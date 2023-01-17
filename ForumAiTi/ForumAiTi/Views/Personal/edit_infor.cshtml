@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Forum AiTi - Hỏi đáp công nghệ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/logoIT-border.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logoIT-border.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--
+-->
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+    <!-- SELECT2 -->
+    <link href="dist/css/select2.min.css" rel="stylesheet" />
+    <script src="dist/js/select2.min.js"></script>
+    <!-- end -->
+    <script src="dist/js/i18n/vi.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-forum shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-menu logo h1 align-self-center" href="index.html">
+                Forum AiTi
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between"
+                id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="qa.html">Hỏi đáp</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="news.html">Tin tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Liên hệ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex dropdown">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Tìm kiếm ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                        data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-light mr-2"></i>
+                    </a>
+                    <a class="nav-link" href="login.html">Đăng nhập</a>
+                    <div class="dropdown">
+                        <a class=" nav-icon position-relative text-decoration-none dropbtn" href="#">
+                            <img id="logouser" height="40" width="40" src="assets/img/user.jfif" alt="">
+                            <span
+                                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-danger">+99</span>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="personal.html">Cá nhân</a>
+                            <a href="#">Bài đăng</a>
+                            <a href="login.html">Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+    <section class="container-fluid my-2 px-5 bg-submenu p-2">
+        <div class="container-fluid bg-forum2">
+            <h3 class="text-forum-orange mb-0 p-2">
+                <oke class="bg-text-forum p-1">Forum</oke>
+                <oke class="text-forum-submenu">AiTi</oke> / Cá nhân
+            </h3>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade bg-forum" id="templatemo_search" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="#" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Tìm kiếm ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Start Categories of The Month -->
+    <section class="mx-5 my-2 ">
+        <div class="row">
+            <div class="col-12 col-md-5 col-lg-5 p-0">
+                <div class="container-fluid">
+                    <h2 class="py-4 bg-forum text-light text-center new-question" id="fullname">Nguyễn Xuân Diệu</h2>
+                    <div class="row user-infor">
+                        <div class="user-img col-12">
+                            <img id="img-content" src="assets/img/user.jfif" alt="">
+                        </div>
+                        <h4 class="birthday" id="birthday">27 / 09 /2001</h4>
+                        <div class="user-myself col-12">
+                            <p class="infor"><i class="fa fa-info-circle"></i> Giới thiệu bản thân</p>
+                            <p class="des" id="des-yourself">Siêu đen đủi 2022. Tôi đối xử chân thành với mọi người,
+                                không bao giờ khoa
+                                trương, nhưng sự chân thành và tốt bụng khiến tôi luôn chiếm được lòng tin của bạn bè.
+                                Tôi là một người có chuyên môn vững vàng, đọc sách là niềm vui thích lớn nhất của tôi và
+                                việc nghiên cứu máy tính khiến tôi cảm thấy rất vui. Tôi làm việc chăm chỉ, bất kể việc
+                                nhỏ như thế nào, tôi phải hoàn thành một cách tỉ mỉ.</p>
+                        </div>
+                        <div class="user-personal col-12">
+                            <div class="row">
+                                <h4 class="user-left text-center m-auto col-6"><i class="fa fa-user-secret"
+                                        aria-hidden="true"></i> Nickname</h4>
+                                <h4 class="user-right text-center m-auto col-6" id="nickname">Boy AiTi</h4>
+                            </div>
+                        </div>
+                        <div class="user-personal col-12">
+                            <div class="row">
+                                <h4 class="user-left text-center m-auto col-6"><i class="fa fa-suitcase"
+                                        aria-hidden="true"></i> Nghề nghiệp</h4>
+                                <h4 class="user-right text-center m-auto col-6" id="job">Kỹ sư IT</h4>
+                            </div>
+                        </div>
+                        <div class="user-card col-12 " id="div-facebook">
+                            <div class="row">
+                                <h4 class="user-left text-center m-auto col-6"><i class="fa fa-facebook-square"> </i>
+                                    Facebook</h4>
+                                <a href="#" id="link-facebook" class="user-right text-center m-auto col-6">
+                                    <h4 id="text-facebook">Xuân Diệu</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="user-card col-12 " id="div-github">
+                            <div class="row">
+                                <h4 class="user-left text-center m-auto col-6"><i class="fa fa-github-square"></i>
+                                    Github</h4>
+                                <a id="link-github" href="#" class="user-right text-center m-auto col-6">
+                                    <h4 id="text-github">Xuân Diệu</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="user-card col-12 " id="div-linked">
+                            <div class="row">
+                                <h4 class="user-left text-center m-auto col-6"><i class="fa fa-linkedin-square"></i>
+                                    Linkedin</h4>
+                                <a id="link-linked" href="#" class="user-right text-center m-auto col-6">
+                                    <h4 id="text-linked">Xuân Diệu</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="user-card col-12 " id="div-stack">
+                            <div class="row">
+                                <h4 class="user-left text-center m-auto col-6"><i class="fa fa-stack-overflow"></i>
+                                    Stackoverflow</h4>
+                                <a id="link-stack" href="#" class="user-right text-center m-auto col-6">
+                                    <h4 id="text-stack">Xuân Diệu</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-7 col-lg-7">
+                <h2 class="py-4 bg-forum text-center"><i class="fa fa-pencil-square" aria-hidden="true"></i> Cập nhật
+                    thông tin cá nhân</h2>
+                <div class="container-fluid bg-forum2">
+                    <form action="#" method="post">
+                        <div class="row pt-2">
+                            <div class="col-12 col-lg-7 col-md-7">
+                                <div class="row edit-infor">
+                                    <label for="fullname">Họ và tên</label>
+                                    <input type="text" name="fullname" value="Nguyễn Xuân Diệu" id="fullname">
+                                </div>
+                                <div class="row edit-infor">
+                                    <label for="nickname">Nickname</label>
+                                    <input type="text" name="nickname" value="Boy AiTi" id="nickname">
+                                </div>
+                                <div class="row edit-infor">
+                                    <label for="birthday">Sinh nhật</label>
+                                    <input type="date" name="birthday" value="2001-09-27" id="birthday">
+                                </div>
+                                <div class="row edit-des">
+                                    <label for="des-yourself">Giới thiệu bản thân</label>
+                                    <textarea name="des-yourself"
+                                        id="des-yourself">Siêu đen đủi 2022. Tôi đối xử chân thành với mọi người, không bao giờ khoa trương, nhưng sự chân thành và tốt bụng khiến tôi luôn chiếm được lòng tin của bạn bè. Tôi là một người có chuyên môn vững vàng, đọc sách là niềm vui thích lớn nhất của tôi và việc nghiên cứu máy tính khiến tôi cảm thấy rất vui. Tôi làm việc chăm chỉ, bất kể việc nhỏ như thế nào, tôi phải hoàn thành một cách tỉ mỉ.</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5 col-lg-5 p-0" id="div-img2">
+                                <img src="assets/img/user.jfif" id="img-content" alt="">
+                                <button type="button" id="btn-img"><input type="file" id="changeimg"> <label
+                                        for="changeimg">Thay đổi hình ảnh đại diện</label></button>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-12 col-lg-6 col-md-6 edit-infor">
+                                <label for="listjob">Nghề nghiệp</label>
+                                <select name="listjob" id="listjob">
+                                    <option value="1">Sinh viên</option>
+                                    <option value="2">Kỹ sư AiTi</option>
+                                    <option value="3">Giáo viên</option>
+                                </select>
+                            </div>
+                            <div class="edit-contact row col-12">
+                                <label for="" class="mb-1"><i class="fa fa-facebook-square"> </i> Facebook</label>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <input type="checkbox" name="" id="text-facebook">
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text"  placeholder="Link đính kèm thông Facebook của bạn" name=""
+                                        id="link-facebook">
+                                </div>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <label for="">Họ tên Facebook của bạn</label>
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text" placeholder="Họ và tên của bạn trên Facebook là gì?" name=""
+                                        id="text-facebook">
+                                </div>
+                            </div>
+                            <div class="edit-contact row col-12">
+                                <label for="" class="mb-1"><i class="fa fa-github-square"> </i> Github</label>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <input type="checkbox" name="" id="text-github">
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text"  placeholder="Link đính kèm thông Github của bạn" name=""
+                                        id="link-github">
+                                </div>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <label for="">Họ tên Github của bạn</label>
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text" placeholder="Họ và tên của bạn trên Github là gì?" name=""
+                                        id="text-github">
+                                </div>
+                            </div>
+                            <div class="edit-contact row col-12">
+                                <label for="" class="mb-1"><i class="fa fa-linkedin-square"> </i> Linkedin</label>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <input type="checkbox" name="" id="text-linked">
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text"  placeholder="Link đính kèm thông Linkedin của bạn" name=""
+                                        id="link-linked">
+                                </div>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <label for="">Họ tên Linkedin của bạn</label>
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text" placeholder="Họ và tên của bạn trên Linkedin là gì?" name=""
+                                        id="text-linked">
+                                </div>
+                            </div>
+                            <div class="edit-contact row col-12">
+                                <label for="" class="mb-1"><i class="fa fa-stack-overflow"> </i> Stackoverflow</label>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <input type="checkbox" name="" id="text-stack">
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text"  placeholder="Link đính kèm thông Stackoverflow của bạn" name=""
+                                        id="link-stack">
+                                </div>
+                                <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                    <label for="">Họ tên Stackoverflow của bạn</label>
+                                </div>
+                                <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                    <input type="text" placeholder="Họ và tên của bạn trên Stackoverflow là gì?" name=""
+                                        id="text-stack">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success m-2">Cập nhật</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Categories of The Month -->
+    <script>
+        $(function () {
+            // Multiple images preview in browser
+            var imagesPreview = function (input, placeToInsertImagePreview, id) {
+
+                if (input.files) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        if ($('div.garelly' + id + ' img#imagges' + id + '').length > 0) {
+                            // $('div.garelly' + id + ' img#imagges' + id + '').attr('src', event.target.result);
+                            $('img#imagges' + id + '').attr('src', event.target.result);
+                        }
+                        else {
+                            $($.parseHTML('<img id="imagges' + id + '">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                            $('div.garelly' + id + ' img#imagges' + id + '')
+                                .after('<i class="fa fa-times" aria-hidden="true" id="imagges' + id + '"></i>');
+                        }
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            };
+            $(document).on('change', 'input[id*="upimg"]', function () {
+                var id = $(this).attr('id');
+                id = id.substring(5, id.length);
+                imagesPreview(this, 'div.garelly' + id, id);
+            });
+            // remove image
+            $(document).on('click', 'i[id*="imagges"]', function () {
+                var id = $(this).attr('id');
+                id = id.substring(7, id.length);
+                $('div.garelly' + id + ' img#imagges' + id + '').remove();
+                $('input#upimg' + id + '').val("");
+            });
+        });
+        $('input#fullname').on('input', function () {
+            var val = $(this).val();
+            $('h2#fullname').text(val);
+        });
+        $('input#nickname').on('input', function () {
+            var val = $(this).val();
+            $('h4#nickname').text(val);
+        });
+        $('input#birthday').on('change', function () {
+            var date = $(this).val();
+            var str = date.substring(8,10)+' / '+date.substring(5,7)+' / '+date.substring(0,4);
+            $('h4#birthday').text(str);
+        });
+        $('textarea#des-yourself').on('keyup', function () {
+            var val = $(this).val();
+            $('p#des-yourself').text(val);
+        });
+        $('select#listjob').on('change', function () {
+            var text = $('select#listjob').find(":selected").text();
+            $('h4#job').text(text);
+        });
+        // 
+        $(document).ready(function () {
+            $('input[type="checkbox"]').each(function () {
+                if ($(this).is(':checked')) {
+                    var id = $(this).attr('id');
+                    var cutID = id.substring(5, id.length);
+                    $('div#div-' + cutID).show();
+                    $('input[type="text"]#text-' + cutID).attr('disabled', false);
+                    $('input[type="text"]#text-' + cutID).attr('required', true);
+                    $('input#link-' + cutID).attr('disabled', false);
+                    $('input#link-' + cutID).attr('required', true);
+
+                } else {
+                    var id = $(this).attr('id');
+                    var cutID = id.substring(5, id.length);
+                    $('div#div-' + cutID).css('display', 'none');
+                    $('input[type="text"]#text-' + cutID).attr('disabled', true);
+                    $('input[type="text"]#text-' + cutID).removeAttr('required');
+                    $('input#link-' + cutID).attr('disabled', true);
+                    $('input#link-' + cutID).removeAttr('required');
+                }
+            });
+        });
+        $('input[type="checkbox"]').on('change', function () {
+            if ($(this).is(':checked')) {
+                var id = $(this).attr('id');
+                var cutID = id.substring(5, id.length);
+                $('div#div-' + cutID).show();
+                $('input[type="text"]#text-' + cutID).attr('disabled', false);
+                $('input[type="text"]#text-' + cutID).attr('required', true);
+                $('input#link-' + cutID).attr('disabled', false);
+                $('input#link-' + cutID).attr('required', true);
+
+            } else {
+                var id = $(this).attr('id');
+                var cutID = id.substring(5, id.length);
+                $('div#div-' + cutID).css('display', 'none');
+                $('input[type="text"]#text-' + cutID).attr('disabled', true);
+                $('input[type="text"]#text-' + cutID).removeAttr('required');
+                $('input#link-' + cutID).attr('disabled', true);
+                $('input#link-' + cutID).removeAttr('required');
+            }
+        });
+        $(document).on('input', 'input#text-github', function () {
+            var val = $(this).val();
+            $('h4#text-github').text(val);
+        });
+        $(document).on('input', 'input#text-linked', function () {
+            var val = $(this).val();
+            $('h4#text-linked').text(val);
+        });
+        $(document).on('input', 'input#text-facebook', function () {
+            var val = $(this).val();
+            $('h4#text-facebook').text(val);
+        });
+        $(document).on('input', 'input#text-stack', function () {
+            var val = $(this).val();
+            $('h4#text-stack').text(val);
+        });
+        // 
+        $(document).on('input', 'input#link-github', function () {
+            var val = $(this).val();
+            $('a#link-github').attr('href', val);
+            var regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+            if(!regex.test(val))
+            {
+                $(this)[0].setCustomValidity("Vui lòng nhập link hợp lệ!");
+            }
+            else
+            {
+                $(this)[0].setCustomValidity("");
+            }
+        });
+        $(document).on('input', 'input#link-linked', function () {
+            var val = $(this).val();
+            $('a#link-linked').attr('href', val);
+            var regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+            if(!regex.test(val))
+            {
+                $(this)[0].setCustomValidity("Vui lòng nhập link hợp lệ!");
+            }
+            else
+            {
+                $(this)[0].setCustomValidity("");
+            }
+        });
+        $(document).on('input', 'input#link-facebook', function () {
+            var val = $(this).val();
+            $('a#link-facebook').attr('href', val);
+            var regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+            if(!regex.test(val))
+            {
+                $(this)[0].setCustomValidity("Vui lòng nhập link hợp lệ!");
+            }
+            else
+            {
+                $(this)[0].setCustomValidity("");
+            }
+        });
+        $(document).on('input', 'input#link-stack', function () {
+            var val = $(this).val();
+            $('a#link-stack').attr('href', val);
+            var regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+            if(!regex.test(val))
+            {
+                $(this)[0].setCustomValidity("Vui lòng nhập link hợp lệ!");
+            }
+            else
+            {
+                $(this)[0].setCustomValidity("");
+            }
+        });
+    </script>
+    <!-- End Featured Product -->
+
+
+    <!-- Start Footer -->
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Forum AiTi</h2>
+                </div>
+
+                <div class="col-md-3 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Dịch vụ</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Hỗ trợ 24/7</a></li>
+                        <li><a class="text-decoration-none" href="#">Giải đáp thắc mắc</a></li>
+                        <li><a class="text-decoration-none" href="#">Kết nối yêu thương</a></li>
+                        <li><a class="text-decoration-none" href="#">Nhắn tin</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-5 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Liên hệ</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            01 Quang Trung - Phường 10 - Quận Gò Vấp - Tp Hồ Chí Minh
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="">027505505</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="#">xuandieu12300@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Địa chỉ Email</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
+                            placeholder="Email của bạn">
+                        <div class="input-group-text btn-success text-light">Đăng ký</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 bg-black py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            Copyright &copy; 2023 Company Name
+                            | Designed by <a rel="sponsored" href="#" target="_blank">XuanDieu</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+</body>
+
+</html>

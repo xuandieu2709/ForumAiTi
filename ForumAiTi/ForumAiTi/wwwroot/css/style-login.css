@@ -1,0 +1,205 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+a {
+    text-decoration: none !important;
+    color: #fff !important;
+}
+
+/* #### LOGIN ### */
+.js-fullheight {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+
+img.logo-login {
+    height: 80px !important;
+    width: 80px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4%;
+    margin-bottom: 5%;
+}
+
+.ftco-section {
+    padding: 3em 0;
+}
+
+.ftco-no-pt {
+    padding-top: 0;
+}
+
+.ftco-no-pb {
+    padding-bottom: 0;
+}
+
+.heading-section {
+    font-size: 28px;
+    color: #fff;
+}
+
+.login {
+    background-color: #264653;
+    padding: 2%;
+    position: relative;
+    border-radius: 10px;
+}
+
+.login-wrap {
+    position: relative;
+    color: rgba(175, 165, 165, 0.9);
+}
+
+.login-wrap h3 {
+    font-weight: 300;
+    color: #fff;
+}
+
+.login-wrap .social {
+    width: 100%;
+}
+
+.login-wrap .social a {
+    width: 100%;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #000;
+    background: #fff;
+}
+
+.login-wrap .social a:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.form-group {
+    position: relative;
+}
+
+.field-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.checkbox-wrap {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-wrap input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "\f0c8";
+    font-family: "FontAwesome";
+    position: absolute;
+    color: rgba(255, 255, 255, 0.1);
+    font-size: 20px;
+    margin-top: -4px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .checkmark:after {
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+}
+
+/* Show the checkmark when checked */
+.checkbox-wrap input:checked~.checkmark:after {
+    display: block;
+    content: "\f14a";
+    font-family: "FontAwesome";
+    color: rgba(0, 0, 0, 0.2);
+}
+
+/* Style the checkmark/indicator */
+.checkbox-primary {
+    color: #2a9d8f;
+}
+
+.checkbox-primary input:checked~.checkmark:after {
+    color: #2a9d8f;
+}
+span.toggle-password
+{
+    color: #264653;
+}
+.form-group > input
+{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: 2px solid #f4a261 !important;
+}
+/* .form-group > input:focus
+{
+    outline: 2px solid #f4a261 !important;
+} */
+.btn-createnew {
+    width: fit-content;
+    background-color: #e9c46a !important;
+}
+
+.btn-login {
+    background-color: #2a9d8f !important;
+    color: #fff !important;
+}
+
+.btn-facebook {
+    background-color: #4267B2 !important;
+    color: #ffff;
+}
+
+.btn-google {
+    background-color: #DB4437 !important;
+    color: #ffff;
+}
+.btn-google:focus,.btn-google:hover,.btn-facebook:focus,.btn-facebook:hover,.btn-createnew:focus,.btn-createnew:hover
+{
+    border: 1px solid #f4a261 !important;
+    outline:  2px solid #f4a261 !important;
+}
+.btn-login:focus,.btn-login:hover
+{
+    border: 1px solid #DB4437 !important;
+    outline:  2px solid #DB4437 !important;
+}
+
+/* END LOGIN */
