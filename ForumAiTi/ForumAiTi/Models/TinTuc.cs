@@ -22,6 +22,7 @@ namespace ForumAiTi.Models
         public string TenFile { get; set; }
         public bool? TrangThai { get; set; }
         public string NguoiDang { get; set; }
+        public DateTime? NgayDang { get; set; }
 
         public virtual NguoiDung NguoiDangNavigation { get; set; }
         public virtual ICollection<CttinTuc> CttinTuc { get; set; }

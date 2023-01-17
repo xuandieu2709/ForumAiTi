@@ -114,6 +114,7 @@ namespace ForumAiTi.Controllers
             else
             {
             }
+            await SignInUser(user);
             return Redirect("/home");
 
         }
@@ -169,6 +170,7 @@ namespace ForumAiTi.Controllers
             else
             {
             }
+            await SignInUser(user);
             return Redirect("/home");
 
         }
@@ -180,6 +182,7 @@ namespace ForumAiTi.Controllers
             {
                 new Claim(ClaimTypes.Name, newUser.TaiKhoan),
                 new Claim(ClaimTypes.Role, newUser.VaiTro),
+                new Claim("TaiKhoan",newUser.TaiKhoan),
             };
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);

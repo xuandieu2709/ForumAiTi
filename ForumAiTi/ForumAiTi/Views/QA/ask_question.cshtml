@@ -1,0 +1,217 @@
+@{
+     ViewData["Title"] = "Hỏi đáp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    List<DanhMucHoiDap> getListHD()
+        {
+            return _context.DanhMucHoiDap.ToList();
+        }
+}
+@model ForumAiTi.Models.HoiDap;
+<!-- Close Header -->
+<section class="container-fluid my-2 px-5 bg-submenu p-2">
+    <div class="container-fluid bg-forum2">
+        <h3 class="text-forum-orange mb-0 p-2">
+            <oke class="bg-text-forum p-1">Forum</oke>
+            <oke class="text-forum-submenu">AiTi</oke> / Hỏi đáp
+        </h3>
+    </div>
+</section>
+<!-- Start Categories of The Month -->
+<section class="mx-5 my-2 ">
+    <div class="row">
+        <div class="col-12 col-md-7 col-lg-7">
+            <form action="/ask_question" method="post" enctype="multipart/form-data">
+                <div class="container-fluid bg-forum3">
+                    <h2 class="py-4"><i class="fa fa-question-circle"></i> Đặt câu hỏi</h2>
+                </div>
+                <div class="container-fluid bg-forum p-4">
+                    <h3 class="mb-2">Viết ra một câu hỏi thật hay</h3>
+                    <p style="font-style: italic;">
+                        Hãy chọn lọc để đưa ra một câu hỏi thật hay. Để mọi người có thể hỗ trợ cho bạn và bạn cũng
+                        có
+                        thể trở thành người đặt câu hỏi hay nhất trong forum. Thử ngay nhé!
+                    </p>
+                    <ul>
+                        <li>Tóm tắt vấn đề của bạn trong tiêu đề một dòng.</li>
+                        <li>Cố gắng mô tả chi tiết nhất vấn đề của bạn.</li>
+                        <li>Mô tả những gì bạn đã cố gắng và những gì bạn mong đợi sẽ xảy ra.</li>
+                        <li>Xem lại câu hỏi của bạn và đăng nó lên trang web.</li>
+                    </ul>
+                </div>
+                <div class="container-fluid bg-forum2 p-4">
+                    <div class="ask-title">
+                        <h4>Tiêu đề</h4>
+                        <p style="font-style: italic;">Hãy cụ thể và tưởng tượng bạn đang đặt câu hỏi cho người
+                            khác.
+                        </p>
+                        <input type="text" name="HoiDap.TieuDe" id="input-title" required>
+                    </div>
+                    <div class="ask-category">
+                        <h4>Danh mục hỏi đáp</h4>
+                        <p style="font-style: italic;">Chọn ít nhất 1 danh mục và tối đa là 3.
+                        </p>
+                        <select style="width: 100%;" aria-placeholder="Đừng quên chọn danh mục nhé!" required
+                            class="js-example-basic-multiple" id="listcategory" name="states[]" multiple="multiple">
+                            @foreach (var item in @getListHD())
+                            {
+                                <option value="@item.MaDanhMuc">@item.TenDanhMuc</option>
+                            }
+                        </select>
+                        <script>
+                            $(document).ready(function () {
+                                $('.js-example-basic-multiple').select2({
+                                    maximumSelectionLength: 3,
+                                    language: "vi"
+                                });
+                            });
+                        </script>
+                        <script src="dist/js/i18n/vi.js"></script>
+                    </div>
+                    <div class="ask-content">
+                        <h4>Mô tả chi tiết của vấn đề của bạn là gì?</h4>
+                        <p style="font-style: italic;">Giới thiệu vấn đề và mở rộng những gì bạn đặt trong tiêu đề.
+                            Tối
+                            thiểu 20 ký tự.</p>
+                        <div class="ask-post row">
+                            <div class="col-12">
+                                <input type="file" hidden name="" id="upload">
+                                <label for="upload"><i class="fa fa-image" aria-hidden="true"></i></label>
+                                <input type="file" name="files" multiple id="upploadIMG">
+                                <label for="upploadIMG"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
+                                <textarea name="HoiDap.NoiDung" id="content" required></textarea>
+                                <div class="garrellyIMG"></div>
+                                <script>
+                                    $(function () {
+                                        // Multiple images preview in browser
+                                        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+                                            if (input.files) {
+                                                var count = 0;
+                                                $('div.garrellyIMG > img').each(function () {
+                                                    count++;
+                                                });
+                                                var filesAmount = input.files.length;
+                                                if ((count + filesAmount) > 3) {
+                                                    alert("Chỉ được chọn tối đa 3 hình");
+                                                    $('.garrellyIMG').empty();
+                                                    $('input#upploadIMG').val("");
+                                                }
+                                                else {
+                                                    var countt = 0;
+                                                    for (i = 0; i < filesAmount; i++) {
+                                                        var reader = new FileReader();
+                                                        reader.onload = function (event) {
+                                                            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                                                            $('img#image' + countt).attr('src', event.target.result);
+                                                            countt++;
+                                                        }
+
+                                                        reader.readAsDataURL(input.files[i]);
+                                                    }
+                                                }
+
+                                            }
+
+                                        };
+
+                                        $('input#upploadIMG').on('change', function () {
+                                            imagesPreview(this, 'div.garrellyIMG');
+                                        });
+                                    });
+                                    $('input#input-title').on('input', function () {
+                                        var text = $(this).val();
+                                        $('#text-title').text(text);
+                                    });
+                                    $('textarea#content').on('keyup', function () {
+                                        var text = $(this).val();
+                                        $('#text-content').text(text);
+                                    });
+                                    $('select#listcategory').on('change', function () {
+                                        var arr = $('select#listcategory :selected').toArray().map(x => $(x).text());
+                                        console.log(arr);
+                                        $('p.details-list').empty();
+                                        for (i = 0; i < arr.length; i++) {
+                                            var text = arr[i];
+                                            console.log(text)
+                                            $('p.details-list').append('<a href="#">' + text + '</a>');
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <button class="btn btn-send">Xác nhận</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-md-5 col-lg-5 p-0">
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-light text-center new-question"><i class="fa fa-television"
+                        aria-hidden="true"></i> Bản xem trước</h2>
+                <div class="row p-2 details bg-question-light">
+                    <h2 class="details-title" id="text-title">Thành công ở đại học là gì? Bí quyết để thành công?
+                    </h2>
+                    <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
+                                src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                    <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                    <p class="details-content" id="text-content">
+                        Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                        còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                        Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                        nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                        hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                        cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                        giao tiếp hiệu quả.
+                    </p>
+                    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active">
+                            </li>
+                            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+                            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="container-fluid">
+                                    <div class="row p-5">
+                                        <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
+                                            <img id="image0" class="img-fluid" src="./assets/img/img2.webp" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container-fluid">
+                                    <div class="row p-5">
+                                        <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
+                                            <img id="image1" class="img-fluid" src="./assets/img/img2.webp" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container-fluid">
+                                    <div class="row p-5">
+                                        <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
+                                            <img id="image2" class="img-fluid" src="./assets/img/img2.webp" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev text-decoration-none w-auto ps-3"
+                            href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <a class="carousel-control-next text-decoration-none w-auto pe-3"
+                            href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Categories of The Month -->

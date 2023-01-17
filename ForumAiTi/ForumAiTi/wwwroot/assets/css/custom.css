@@ -467,6 +467,33 @@ div[class*="garelly"]>input {
 div[class*="garelly"]>input:focus {
     outline: 2px solid #f4a261;
 }
+/* IMG */
+div[class*="garrellyIMG"] {
+    margin: 1%;
+    padding: 1%;
+}
+
+div[class*="garrellyIMG"]>img {
+    height: 80px;
+    width: 80px;
+    margin-right: 1%;
+}
+
+div[class*="garrellyIMG"]>i {
+    margin-left: 1%;
+    color: red;
+}
+
+div[class*="garrellyIMG"]>input {
+    width: 100%;
+    border: 2px solid #f4a261;
+    margin-top: 1%;
+}
+
+div[class*="garrellyIMG"]>input:focus {
+    outline: 2px solid #f4a261;
+}
+/*  */
 
 .btn-send {
     color: #fff;

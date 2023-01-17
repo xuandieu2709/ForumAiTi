@@ -251,6 +251,8 @@ namespace ForumAiTi.Models
             {
                 entity.HasKey(e => e.MaHoiDap);
 
+                entity.Property(e => e.NgayDang).HasColumnType("datetime");
+
                 entity.Property(e => e.NguoiDang)
                     .HasMaxLength(250)
                     .IsUnicode(false);
@@ -391,6 +393,8 @@ namespace ForumAiTi.Models
             modelBuilder.Entity<TinTuc>(entity =>
             {
                 entity.HasKey(e => e.MaTinTuc);
+
+                entity.Property(e => e.NgayDang).HasColumnType("datetime");
 
                 entity.Property(e => e.NguoiDang)
                     .HasMaxLength(250)
