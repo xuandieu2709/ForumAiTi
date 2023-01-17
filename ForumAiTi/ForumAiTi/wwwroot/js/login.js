@@ -1,3 +1,6 @@
+$(document).ready(function () {
+    $('button#create-new').attr('disabled',true);    
+});
 $('#password-field').on('input',function(){
     var pass = $('#password-field').val();
     var confirm = $('#password-field1').val();
@@ -14,6 +17,7 @@ $('#password-field').on('input',function(){
                 $('input#password-field').css({'outline':'4px solid green'});
                 $('input#password-field1').css({'outline':'4px solid green'});
                 $('#password-field')[0].setCustomValidity("");
+                $('button#create-new').attr('disabled',false);   
             }
             else{
                 $('input#password-field').css({'outline':'4px solid #f4a261'});
@@ -41,6 +45,7 @@ $('#password-field1').on('input',function(){
                 $('input#password-field1').css({'outline':'4px solid green'});
                 $('input#password-field').css({'outline':'4px solid green'});
                 $('#password-field1')[0].setCustomValidity("");
+                $('button#create-new').attr('disabled',false);   
             }
             else{
                 $('input#password-field1').css({'outline':'4px solid #f4a261'});

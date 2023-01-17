@@ -201,5 +201,8 @@ span.toggle-password
     border: 1px solid #DB4437 !important;
     outline:  2px solid #DB4437 !important;
 }
-
+#create-new:disabled
+{
+    opacity: 0.6 !important;
+}
 /* END LOGIN */

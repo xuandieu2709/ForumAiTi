@@ -24,10 +24,13 @@ namespace ForumAiTi.Models
         public string HoTen { get; set; }
         public DateTime? SinhNhat { get; set; }
         public string Nickname { get; set; }
+        public byte[] HinhAnh { get; set; }
         public string Email { get; set; }
         public string GioiTinh { get; set; }
         public string TaiKhoan { get; set; }
+        public string MatKhau { get; set; }
         public int? MaLoai { get; set; }
+        public string VaiTro { get; set; }
 
         public virtual LoaiTaiKhoan MaLoaiNavigation { get; set; }
         public virtual ICollection<BinhLuan> BinhLuan { get; set; }

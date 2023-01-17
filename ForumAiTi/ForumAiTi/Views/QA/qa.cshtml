@@ -1,535 +1,345 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Forum AiTi - Hỏi đáp công nghệ</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" href="assets/img/logoIT-border.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logoIT-border.png">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/templatemo.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
-
-    <!-- Load fonts style after rendering the layout styles -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <!-- Start Script -->
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <!-- End Script -->
-    <!-- SELECT2 -->
-    <link href="dist/css/select2.min.css" rel="stylesheet" />
-    <script src="dist/js/select2.min.js"></script>
-    <!-- end -->
-</head>
-
-<body>
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-forum shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-menu logo h1 align-self-center" href="index.html">
-                Forum AiTi
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between"
-                id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Trang chủ</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="qa.html">Hỏi đáp</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="news.html">Tin tức</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Liên hệ</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Tìm kiếm ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
-                        data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-light mr-2"></i>
-                    </a>
-                    <a class="nav-link" href="login.html">Đăng nhập</a>
-                    <div class="dropdown">
-                        <a class=" nav-icon position-relative text-decoration-none dropbtn" href="#">
-                            <img id="logouser" height="40" width="40" src="assets/img/user.jfif" alt="">
-                            <span
-                                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-danger">+99</span>
-                        </a>
-                        <div class="dropdown-content">
-                            <a href="personal.html">Cá nhân</a>
-                            <a href="#">Bài đăng</a>
-                            <a href="login.html">Đăng xuất</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </nav>
-    <!-- Close Header -->
-    <section class="container-fluid my-2 px-5 bg-submenu p-2">
-        <div class="container-fluid bg-forum2">
-            <h3 class="text-forum-orange mb-0 p-2">
-                <oke class="bg-text-forum p-1">Forum</oke>
-                <oke class="text-forum-submenu">AiTi</oke> / Hỏi đáp
-            </h3>
-        </div>
-    </section>
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Tìm kiếm ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
+@{
+    ViewData["Title"] = "Hỏi đáp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Close Header -->
+<section class="container-fluid my-2 px-5 bg-submenu p-2">
+    <div class="container-fluid bg-forum2">
+        <h3 class="text-forum-orange mb-0 p-2">
+            <oke class="bg-text-forum p-1">Forum</oke>
+            <oke class="text-forum-submenu">AiTi</oke> / Hỏi đáp
+        </h3>
     </div>
-    <!-- Start Categories of The Month -->
-    <section class="mx-5 my-2 ">
-        <div class="row">
-            <div class="col-12 col-md-8 col-lg-8">
-                <div class="container-fluid bg-question-light">
-                    <div class="row p-2">
-                        <div class="col-12 col-lg-6 col-md-6">
-                            Danh mục hỏi đáp
-                            <select style="width: 100%;margin-top: 10%;" aria-placeholder="Đừng quên chọn danh mục nhé!"
-                                required class="js-example-basic-multiple" id="listcategory" name="states[]"
-                                multiple="multiple">
-                                <option value="1">C#</option>
-                                <option value="2">Java</option>
-                                <option value="3">C++</option>
-                                <option value="4">Python</option>
-                            </select>
-                            <script>
-                                $(document).ready(function () {
-                                    $('.js-example-basic-multiple').select2({
-                                        maximumSelectionLength: 3,
-                                        language: "vi"
-                                    });
+</section>
+<!-- Modal -->
+<div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="w-100 pt-1 mb-5 text-right">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="" method="get" class="modal-content modal-body border-0 p-0">
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Tìm kiếm ...">
+                <button type="submit" class="input-group-text bg-success text-light">
+                    <i class="fa fa-fw fa-search text-white"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Start Categories of The Month -->
+<section class="mx-5 my-2 ">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-8">
+            <div class="container-fluid bg-question-light">
+                <div class="row p-2">
+                    <div class="col-12 col-lg-6 col-md-6">
+                        Danh mục hỏi đáp
+                        <select style="width: 100%;margin-top: 10%;" aria-placeholder="Đừng quên chọn danh mục nhé!"
+                            required class="js-example-basic-multiple" id="listcategory" name="states[]"
+                            multiple="multiple">
+                            <option value="1">C#</option>
+                            <option value="2">Java</option>
+                            <option value="3">C++</option>
+                            <option value="4">Python</option>
+                        </select>
+                        <script>
+                            $(document).ready(function () {
+                                $('.js-example-basic-multiple').select2({
+                                    maximumSelectionLength: 3,
+                                    language: "vi"
                                 });
-                            </script>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6">
-                            Thời gian đăng bài
-                            <select class="form-select mt-2" id="single-select-field"
-                                data-placeholder="Choose one thing">
-                                <option></option>
-                                <option>Hôm nay</option>
-                                <option>Tuần trước</option>
-                                <option>Tháng này</option>
-                                <option>Năm này</option>
-                            </select>
-                        </div>
+                            });
+                        </script>
                     </div>
-                </div>
-                <div class="QA my-2">
-                    <div class="question row">
-                        <div class="question-body col-12">
-                            <a href="details_qa.html">
-                                <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                            </a>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="question-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
-                            <p>
-                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                </pi>
-                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
-                                    luận
-                                </pi>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="question row">
-                        <div class="question-body col-12">
-                            <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="question-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
-                            <p>
-                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                </pi>
-                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
-                                    luận
-                                </pi>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="question row">
-                        <div class="question-body col-12">
-                            <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="question-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
-                            <p>
-                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                </pi>
-                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
-                                    luận
-                                </pi>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="question row">
-                        <div class="question-body col-12">
-                            <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="question-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
-                            <p>
-                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                </pi>
-                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
-                                    luận
-                                </pi>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="question row">
-                        <div class="question-body col-12">
-                            <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="question-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
-                            <p>
-                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                </pi>
-                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
-                                    luận
-                                </pi>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="question row">
-                        <div class="question-body col-12">
-                            <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="question-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
-                            <p>
-                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                </pi>
-                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
-                                    luận
-                                </pi>
-                            </p>
-                        </div>
-                    </div>
-
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Trước</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Sau</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-4 p-0">
-                <div class="container-fluid">
-                    <a href="ask-question.html" class="ask-question">
-                        <h2 class="py-4 bg-submenu-1 text-center">Đặt câu hỏi</h2>
-                    </a>
-                </div>
-                <div class="container-fluid">
-                    <h2 class="py-4 bg-forum text-light text-center new-question">Câu hỏi mới nhất</h2>
-                    <div class="question-div">
-                        <div class="question-sub">
-                            <a href="details-qa.html">
-                                <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                            </a>
-                            <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                            <a href="#">
-                                <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                            </a>
-                        </div>
-                        <div class="question-sub">
-                            <a href="details-qa.html">
-                                <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                            </a>
-                          ~  <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                            <a href="#">
-                                <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                            </a>
-                        </div>
-                        <div class="question-sub">
-                            <a href="details-qa.html">
-                                <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                            </a>
-                            <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                            <a href="#">
-                                <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                            </a>
-                        </div>
-                        <div class="question-sub">
-                            <a href="details-qa.html">
-                                <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                            </a>
-                            <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                            <a href="#">
-                                <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                            </a>
-                        </div>
-                        <div class="question-sub">
-                            <a href="details-qa.html">
-                                <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                            </a>
-                            <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                            <a href="#">
-                                <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid">
-                    <h2 class="py-4 bg-forum text-light text-center new-question">Thành viên ưu tú</h2>
-                    <div class="listTopMember">
-                        <a href="#">
-                            <div class="row member">
-                                <div class="col-4 col-sm-6 member-left">
-                                    <img src="images/user.jfif" alt="">
-                                </div>
-                                <div class="col-8 col-sm-6 member-right">
-                                    <h4>Boy AiTi</h4>
-                                    <p>Ngày 27 Tháng 09 năm 2001</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="row member">
-                                <div class="col-4 col-sm-6 member-left">
-                                    <img src="images/user.jfif" alt="">
-                                </div>
-                                <div class="col-8 col-sm-6 member-right">
-                                    <h4>Boy AiTi</h4>
-                                    <p>Ngày 27 Tháng 09 năm 2001</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="row member">
-                                <div class="col-4 col-sm-6 member-left">
-                                    <img src="images/user.jfif" alt="">
-                                </div>
-                                <div class="col-8 col-sm-6 member-right">
-                                    <h4>Boy AiTi</h4>
-                                    <p>Ngày 27 Tháng 09 năm 2001</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="row member">
-                                <div class="col-4 col-sm-6 member-left">
-                                    <img src="images/user.jfif" alt="">
-                                </div>
-                                <div class="col-8 col-sm-6 member-right">
-                                    <h4>Boy AiTi</h4>
-                                    <p>Ngày 27 Tháng 09 năm 2001</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="row member">
-                                <div class="col-4 col-sm-6 member-left">
-                                    <img src="images/user.jfif" alt="">
-                                </div>
-                                <div class="col-8 col-sm-6 member-right">
-                                    <h4>Boy AiTi</h4>
-                                    <p>Ngày 27 Tháng 09 năm 2001</p>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="col-12 col-lg-6 col-md-6">
+                        Thời gian đăng bài
+                        <select class="form-select mt-2" id="single-select-field" data-placeholder="Choose one thing">
+                            <option></option>
+                            <option>Hôm nay</option>
+                            <option>Tuần trước</option>
+                            <option>Tháng này</option>
+                            <option>Năm này</option>
+                        </select>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- End Categories of The Month -->
-
-    <!-- End Featured Product -->
-
-
-    <!-- Start Footer -->
-    <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Forum AiTi</h2>
-                </div>
-
-                <div class="col-md-3 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Dịch vụ</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Hỗ trợ 24/7</a></li>
-                        <li><a class="text-decoration-none" href="#">Giải đáp thắc mắc</a></li>
-                        <li><a class="text-decoration-none" href="#">Kết nối yêu thương</a></li>
-                        <li><a class="text-decoration-none" href="#">Nhắn tin</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-5 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Liên hệ</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            01 Quang Trung - Phường 10 - Quận Gò Vấp - Tp Hồ Chí Minh
-                        </li>
-                        <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="">027505505</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="#">xuandieu12300@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="row text-light mb-4">
-                <div class="col-12 mb-3">
-                    <div class="w-100 my-3 border-top border-light"></div>
-                </div>
-                <div class="col-auto me-auto">
-                    <ul class="list-inline text-left footer-icons">
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
-                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
-                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Địa chỉ Email</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
-                            placeholder="Email của bạn">
-                        <div class="input-group-text btn-success text-light">Đăng ký</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="w-100 bg-black py-3">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <p class="text-left text-light">
-                            Copyright &copy; 2023 Company Name
-                            | Designed by <a rel="sponsored" href="#" target="_blank">XuanDieu</a>
+            <div class="QA my-2">
+                <div class="question row">
+                    <div class="question-body col-12">
+                        <a href="details_qa.html">
+                            <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
+                        </a>
+                        <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
+                                    src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                        <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                        <p class="question-content">
+                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                            giao tiếp hiệu quả.
+                        </p>
+                        <p>
+                            <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
+                            </pi>
+                            <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
+                                luận
+                            </pi>
                         </p>
                     </div>
                 </div>
+                <div class="question row">
+                    <div class="question-body col-12">
+                        <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
+                        <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
+                                    src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                        <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                        <p class="question-content">
+                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                            giao tiếp hiệu quả.
+                        </p>
+                        <p>
+                            <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
+                            </pi>
+                            <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
+                                luận
+                            </pi>
+                        </p>
+                    </div>
+                </div>
+                <div class="question row">
+                    <div class="question-body col-12">
+                        <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
+                        <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
+                                    src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                        <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                        <p class="question-content">
+                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                            giao tiếp hiệu quả.
+                        </p>
+                        <p>
+                            <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
+                            </pi>
+                            <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
+                                luận
+                            </pi>
+                        </p>
+                    </div>
+                </div>
+                <div class="question row">
+                    <div class="question-body col-12">
+                        <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
+                        <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
+                                    src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                        <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                        <p class="question-content">
+                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                            giao tiếp hiệu quả.
+                        </p>
+                        <p>
+                            <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
+                            </pi>
+                            <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
+                                luận
+                            </pi>
+                        </p>
+                    </div>
+                </div>
+                <div class="question row">
+                    <div class="question-body col-12">
+                        <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
+                        <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
+                                    src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                        <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                        <p class="question-content">
+                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                            giao tiếp hiệu quả.
+                        </p>
+                        <p>
+                            <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
+                            </pi>
+                            <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
+                                luận
+                            </pi>
+                        </p>
+                    </div>
+                </div>
+                <div class="question row">
+                    <div class="question-body col-12">
+                        <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
+                        <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
+                                    src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                        <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                        <p class="question-content">
+                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                            giao tiếp hiệu quả.
+                        </p>
+                        <p>
+                            <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
+                            </pi>
+                            <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80 Bình
+                                luận
+                            </pi>
+                        </p>
+                    </div>
+                </div>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Trước</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
-
-    </footer>
-    <!-- End Footer -->
-
-</body>
-
-</html>
+        <div class="col-12 col-md-4 col-lg-4 p-0">
+            <div class="container-fluid">
+                <a href="ask-question.html" class="ask-question">
+                    <h2 class="py-4 bg-submenu-1 text-center">Đặt câu hỏi</h2>
+                </a>
+            </div>
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-light text-center new-question">Câu hỏi mới nhất</h2>
+                <div class="question-div">
+                    <div class="question-sub">
+                        <a href="details-qa.html">
+                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
+                        </a>
+                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
+                        <a href="#">
+                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
+                        </a>
+                    </div>
+                    <div class="question-sub">
+                        <a href="details-qa.html">
+                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
+                        </a>
+                        ~ <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
+                        <a href="#">
+                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
+                        </a>
+                    </div>
+                    <div class="question-sub">
+                        <a href="details-qa.html">
+                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
+                        </a>
+                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
+                        <a href="#">
+                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
+                        </a>
+                    </div>
+                    <div class="question-sub">
+                        <a href="details-qa.html">
+                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
+                        </a>
+                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
+                        <a href="#">
+                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
+                        </a>
+                    </div>
+                    <div class="question-sub">
+                        <a href="details-qa.html">
+                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
+                        </a>
+                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
+                        <a href="#">
+                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-light text-center new-question">Thành viên ưu tú</h2>
+                <div class="listTopMember">
+                    <a href="#">
+                        <div class="row member">
+                            <div class="col-4 col-sm-6 member-left">
+                                <img src="images/user.jfif" alt="">
+                            </div>
+                            <div class="col-8 col-sm-6 member-right">
+                                <h4>Boy AiTi</h4>
+                                <p>Ngày 27 Tháng 09 năm 2001</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="row member">
+                            <div class="col-4 col-sm-6 member-left">
+                                <img src="images/user.jfif" alt="">
+                            </div>
+                            <div class="col-8 col-sm-6 member-right">
+                                <h4>Boy AiTi</h4>
+                                <p>Ngày 27 Tháng 09 năm 2001</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="row member">
+                            <div class="col-4 col-sm-6 member-left">
+                                <img src="images/user.jfif" alt="">
+                            </div>
+                            <div class="col-8 col-sm-6 member-right">
+                                <h4>Boy AiTi</h4>
+                                <p>Ngày 27 Tháng 09 năm 2001</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="row member">
+                            <div class="col-4 col-sm-6 member-left">
+                                <img src="images/user.jfif" alt="">
+                            </div>
+                            <div class="col-8 col-sm-6 member-right">
+                                <h4>Boy AiTi</h4>
+                                <p>Ngày 27 Tháng 09 năm 2001</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="row member">
+                            <div class="col-4 col-sm-6 member-left">
+                                <img src="images/user.jfif" alt="">
+                            </div>
+                            <div class="col-8 col-sm-6 member-right">
+                                <h4>Boy AiTi</h4>
+                                <p>Ngày 27 Tháng 09 năm 2001</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

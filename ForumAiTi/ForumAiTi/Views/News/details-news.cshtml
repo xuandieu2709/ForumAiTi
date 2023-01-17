@@ -1,133 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Forum AiTi - Hỏi đáp công nghệ</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" href="assets/img/logoIT-border.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logoIT-border.png">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/templatemo.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
-
-    <!-- Load fonts style after rendering the layout styles -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <!-- Start Script -->
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <!-- End Script -->
-    <!-- SELECT2 -->
-    <link href="dist/css/select2.min.css" rel="stylesheet" />
-    <script src="dist/js/select2.min.js"></script>
-    <!-- end -->
-</head>
-
-<body>
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-forum shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-menu logo h1 align-self-center" href="index.html">
-                Forum AiTi
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between"
-                id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="qa.html">Hỏi đáp</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="news.html">Tin tức</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Liên hệ</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Tìm kiếm ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
-                        data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-light mr-2"></i>
-                    </a>
-                    <a class="nav-link" href="login.html">Đăng nhập</a>
-                    <div class="dropdown">
-                        <a class=" nav-icon position-relative text-decoration-none dropbtn" href="#">
-                            <img id="logouser" height="40" width="40" src="assets/img/user.jfif" alt="">
-                            <span
-                                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-danger">+99</span>
-                        </a>
-                        <div class="dropdown-content">
-                            <a href="personal.html">Cá nhân</a>
-                            <a href="#">Bài đăng</a>
-                            <a href="login.html">Đăng xuất</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </nav>
-    <!-- Close Header -->
-    <section class="container-fluid my-2 px-5 bg-submenu p-2">
-        <div class="container-fluid bg-forum2">
-            <h3 class="text-forum-orange mb-0 p-2">
-                <oke class="bg-text-forum p-1">Forum</oke>
-                <oke class="text-forum-submenu">AiTi</oke> / Tin tức
-            </h3>
-        </div>
-    </section>
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Tìm kiếm ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
+@{
+    ViewData["Title"] = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="container-fluid my-2 px-5 bg-submenu p-2">
+    <div class="container-fluid bg-forum2">
+        <h3 class="text-forum-orange mb-0 p-2">
+            <oke class="bg-text-forum p-1">Forum</oke>
+            <oke class="text-forum-submenu">AiTi</oke> / Tin tức
+        </h3>
     </div>
-    <section class="mx-5 my-2 ">
-        <div class="row">
-            <div class="col-12 col-md-8 col-lg-8">
-                <div class="row p-3 news-details bg-question-light">
-                    <h2 class="details-title">Thành công ở đại học là gì? Bí quyết để thành công?</h2>
-                    <p class="time-posted">Đã đăng ngày 27 / 01 / 2022</p>
-                    <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                    <img class="details-img" src="assets/img/img3.webp" alt="">
-                    <p class="details-content">
+</section>
+<section class="mx-5 my-2 ">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-8">
+            <div class="row p-3 news-details bg-question-light">
+                <h2 class="details-title">Thành công ở đại học là gì? Bí quyết để thành công?</h2>
+                <p class="time-posted">Đã đăng ngày 27 / 01 / 2022</p>
+                <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                <img class="details-img" src="assets/img/img3.webp" alt="">
+                <p class="details-content">
+                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                    giao tiếp hiệu quả.
+                </p>
+                <div class="news-paragraph p-0">
+                    <p class="news-paragraph-content">
                         Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
                         còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
                         Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
@@ -136,378 +37,298 @@
                         cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
                         giao tiếp hiệu quả.
                     </p>
-                    <div class="news-paragraph p-0">
-                        <p class="news-paragraph-content">
-                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                    <img src="assets/img/img4.jpg" alt="">
+                    <p class="paragraph-note-img">Hình này là hình siêu công nghệ</p>
+                </div>
+                <div class="news-paragraph p-0">
+                    <p class="news-paragraph-content">
+                        Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
                         còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
                         Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
                         nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
                         hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
                         cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
                         giao tiếp hiệu quả.
-                        </p>
-                        <img src="assets/img/img4.jpg" alt="">
-                        <p class="paragraph-note-img">Hình này là hình siêu công nghệ</p>
+                    </p>
+                    <img src="assets/img/img4.jpg" alt="">
+                    <p class="paragraph-note-img">Hình này là hình siêu công nghệ</p>
+                </div>
+                <div class="news-paragraph p-0">
+                    <p class="news-paragraph-content">
+                        Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                        còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                        Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                        nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                        hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                        cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                        giao tiếp hiệu quả.
+                    </p>
+                    <img src="assets/img/img4.jpg" alt="">
+                    <p class="paragraph-note-img">Hình này là hình siêu công nghệ</p>
+                </div>
+            </div>
+            <h2 class="py-4 bg-forum text-center new-question">Tin tức liên quan</h2>
+            <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="container">
+                            <div class="row p-5">
+                                <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                    <img class="img-fluid" src="./assets/img/img4.jpg" alt="">
+                                </div>
+                                <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                    <div class="text-align-left align-self-center">
+                                        <a href="#">
+                                            <h1 class="h1 text-success banner-title">Thành công ở đại học là gì? Bí
+                                                quyết để thành công?</h1>
+                                        </a>
+                                        <p class="banner-content">
+                                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học
+                                            tập cao mà họ
+                                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh
+                                            viên của bạn.
+                                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động
+                                            tình
+                                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường
+                                            tổ chức…Các
+                                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,…
+                                            mà còn là
+                                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn
+                                            luyện kĩ năng
+                                            giao tiếp hiệu quả.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="news-paragraph p-0">
-                        <p class="news-paragraph-content">
-                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                        còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                        Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                        nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                        hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                        cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                        giao tiếp hiệu quả.
-                        </p>
-                        <img src="assets/img/img4.jpg" alt="">
-                        <p class="paragraph-note-img">Hình này là hình siêu công nghệ</p>
+                    <div class="carousel-item">
+                        <div class="container">
+                            <div class="row p-5">
+                                <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                    <img class="img-fluid" src="./assets/img/img2.webp" alt="">
+                                </div>
+                                <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                    <div class="text-align-left align-self-center">
+                                        <a href="#">
+                                            <h1 class="h1 text-success banner-title">Thành công ở đại học là gì? Bí
+                                                quyết để thành công?</h1>
+                                        </a>
+                                        <p class="banner-content">
+                                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học
+                                            tập cao mà họ
+                                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh
+                                            viên của bạn.
+                                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động
+                                            tình
+                                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường
+                                            tổ chức…Các
+                                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,…
+                                            mà còn là
+                                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn
+                                            luyện kĩ năng
+                                            giao tiếp hiệu quả.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="news-paragraph p-0">
-                        <p class="news-paragraph-content">
-                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                        còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                        Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                        nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                        hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                        cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                        giao tiếp hiệu quả.
-                        </p>
-                        <img src="assets/img/img4.jpg" alt="">
-                        <p class="paragraph-note-img">Hình này là hình siêu công nghệ</p>
+                    <div class="carousel-item">
+                        <div class="container">
+                            <div class="row p-5">
+                                <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                    <img class="img-fluid" src="./assets/img/img3.webp" alt="">
+                                </div>
+                                <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                    <div class="text-align-left align-self-center">
+                                        <a href="#">
+                                            <h1 class="h1 text-success banner-title">Thành công ở đại học là gì? Bí
+                                                quyết để thành công?</h1>
+                                        </a>
+                                        <p class="banner-content">
+                                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học
+                                            tập cao mà họ
+                                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh
+                                            viên của bạn.
+                                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động
+                                            tình
+                                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường
+                                            tổ chức…Các
+                                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,…
+                                            mà còn là
+                                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn
+                                            luyện kĩ năng
+                                            giao tiếp hiệu quả.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <h2 class="py-4 bg-forum text-center new-question">Tin tức liên quan</h2>
-                <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
-                        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
-                        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="container">
-                                <div class="row p-5">
-                                    <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                                        <img class="img-fluid" src="./assets/img/img4.jpg" alt="">
-                                    </div>
-                                    <div class="col-lg-6 mb-0 d-flex align-items-center">
-                                        <div class="text-align-left align-self-center">
-                                            <a href="#"><h1 class="h1 text-success banner-title">Thành công ở đại học là gì? Bí quyết để thành công?</h1></a>
-                                            <p class="banner-content">
-                                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                                giao tiếp hiệu quả.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel"
+                    role="button" data-bs-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel"
+                    role="button" data-bs-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4 p-0">
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-center new-question">Tin tức nổi bật</h2>
+                <div class="question-div">
+                    <div class="details-news row">
+                        <div class="details-news-left p-0 col-12 col-lg-5">
+                            <img class="m-0" src="assets/img/img3.webp" alt="">
                         </div>
-                        <div class="carousel-item">
-                            <div class="container">
-                                <div class="row p-5">
-                                    <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                                        <img class="img-fluid" src="./assets/img/img2.webp" alt="">
-                                    </div>
-                                    <div class="col-lg-6 mb-0 d-flex align-items-center">
-                                        <div class="text-align-left align-self-center">
-                                            <a href="#"><h1 class="h1 text-success banner-title">Thành công ở đại học là gì? Bí quyết để thành công?</h1></a>
-                                            <p class="banner-content">
-                                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                                giao tiếp hiệu quả.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="container">
-                                <div class="row p-5">
-                                    <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                                        <img class="img-fluid" src="./assets/img/img3.webp" alt="">
-                                    </div>
-                                    <div class="col-lg-6 mb-0 d-flex align-items-center">
-                                        <div class="text-align-left align-self-center">
-                                            <a href="#"><h1 class="h1 text-success banner-title">Thành công ở đại học là gì? Bí quyết để thành công?</h1></a>
-                                            <p class="banner-content">
-                                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                                giao tiếp hiệu quả.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="details-news-right col-12 col-lg-7">
+                            <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
+                                    công?</a></h4>
+                            <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <p class="details-news-content">
+                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
+                                họ
+                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
+                                bạn.
+                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
+                                chức…Các
+                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
+                                là
+                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
+                                năng
+                                giao tiếp hiệu quả.
+                            </p>
                         </div>
                     </div>
-                    <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel"
-                        role="button" data-bs-slide="prev">
-                        <i class="fas fa-chevron-left"></i>
+                    <div class="details-news row">
+                        <div class="details-news-left p-0 col-12 col-lg-5">
+                            <img class="m-0" src="assets/img/img3.webp" alt="">
+                        </div>
+                        <div class="details-news-right col-12 col-lg-7">
+                            <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
+                                    công?</a></h4>
+                            <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <p class="details-news-content">
+                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
+                                họ
+                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
+                                bạn.
+                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
+                                chức…Các
+                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
+                                là
+                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
+                                năng
+                                giao tiếp hiệu quả.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="details-news row">
+                        <div class="details-news-left p-0 col-12 col-lg-5">
+                            <img class="m-0" src="assets/img/img3.webp" alt="">
+                        </div>
+                        <div class="details-news-right col-12 col-lg-7">
+                            <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
+                                    công?</a></h4>
+                            <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <p class="details-news-content">
+                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
+                                họ
+                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
+                                bạn.
+                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
+                                chức…Các
+                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
+                                là
+                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
+                                năng
+                                giao tiếp hiệu quả.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="details-news row">
+                        <div class="details-news-left p-0 col-12 col-lg-5">
+                            <img class="m-0" src="assets/img/img3.webp" alt="">
+                        </div>
+                        <div class="details-news-right col-12 col-lg-7">
+                            <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
+                                    công?</a></h4>
+                            <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <p class="details-news-content">
+                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
+                                họ
+                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
+                                bạn.
+                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
+                                chức…Các
+                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
+                                là
+                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
+                                năng
+                                giao tiếp hiệu quả.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="details-news row">
+                        <div class="details-news-left p-0 col-12 col-lg-5">
+                            <img class="m-0" src="assets/img/img3.webp" alt="">
+                        </div>
+                        <div class="details-news-right col-12 col-lg-7">
+                            <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
+                                    công?</a></h4>
+                            <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <p class="details-news-content">
+                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
+                                họ
+                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
+                                bạn.
+                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
+                                chức…Các
+                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
+                                là
+                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
+                                năng
+                                giao tiếp hiệu quả.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-center new-question">Danh mục ưa thích</h2>
+                <div class="listcat bg-forum2">
+                    <a href="details-qa.html">
+                        <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
                     </a>
-                    <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel"
-                        role="button" data-bs-slide="next">
-                        <i class="fas fa-chevron-right"></i>
+                    <a href="details-qa.html">
+                        <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
+                    </a>
+                    <a href="details-qa.html">
+                        <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
+                    </a>
+                    <a href="details-qa.html">
+                        <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
+                    </a>
+                    <a href="details-qa.html">
+                        <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
                     </a>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-4 p-0">
-                <div class="container-fluid">
-                    <h2 class="py-4 bg-forum text-center new-question">Tin tức nổi bật</h2>
-                    <div class="question-div">
-                        <div class="details-news row">
-                            <div class="details-news-left p-0 col-12 col-lg-5">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="details-news-right col-12 col-lg-7">
-                                <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
-                                        công?</a></h4>
-                                <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="details-news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="details-news row">
-                            <div class="details-news-left p-0 col-12 col-lg-5">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="details-news-right col-12 col-lg-7">
-                                <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
-                                        công?</a></h4>
-                                <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="details-news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="details-news row">
-                            <div class="details-news-left p-0 col-12 col-lg-5">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="details-news-right col-12 col-lg-7">
-                                <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
-                                        công?</a></h4>
-                                <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="details-news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="details-news row">
-                            <div class="details-news-left p-0 col-12 col-lg-5">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="details-news-right col-12 col-lg-7">
-                                <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
-                                        công?</a></h4>
-                                <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="details-news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="details-news row">
-                            <div class="details-news-left p-0 col-12 col-lg-5">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="details-news-right col-12 col-lg-7">
-                                <h4 class="details-news-title"><a href="#">Thành công ở đại học là gì? Bí quyết để thành
-                                        công?</a></h4>
-                                <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="details-news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid">
-                    <h2 class="py-4 bg-forum text-center new-question">Danh mục ưa thích</h2>
-                    <div class="listcat bg-forum2">
-                        <a href="details-qa.html">
-                            <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
-                        </a>
-                        <a href="details-qa.html">
-                            <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
-                        </a>
-                        <a href="details-qa.html">
-                            <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
-                        </a>
-                        <a href="details-qa.html">
-                            <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
-                        </a>
-                        <a href="details-qa.html">
-                            <h4 class="py-2 bg-danger text-center">Tình yêu học đường</h4>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
-    </section>
-    <!-- End Categories of The Month -->
-
-    <!-- End Featured Product -->
-
-
-    <!-- Start Footer -->
-    <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Forum AiTi</h2>
-                </div>
-
-                <div class="col-md-3 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Dịch vụ</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Hỗ trợ 24/7</a></li>
-                        <li><a class="text-decoration-none" href="#">Giải đáp thắc mắc</a></li>
-                        <li><a class="text-decoration-none" href="#">Kết nối yêu thương</a></li>
-                        <li><a class="text-decoration-none" href="#">Nhắn tin</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-5 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Liên hệ</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            01 Quang Trung - Phường 10 - Quận Gò Vấp - Tp Hồ Chí Minh
-                        </li>
-                        <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="">027505505</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="#">xuandieu12300@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="row text-light mb-4">
-                <div class="col-12 mb-3">
-                    <div class="w-100 my-3 border-top border-light"></div>
-                </div>
-                <div class="col-auto me-auto">
-                    <ul class="list-inline text-left footer-icons">
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
-                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
-                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Địa chỉ Email</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
-                            placeholder="Email của bạn">
-                        <div class="input-group-text btn-success text-light">Đăng ký</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="w-100 bg-black py-3">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <p class="text-left text-light">
-                            Copyright &copy; 2023 Company Name
-                            | Designed by <a rel="sponsored" href="#" target="_blank">XuanDieu</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </footer>
-    <!-- End Footer -->
-
-</body>
-
-</html>
+    </div>
+</section>
+<!-- End Categories of The Month -->

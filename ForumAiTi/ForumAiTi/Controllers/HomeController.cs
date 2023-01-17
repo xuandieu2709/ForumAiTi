@@ -18,7 +18,10 @@ namespace ForumAiTi.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+
+        [HttpGet("/")]
+        [HttpGet("/home")]
+        public IActionResult index()
         {
             return View();
         }

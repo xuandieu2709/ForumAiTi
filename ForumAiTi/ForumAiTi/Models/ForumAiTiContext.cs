@@ -300,9 +300,17 @@ namespace ForumAiTi.Models
 
                 entity.Property(e => e.HoTen).HasMaxLength(50);
 
+                entity.Property(e => e.MatKhau)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Nickname).HasMaxLength(50);
 
                 entity.Property(e => e.SinhNhat).HasColumnType("date");
+
+                entity.Property(e => e.VaiTro)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.MaLoaiNavigation)
                     .WithMany(p => p.NguoiDung)

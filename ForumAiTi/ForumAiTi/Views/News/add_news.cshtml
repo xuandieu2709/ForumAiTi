@@ -1,371 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Forum AiTi - Hỏi đáp công nghệ</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" href="assets/img/logoIT-border.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logoIT-border.png">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/templatemo.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
-    <!-- Load fonts style after rendering the layout styles -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!--
--->
-    <!-- Start Script -->
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <!-- End Script -->
-    <!-- SELECT2 -->
-    <link href="dist/css/select2.min.css" rel="stylesheet" />
-    <script src="dist/js/select2.min.js"></script>
-    <!-- end -->
-    <script src="dist/js/i18n/vi.js"></script>
-</head>
-
-<body>
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-forum shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-menu logo h1 align-self-center" href="index.html">
-                Forum AiTi
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between"
-                id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Trang chủ</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="qa.html">Hỏi đáp</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="news.html">Tin tức</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Liên hệ</a>
-                        </li>
+@{
+    ViewData["Title"] = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="container-fluid my-2 px-5 bg-submenu p-2">
+    <div class="container-fluid bg-forum2">
+        <h3 class="text-forum-orange mb-0 p-2">
+            <oke class="bg-text-forum p-1">Forum</oke>
+            <oke class="text-forum-submenu">AiTi</oke> / Tin tức
+        </h3>
+    </div>
+</section>
+<!-- Modal -->
+<!-- Start Categories of The Month -->
+<section class="mx-5 my-2 ">
+    <div class="row">
+        <div class="col-12 col-md-7 col-lg-7">
+            <form action="#" method="post">
+                <div class="container-fluid bg-forum3">
+                    <h2 class="py-4"><i class="fa fa-newspaper-o"></i> Tạo bài viết mới</h2>
+                </div>
+                <div class="container-fluid bg-forum p-4">
+                    <h3 class="mb-2">Tạo bài viết mới ngay nào!</h3>
+                    <p style="font-style: italic;">
+                        Hãy tạo mới một bài viết thật hay để mọi người cùng nhau nắm bắt tình hình và tin tức ngày
+                        mới vừa qua. Cùng nhau đưa tin cùng nhau chia sẻ. Thử ngay nhé!
+                    </p>
+                    <ul>
+                        <li>Tóm tắt nội dung của tin tức trong tiêu đề bài viết.</li>
+                        <li>Cố gắng mô tả chi tiết nhất tin tức qua phần tóm tắt tin tức.</li>
+                        <li>Mô tả nội dung chi tiết của tin tức thông qua phần nội dung tin tức.</li>
+                        <li>Xem lại câu hỏi của bạn và đăng nó lên trang web.</li>
                     </ul>
                 </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Tìm kiếm ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
+                <div class="container-fluid bg-forum2 p-4">
+                    <div class="ask-title">
+                        <h4>Tiêu đề tin tức</h4>
+                        <p style="font-style: italic;">Hãy cụ thể và suy nghĩ ra một tiêu đề thật hấp dẫn lôi cuốn
+                            người xem bạn nhé!.
+                        </p>
+                        <input type="text" name="" id="input-title" required>
+                    </div>
+                    <div class="px-3 row ask-two">
+                        <div class="col-12 col-md-12 col-lg-6 ask-one">
+                            <h4>Thời gian đưa tin</h4>
+                            <p style="font-style: italic;">
+                                Thời gian chính xác là rất cần thiết đối với mỗi tin tức. Hãy cố gắng chọn ngày đưa
+                                tin
+                                đúng nhất bạn nhé!
+                            </p>
+                            <input type="date" placeholder="dd-mm-yyyy" class="input-group" name="" id="input-datetime"
+                                required>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6 ask-one">
+                            <h4>Chủ đề hỏi đáp</h4>
+                            <p style="font-style: italic;">Chủ đề rất quan trọng vì vậy đừng bỏ lỡ nó nhé(Vui lòng
+                                chọn ít nhất 1 chủ đề và tối đa là 3).
+                            </p>
+                            <select style="width: 100%;" aria-placeholder="Đừng quên chọn danh mục nhé!" required
+                                class="js-example-basic-multiple" id="listcategory" name="states[]" multiple="multiple">
+                                <option value="1">C#</option>
+                                <option value="2">Java</option>
+                                <option value="3">C++</option>
+                                <option value="4">Python</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ask-title row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <h4>Hình ảnh đại diện cho tin tức</h4>
+                            <p style="font-style: italic;">Hãy chọn hình ảnh phù hợp để giúp cho người xem có cái
+                                nhìn tổng quan nhất về tin tức của bạn
+                            </p>
+
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 p-0" id="div-img">
+                            <img src="assets/img/img4.jpg" id="img-content" alt="">
+                            <button type="button" id="btn-img"><input type="file" id="changeimg"> <label
+                                    for="changeimg">Thay đổi hình ảnh</label></button>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="ask-content">
+                        <h4>Tóm tắt nội dung tin tức</h4>
+                        <p style="font-style: italic;">Giới thiệu tổng quan ngắn gọn về tin tức.</p>
+                        <div class="ask-post row">
+                            <div class="col-12">
+                                <textarea name="" id="content" required></textarea>
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
-                        data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-light mr-2"></i>
-                    </a>
-                    <a class="nav-link" href="login.html">Đăng nhập</a>
-                    <div class="dropdown">
-                        <a class=" nav-icon position-relative text-decoration-none dropbtn" href="#">
-                            <img id="logouser" height="40" width="40" src="assets/img/user.jfif" alt="">
-                            <span
-                                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-danger">+99</span>
-                        </a>
-                        <div class="dropdown-content">
-                            <a href="personal.html">Cá nhân</a>
-                            <a href="#">Bài đăng</a>
-                            <a href="login.html">Đăng xuất</a>
+                    <!--  -->
+                    <div class="ask-content">
+                        <h4>Mô tả chi tiết nội dung tin tức?</h4>
+                        <p style="font-style: italic;">Giới thiệu vấn đề và mở rộng những gì bạn đặt trong tiêu đề.
+                            Tối
+                            thiểu 20 ký tự.</p>
+                        <div class="div-paragraph">
+                            <div class="ask-post row" id="divpost0">
+                                <div class="col-12">
+                                    <input type="file" accept="image/*" hidden name="" id="upload0">
+                                    <label for="upload0"><i class="fa fa-image" aria-hidden="true"></i></label>
+                                    <textarea name="" id="content-des0" required></textarea>
+                                    <div class="garelly0"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mt-2 mb-2"><button type="button" class="btn btn-addnew" id="btn-add">Thêm
+                                    mới</button></div>
+                            <div class="col-6 mt-2 mb-2"><button type="submit" class="btn btn-post">Đăng
+                                    tin</button></div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-        </div>
-    </nav>
-    <!-- Close Header -->
-    <section class="container-fluid my-2 px-5 bg-submenu p-2">
-        <div class="container-fluid bg-forum2">
-            <h3 class="text-forum-orange mb-0 p-2">
-                <oke class="bg-text-forum p-1">Forum</oke>
-                <oke class="text-forum-submenu">AiTi</oke> / Tin tức
-            </h3>
-        </div>
-    </section>
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Tìm kiếm ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
                 </div>
             </form>
         </div>
-    </div>
-    <!-- Start Categories of The Month -->
-    <section class="mx-5 my-2 ">
-        <div class="row">
-            <div class="col-12 col-md-7 col-lg-7">
-                <form action="#" method="post">
-                    <div class="container-fluid bg-forum3">
-                        <h2 class="py-4"><i class="fa fa-newspaper-o"></i> Tạo bài viết mới</h2>
-                    </div>
-                    <div class="container-fluid bg-forum p-4">
-                        <h3 class="mb-2">Tạo bài viết mới ngay nào!</h3>
-                        <p style="font-style: italic;">
-                            Hãy tạo mới một bài viết thật hay để mọi người cùng nhau nắm bắt tình hình và tin tức ngày
-                            mới vừa qua. Cùng nhau đưa tin cùng nhau chia sẻ. Thử ngay nhé!
-                        </p>
-                        <ul>
-                            <li>Tóm tắt nội dung của tin tức trong tiêu đề bài viết.</li>
-                            <li>Cố gắng mô tả chi tiết nhất tin tức qua phần tóm tắt tin tức.</li>
-                            <li>Mô tả nội dung chi tiết của tin tức thông qua phần nội dung tin tức.</li>
-                            <li>Xem lại câu hỏi của bạn và đăng nó lên trang web.</li>
-                        </ul>
-                    </div>
-                    <div class="container-fluid bg-forum2 p-4">
-                        <div class="ask-title">
-                            <h4>Tiêu đề tin tức</h4>
-                            <p style="font-style: italic;">Hãy cụ thể và suy nghĩ ra một tiêu đề thật hấp dẫn lôi cuốn
-                                người xem bạn nhé!.
+        <div class="col-12 col-md-5 col-lg-5 p-0">
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-light text-center new-question"><i class="fa fa-television"
+                        aria-hidden="true"></i> Bản xem trước</h2>
+                <div class="row p-3 news-details bg-question-light">
+                    <h2 class="details-title" id="text-title">Thành công ở đại học là gì? Bí quyết để thành công?
+                    </h2>
+                    <p class="time-posted">Đã đăng ngày <datetime></datetime>
+                    </p>
+                    <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                    <img class="details-img" id="img-content" src="assets/img/img3.webp" alt="">
+                    <p class="details-content" id="text-content">
+                        Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                        còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                        Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                        nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                        hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                        cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                        giao tiếp hiệu quả.
+                    </p>
+                    <div id="div-image-preview">
+                        <div class="news-paragraph p-0" id="paragraph0">
+                            <p class="news-paragraph-content" id="content-des0">
+                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
+                                họ
+                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
+                                bạn.
+                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
+                                chức…Các
+                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
+                                là
+                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
+                                năng
+                                giao tiếp hiệu quả.
                             </p>
-                            <input type="text" name="" id="input-title" required>
-                        </div>
-                        <div class="px-3 row ask-two">
-                            <div class="col-12 col-md-12 col-lg-6 ask-one">
-                                <h4>Thời gian đưa tin</h4>
-                                <p style="font-style: italic;">
-                                    Thời gian chính xác là rất cần thiết đối với mỗi tin tức. Hãy cố gắng chọn ngày đưa
-                                    tin
-                                    đúng nhất bạn nhé!
-                                </p>
-                                <input type="date" placeholder="dd-mm-yyyy" class="input-group" name=""
-                                    id="input-datetime" required>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-6 ask-one">
-                                <h4>Chủ đề hỏi đáp</h4>
-                                <p style="font-style: italic;">Chủ đề rất quan trọng vì vậy đừng bỏ lỡ nó nhé(Vui lòng
-                                    chọn ít nhất 1 chủ đề và tối đa là 3).
-                                </p>
-                                <select style="width: 100%;" aria-placeholder="Đừng quên chọn danh mục nhé!" required
-                                    class="js-example-basic-multiple" id="listcategory" name="states[]"
-                                    multiple="multiple">
-                                    <option value="1">C#</option>
-                                    <option value="2">Java</option>
-                                    <option value="3">C++</option>
-                                    <option value="4">Python</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="ask-title row">
-                            <div class="col-12 col-md-6 col-lg-6" >
-                                <h4>Hình ảnh đại diện cho tin tức</h4>
-                                <p style="font-style: italic;">Hãy chọn hình ảnh phù hợp để giúp cho người xem có cái
-                                    nhìn tổng quan nhất về tin tức của bạn
-                                </p>
-                                
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 p-0" id="div-img">
-                                <img src="assets/img/img4.jpg" id="img-content" alt="">
-                                <button type="button" id="btn-img"><input type="file" id="changeimg"> <label for="changeimg">Thay đổi hình ảnh</label></button>
-                            </div>
-                        </div>
-                        <!--  -->
-                        <div class="ask-content">
-                            <h4>Tóm tắt nội dung tin tức</h4>
-                            <p style="font-style: italic;">Giới thiệu tổng quan ngắn gọn về tin tức.</p>
-                            <div class="ask-post row">
-                                <div class="col-12">
-                                    <textarea name="" id="content" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <!--  -->
-                        <div class="ask-content">
-                            <h4>Mô tả chi tiết nội dung tin tức?</h4>
-                            <p style="font-style: italic;">Giới thiệu vấn đề và mở rộng những gì bạn đặt trong tiêu đề.
-                                Tối
-                                thiểu 20 ký tự.</p>
-                            <div class="div-paragraph">
-                                <div class="ask-post row" id="divpost0">
-                                    <div class="col-12">
-                                        <input type="file" accept="image/*" hidden name="" id="upload0">
-                                        <label for="upload0"><i class="fa fa-image" aria-hidden="true"></i></label>
-                                        <textarea name="" id="content-des0" required></textarea>
-                                        <div class="garelly0"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 mt-2 mb-2"><button type="button" class="btn btn-addnew"
-                                        id="btn-add">Thêm
-                                        mới</button></div>
-                                <div class="col-6 mt-2 mb-2"><button type="submit" class="btn btn-post">Đăng
-                                        tin</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-12 col-md-5 col-lg-5 p-0">
-                <div class="container-fluid">
-                    <h2 class="py-4 bg-forum text-light text-center new-question"><i class="fa fa-television"
-                            aria-hidden="true"></i> Bản xem trước</h2>
-                    <div class="row p-3 news-details bg-question-light">
-                        <h2 class="details-title" id="text-title">Thành công ở đại học là gì? Bí quyết để thành công?
-                        </h2>
-                        <p class="time-posted">Đã đăng ngày <datetime></datetime>
-                        </p>
-                        <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                        <img class="details-img" id="img-content" src="assets/img/img3.webp" alt="">
-                        <p class="details-content" id="text-content">
-                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                            giao tiếp hiệu quả.
-                        </p>
-                        <div id="div-image-preview">
-                            <div class="news-paragraph p-0" id="paragraph0">
-                                <p class="news-paragraph-content" id="content-des0">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                                <img src="assets/img/img4.jpg" id="imagges0" alt="">
-                                <p class="paragraph-note-img" id="imagges0">Hình này là hình siêu công nghệ</p>
-                            </div>
+                            <img src="assets/img/img4.jpg" id="imagges0" alt="">
+                            <p class="paragraph-note-img" id="imagges0">Hình này là hình siêu công nghệ</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- End Categories of The Month -->
+    </div>
+</section>
+<!-- End Categories of The Month -->
 
-    <!-- End Featured Product -->
-
-
-    <!-- Start Footer -->
-    <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Forum AiTi</h2>
-                </div>
-
-                <div class="col-md-3 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Dịch vụ</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Hỗ trợ 24/7</a></li>
-                        <li><a class="text-decoration-none" href="#">Giải đáp thắc mắc</a></li>
-                        <li><a class="text-decoration-none" href="#">Kết nối yêu thương</a></li>
-                        <li><a class="text-decoration-none" href="#">Nhắn tin</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-5 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Liên hệ</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            01 Quang Trung - Phường 10 - Quận Gò Vấp - Tp Hồ Chí Minh
-                        </li>
-                        <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="">027505505</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="#">xuandieu12300@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="row text-light mb-4">
-                <div class="col-12 mb-3">
-                    <div class="w-100 my-3 border-top border-light"></div>
-                </div>
-                <div class="col-auto me-auto">
-                    <ul class="list-inline text-left footer-icons">
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
-                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
-                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Địa chỉ Email</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
-                            placeholder="Email của bạn">
-                        <div class="input-group-text btn-success text-light">Đăng ký</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="w-100 bg-black py-3">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <p class="text-left text-light">
-                            Copyright &copy; 2023 Company Name
-                            | Designed by <a rel="sponsored" href="#" target="_blank">XuanDieu</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </footer>
-    <!-- End Footer -->
-</body>
-
-</html>
+<!-- End Featured Product -->
