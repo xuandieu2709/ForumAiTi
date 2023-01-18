@@ -1,6 +1,11 @@
 @{
     ViewData["Title"] = "Hỏi đáp";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    List<DanhMucHoiDap> getListHD()
+        {
+            return _context.DanhMucHoiDap.ToList();
+        }
 }
 <!-- Close Header -->
 <section class="container-fluid my-2 px-5 bg-submenu p-2">
@@ -39,10 +44,10 @@
                         <select style="width: 100%;margin-top: 10%;" aria-placeholder="Đừng quên chọn danh mục nhé!"
                             required class="js-example-basic-multiple" id="listcategory" name="states[]"
                             multiple="multiple">
-                            <option value="1">C#</option>
-                            <option value="2">Java</option>
-                            <option value="3">C++</option>
-                            <option value="4">Python</option>
+                            @foreach (var item in @getListHD())
+                            {
+                                <option value="@item.MaDanhMuc">@item.TenDanhMuc</option>
+                            }
                         </select>
                         <script>
                             $(document).ready(function () {
@@ -55,7 +60,8 @@
                     </div>
                     <div class="col-12 col-lg-6 col-md-6">
                         Thời gian đăng bài
-                        <select class="form-select mt-2" id="single-select-field" data-placeholder="Choose one thing">
+                        <select style="border: 3px solid #f4a261;padding: 1%;" class="form-select mt-2"
+                                id="single-select-field" data-placeholder="Choose one thing">
                             <option></option>
                             <option>Hôm nay</option>
                             <option>Tuần trước</option>

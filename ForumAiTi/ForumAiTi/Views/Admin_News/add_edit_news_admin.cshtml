@@ -1,182 +1,180 @@
+@using ForumAiTi.Models
 @{
     ViewData["Title"] = "Quản lý tin tức";
-	Layout = "~/Views/Shared/_Layout_admin.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    List<ChuDe> getListCD()
+    {
+        return _context.ChuDe.ToList();
+    }
 }
-    <!-- Close Header -->
-    <section class="container-fluid my-2 px-5 bg-submenu p-2">
-        <div class="container-fluid bg-forum2">
-            <h3 class="text-forum-orange mb-0 p-2">
-                <oke class="bg-text-forum p-1">Management</oke>
-                <oke class="text-forum-submenu">Forum</oke> / Tin tức
-            </h3>
-        </div>
-    </section>
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Tìm kiếm ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
+<!-- Close Header -->
+<section class="container-fluid my-2 px-5 bg-submenu p-2">
+    <div class="container-fluid bg-forum2">
+        <h3 class="text-forum-orange mb-0 p-2">
+            <oke class="bg-text-forum p-1">Management</oke>
+            <oke class="text-forum-submenu">Forum</oke> / Tin tức
+        </h3>
+    </div>
+</section>
+<!-- Start Categories of The Month -->
+<section class="mx-5 my-2 ">
+    <div class="row">
+        <div class="col-12 col-md-7 col-lg-7">
+            <form action="/add_news_admin" method="post" enctype="multipart/form-data">
+                <div class="container-fluid bg-forum3">
+                    <h2 class="py-4"><i class="fa fa-newspaper-o"></i> Tạo bài viết mới</h2>
+                </div>
+                <div class="container-fluid bg-forum p-4">
+                    <h3 class="mb-2">Tạo bài viết mới ngay nào!</h3>
+                    <p style="font-style: italic;">
+                        Hãy tạo mới một bài viết thật hay để mọi người cùng nhau nắm bắt tình hình và tin tức ngày
+                        mới vừa qua. Cùng nhau đưa tin cùng nhau chia sẻ. Thử ngay nhé!
+                    </p>
+                    <ul>
+                        <li>Tóm tắt nội dung của tin tức trong tiêu đề bài viết.</li>
+                        <li>Cố gắng mô tả chi tiết nhất tin tức qua phần tóm tắt tin tức.</li>
+                        <li>Mô tả nội dung chi tiết của tin tức thông qua phần nội dung tin tức.</li>
+                        <li>Xem lại câu hỏi của bạn và đăng nó lên trang web.</li>
+                    </ul>
+                </div>
+                <div class="container-fluid bg-forum2 p-4">
+                    <div class="ask-title">
+                        <h4>Tiêu đề tin tức</h4>
+                        <p style="font-style: italic;">Hãy cụ thể và suy nghĩ ra một tiêu đề thật hấp dẫn lôi cuốn
+                            người xem bạn nhé!.
+                        </p>
+                        <input type="text" name="TinTuc.TieuDe" id="input-title" required>
+                    </div>
+                    <div class="px-3 row ask-two">
+                        <div class="col-12 col-md-12 col-lg-6 ask-one">
+                            <h4>Thời gian đưa tin</h4>
+                            <p style="font-style: italic;">
+                                Thời gian chính xác là rất cần thiết đối với mỗi tin tức. Hãy cố gắng chọn ngày đưa
+                                tin
+                                đúng nhất bạn nhé!
+                            </p>
+                            <input type="date" placeholder="dd-mm-yyyy" class="input-group" name="TinTuc.NgayDang"
+                                id="input-datetime" required>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6 ask-one">
+                            <h4>Chủ đề tin tức</h4>
+                            <p style="font-style: italic;">Chủ đề rất quan trọng vì vậy đừng bỏ lỡ nó nhé(Vui lòng
+                                chọn ít nhất 1 chủ đề và tối đa là 3).
+                            </p>
+                            <select style="width: 100%;" aria-placeholder="Đừng quên chọn danh mục nhé!" required
+                                class="js-example-basic-multiple" id="listcategory" name="states[]" multiple="multiple">
+                                @foreach (var item in getListCD())
+                                {
+                                    <option value="@item.MaChuDe">@item.TenChuDe</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ask-title row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <h4>Hình ảnh đại diện cho tin tức</h4>
+                            <p style="font-style: italic;">Hãy chọn hình ảnh phù hợp để giúp cho người xem có cái
+                                nhìn tổng quan nhất về tin tức của bạn
+                            </p>
+
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 p-0" id="div-img">
+                            <img src="assets/img/img4.jpg" id="img-content" alt="">
+                            <button type="button" id="btn-img"><input type="file" name="FileND" required
+                                    id="changeimg"> <label for="changeimg">Thay đổi hình ảnh</label></button>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="ask-content">
+                        <h4>Tóm tắt nội dung tin tức</h4>
+                        <p style="font-style: italic;">Giới thiệu tổng quan ngắn gọn về tin tức.</p>
+                        <div class="ask-post row">
+                            <div class="col-12">
+                                <textarea name="TinTuc.NoiDung" id="content" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="ask-content">
+                        <h4>Mô tả chi tiết nội dung tin tức?</h4>
+                        <p style="font-style: italic;">Giới thiệu vấn đề và mở rộng những gì bạn đặt trong tiêu đề.
+                            Tối
+                            thiểu 20 ký tự.</p>
+                        <div class="div-paragraph">
+                            <div class="ask-post row" id="divpost0">
+                                <div class="col-12">
+                                    <input type="number" value="0" hidden name="TinTuc.FileToForm[0].STT" id="chuthich0">
+                                    <input type="file" accept="image/*" hidden name="TinTuc.FileToForm[0].File" id="upload0">
+                                    <label for="upload0"><i class="fa fa-image" aria-hidden="true"></i></label>
+                                    <textarea name="TinTuc.NoiDungTinTuc[0].NoiDung" id="content-des0" required></textarea>
+                                    <div class="garelly0"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-2"><button type="button" class="btn btn-addnew" id="btn-add">Thêm
+                                    mới đoạn văn</button></div>
+                            <div class="col-12 mt-2 mb-2">
+                                <a href="admin_news.html" type="button" class="btn btn-cancel">Quay lại</a>
+                                <button type="submit" class="btn btn-post ml-2">Đăng
+                                    tin</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
-    </div>
-    <!-- Start Categories of The Month -->
-    <section class="mx-5 my-2 ">
-        <div class="row">
-            <div class="col-12 col-md-7 col-lg-7">
-                <form action="#" method="post">
-                    <div class="container-fluid bg-forum3">
-                        <h2 class="py-4"><i class="fa fa-newspaper-o"></i> Tạo bài viết mới</h2>
-                    </div>
-                    <div class="container-fluid bg-forum p-4">
-                        <h3 class="mb-2">Tạo bài viết mới ngay nào!</h3>
-                        <p style="font-style: italic;">
-                            Hãy tạo mới một bài viết thật hay để mọi người cùng nhau nắm bắt tình hình và tin tức ngày
-                            mới vừa qua. Cùng nhau đưa tin cùng nhau chia sẻ. Thử ngay nhé!
-                        </p>
-                        <ul>
-                            <li>Tóm tắt nội dung của tin tức trong tiêu đề bài viết.</li>
-                            <li>Cố gắng mô tả chi tiết nhất tin tức qua phần tóm tắt tin tức.</li>
-                            <li>Mô tả nội dung chi tiết của tin tức thông qua phần nội dung tin tức.</li>
-                            <li>Xem lại câu hỏi của bạn và đăng nó lên trang web.</li>
-                        </ul>
-                    </div>
-                    <div class="container-fluid bg-forum2 p-4">
-                        <div class="ask-title">
-                            <h4>Tiêu đề tin tức</h4>
-                            <p style="font-style: italic;">Hãy cụ thể và suy nghĩ ra một tiêu đề thật hấp dẫn lôi cuốn
-                                người xem bạn nhé!.
+        <div class="col-12 col-md-5 col-lg-5 p-0">
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-light text-center new-question"><i class="fa fa-television"
+                        aria-hidden="true"></i> Bản xem trước</h2>
+                <div class="row p-3 news-details bg-question-light">
+                    <h2 class="details-title" id="text-title">Thành công ở đại học là gì? Bí quyết để thành công?
+                    </h2>
+                    <p class="time-posted">Đã đăng ngày <datetime></datetime>
+                    </p>
+                    <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
+                    <img class="details-img" id="img-content" src="assets/img/img3.webp" alt="">
+                    <p class="details-content" id="text-content">
+                        Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
+                        còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
+                        Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                        nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
+                        hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
+                        cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
+                        giao tiếp hiệu quả.
+                    </p>
+                    <div id="div-image-preview">
+                        <div class="news-paragraph p-0" id="paragraph0">
+                            <p class="news-paragraph-content" id="content-des0">
+                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
+                                họ
+                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
+                                bạn.
+                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
+                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
+                                chức…Các
+                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
+                                là
+                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
+                                năng
+                                giao tiếp hiệu quả.
                             </p>
-                            <input type="text" name="" id="input-title" required>
-                        </div>
-                        <div class="px-3 row ask-two">
-                            <div class="col-12 col-md-12 col-lg-6 ask-one">
-                                <h4>Thời gian đưa tin</h4>
-                                <p style="font-style: italic;">
-                                    Thời gian chính xác là rất cần thiết đối với mỗi tin tức. Hãy cố gắng chọn ngày đưa
-                                    tin
-                                    đúng nhất bạn nhé!
-                                </p>
-                                <input type="date" placeholder="dd-mm-yyyy" class="input-group" name=""
-                                    id="input-datetime" required>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-6 ask-one">
-                                <h4>Chủ đề hỏi đáp</h4>
-                                <p style="font-style: italic;">Chủ đề rất quan trọng vì vậy đừng bỏ lỡ nó nhé(Vui lòng
-                                    chọn ít nhất 1 chủ đề và tối đa là 3).
-                                </p>
-                                <select style="width: 100%;" aria-placeholder="Đừng quên chọn danh mục nhé!" required
-                                    class="js-example-basic-multiple" id="listcategory" name="states[]"
-                                    multiple="multiple">
-                                    <option value="1">C#</option>
-                                    <option value="2">Java</option>
-                                    <option value="3">C++</option>
-                                    <option value="4">Python</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="ask-title row">
-                            <div class="col-12 col-md-6 col-lg-6" >
-                                <h4>Hình ảnh đại diện cho tin tức</h4>
-                                <p style="font-style: italic;">Hãy chọn hình ảnh phù hợp để giúp cho người xem có cái
-                                    nhìn tổng quan nhất về tin tức của bạn
-                                </p>
-                                
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 p-0" id="div-img">
-                                <img src="assets/img/img4.jpg" id="img-content" alt="">
-                                <button type="button" id="btn-img"><input type="file" id="changeimg"> <label for="changeimg">Thay đổi hình ảnh</label></button>
-                            </div>
-                        </div>
-                        <!--  -->
-                        <div class="ask-content">
-                            <h4>Tóm tắt nội dung tin tức</h4>
-                            <p style="font-style: italic;">Giới thiệu tổng quan ngắn gọn về tin tức.</p>
-                            <div class="ask-post row">
-                                <div class="col-12">
-                                    <textarea name="" id="content" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <!--  -->
-                        <div class="ask-content">
-                            <h4>Mô tả chi tiết nội dung tin tức?</h4>
-                            <p style="font-style: italic;">Giới thiệu vấn đề và mở rộng những gì bạn đặt trong tiêu đề.
-                                Tối
-                                thiểu 20 ký tự.</p>
-                            <div class="div-paragraph">
-                                <div class="ask-post row" id="divpost0">
-                                    <div class="col-12">
-                                        <input type="file" accept="image/*" hidden name="" id="upload0">
-                                        <label for="upload0"><i class="fa fa-image" aria-hidden="true"></i></label>
-                                        <textarea name="" id="content-des0" required></textarea>
-                                        <div class="garelly0"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 mt-2 mb-2"><button type="button" class="btn btn-addnew"
-                                        id="btn-add">Thêm mới đoạn văn</button></div>
-                                <div class="col-12 mt-2 mb-2">
-                                    <a href="admin_news.html" type="button" class="btn btn-cancel">Quay lại</a>
-                                    <button type="submit" class="btn btn-post ml-2">Đăng
-                                        tin</button>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-12 col-md-5 col-lg-5 p-0">
-                <div class="container-fluid">
-                    <h2 class="py-4 bg-forum text-light text-center new-question"><i class="fa fa-television"
-                            aria-hidden="true"></i> Bản xem trước</h2>
-                    <div class="row p-3 news-details bg-question-light">
-                        <h2 class="details-title" id="text-title">Thành công ở đại học là gì? Bí quyết để thành công?
-                        </h2>
-                        <p class="time-posted">Đã đăng ngày <datetime></datetime>
-                        </p>
-                        <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                        <img class="details-img" id="img-content" src="assets/img/img3.webp" alt="">
-                        <p class="details-content" id="text-content">
-                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                            giao tiếp hiệu quả.
-                        </p>
-                        <div id="div-image-preview">
-                            <div class="news-paragraph p-0" id="paragraph0">
-                                <p class="news-paragraph-content" id="content-des0">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                                <img src="assets/img/img4.jpg" id="imagges0" alt="">
-                                <p class="paragraph-note-img" id="imagges0">Hình này là hình siêu công nghệ</p>
-                            </div>
+                            <img src="assets/img/img4.jpg" id="imagges0" alt="">
+                            <p class="paragraph-note-img" id="imagges0">Hình này là hình siêu công nghệ</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2({
+            maximumSelectionLength: 3,
+            language: "vi"
+        });
+    });
+</script>

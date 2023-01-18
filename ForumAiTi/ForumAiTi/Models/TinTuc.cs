@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -27,5 +28,7 @@ namespace ForumAiTi.Models
         public virtual NguoiDung NguoiDangNavigation { get; set; }
         public virtual ICollection<CttinTuc> CttinTuc { get; set; }
         public virtual ICollection<NoiDungTinTuc> NoiDungTinTuc { get; set; }
+        [NotMapped]
+        public virtual ICollection<FileToForm> FileToForm { get; set; }
     }
 }

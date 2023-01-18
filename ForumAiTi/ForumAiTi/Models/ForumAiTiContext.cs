@@ -351,6 +351,8 @@ namespace ForumAiTi.Models
 
                 entity.Property(e => e.MaNoiDungTt).HasColumnName("MaNoiDungTT");
 
+                entity.Property(e => e.ChuThich).HasMaxLength(1000);
+
                 entity.Property(e => e.LoaiFile)
                     .HasMaxLength(1000)
                     .IsUnicode(false);

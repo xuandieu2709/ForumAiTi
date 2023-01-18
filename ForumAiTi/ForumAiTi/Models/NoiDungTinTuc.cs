@@ -15,6 +15,7 @@ namespace ForumAiTi.Models
         public byte[] File { get; set; }
         public string TenFile { get; set; }
         public string LoaiFile { get; set; }
+        public string ChuThich { get; set; }
 
         public virtual TinTuc MaTinTucNavigation { get; set; }
     }

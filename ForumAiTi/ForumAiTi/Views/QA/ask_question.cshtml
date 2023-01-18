@@ -214,4 +214,23 @@
         </div>
     </div>
 </section>
+@if (ViewBag.MessSUc != null)
+    {
+        @if (ViewBag.MessSUc.Equals("1"))
+        {
+            <script type="text/javascript" charset="utf-8">
+                window.onload = function () {
+                    setTimeout(() => { alert("Chúc mừng bạn!\nCâu hỏi của bạn đã được đăng thành công."); }, 500);
+                };
+            </script>
+        }
+        else if (ViewBag.MessSUc.Equals("2"))
+        {
+            <script type="text/javascript" charset="utf-8">
+                window.onload = function () {
+                    setTimeout(() => { alert("Đã có lỗi xảy ra!\nVui lòng thử lại sau."); }, 500);
+                };
+            </script>
+        }
+    }
 <!-- End Categories of The Month -->

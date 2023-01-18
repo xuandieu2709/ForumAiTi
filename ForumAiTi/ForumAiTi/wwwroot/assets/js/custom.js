@@ -22,7 +22,7 @@ $(document).ready(function () {
     });
     $('select#listcategory').on('change', function () {
         var arr = $('select#listcategory :selected').toArray().map(x => $(x).text());
-        console.log(arr);
+        // console.log(arr);
         $('p.details-list').empty();
         for (i = 0; i < arr.length; i++) {
             var text = arr[i];
@@ -40,9 +40,10 @@ $(document).on('click', '#btn-add', function () {
     });
     var text = '<div class="ask-post row" id="divpost' + count + '">'
         + '<div class="col-12">'
-        + '<input type="file" accept="image/*" hidden name="" id="upload' + count + '">'
+        +'<input type="number" value="0" hidden name="TinTuc.FileToForm['+count+'].STT" id="chuthich'+count+'">'
+        + '<input type="file" accept="image/*" hidden name="TinTuc.FileToForm[' + count + '].File" id="upload' + count + '">'
         + '<label for="upload' + count + '"><i class="fa fa-image" aria-hidden="true"></i></label>'
-        + '<textarea name="" id="content-des' + count + '" required></textarea>'
+        + '<textarea name="TinTuc.NoiDungTinTuc[' + count + '].NoiDung" id="content-des' + count + '" required></textarea>'
         + '<div class="garelly' + count + '"></div>'
         + '</div>'
         + '<div class="col-6 mt-2 mb-2"><button type="button" class="btn btn-remove' + count + '" id="btn-remove' + count + '">Xóa đoạn văn</button></div>'
@@ -61,6 +62,31 @@ $(document).on('click', 'button[id*="btn-remove"]', function () {
     id = id.substring(10, id.length);
     $('#divpost' + id).remove();
     $('#paragraph' + id).remove();
+    var count = 0;
+    $('div[id*="divpost"]').each(function () {
+        var id = $(this).attr('id');
+        id = id.substring(7, id.length);
+        if (Number(id) === 0) {
+        } else {
+            $('button#btn-remove'+id).removeClass('btn-remove'+id).addClass('btn-remove'+count).attr('id','btn-remove'+count);
+            $('div#divpost' + id).attr('id', 'divpost' + count);
+            $('input#chuthich'+id).attr('id','chuthich'+count).attr('name','TinTuc.FileToForm['+count+'].ChuThich');
+            $('input#upload' + id).attr('id', 'upload' + count).attr('name', 'TinTuc.FileToForm[' + count + '].File');
+            $('label[for="upload' + id + '"]').attr('for', 'upload' + count);
+            $('textarea#content-des' + id).attr('id', 'content-des' + count + '').attr('name', 'TinTuc.NoiDungTinTuc[' + count + '].NoiDung');
+           //
+            $('div.garelly' + id).addClass('garelly' + count + '').removeClass('garelly' + id + '');
+            $('i#imagges'+id).attr('id','imagges'+count);
+            $('input#imagges' + id).attr('id','imagges'+count).attr('name','TinTuc.NoiDungTinTuc['+count+'].ChuThich');
+            //
+            $('div#paragraph' + id).attr('id', 'paragraph' + count + '');
+            $('p#content-des' + id).attr('id', 'content-des' + count + '');
+            $('img#imagges' + id).attr('id', 'imagges' + count);
+            $('p#imagges' + id).attr('id', 'imagges' + count);
+        }
+        count++;
+    });
+
 });
 // CHNAGE TEXT
 $(document).on('input', 'input[id*="imagges"]', function () {
@@ -75,7 +101,6 @@ $(document).on('keyup', 'textarea[id*="content-des"]', function () {
 $(function () {
     // Multiple images preview in browser
     var imagesPreview = function (input, placeToInsertImagePreview, id) {
-
         if (input.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
@@ -87,19 +112,17 @@ $(function () {
                     $($.parseHTML('<img id="imagges' + id + '">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
                     $('div.garelly' + id + ' img#imagges' + id + '')
                         .after('<i class="fa fa-times" aria-hidden="true" id="imagges' + id + '"></i>'
-                            + '<input placeholder="Chú thích hình ảnh rất cần đấy bạn nhé..." type="text" id="imagges' + id + '" />');
+                            + '<input placeholder="Chú thích hình ảnh rất cần đấy bạn nhé..." name="TinTuc.NoiDungTinTuc['+id+'].ChuThich" type="text" id="imagges' + id + '" />');
                     $('img#imagges' + id).attr('src', event.target.result);
                     // preview
-                    var text = '<img src="'+event.target.result+'" id="imagges' + id + '" alt="">'
+                    var text = '<img src="' + event.target.result + '" id="imagges' + id + '" alt="">'
                         + '<p class="paragraph-note-img" id="imagges' + id + '"></p>';
-                        if($('#paragraph' + id + ' img#imagges' + id + '').length <= 0)
-                        {
+                    if ($('#paragraph' + id + ' img#imagges' + id + '').length <= 0) {
                         $('p#content-des' + id).after(text);
-                        }
+                    }
                 }
 
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     };
@@ -107,6 +130,8 @@ $(function () {
         var id = $(this).attr('id');
         id = id.substring(6, id.length);
         imagesPreview(this, 'div.garelly' + id, id);
+        $('input#chuthich'+id).attr('value', '1');
+        // alert($('input#chuthich'+id).val());
     });
     // remove image
     $(document).on('click', 'i[id*="imagges"]', function () {
@@ -117,6 +142,11 @@ $(function () {
         $('input#imagges' + id).remove();
         $('img#imagges' + id).remove();
         $('p#' + $(this).attr('id')).remove();
+        $('input#imagges' + id).val('');
+        $('input#chuthich'+id).attr('value', '0');
+        // alert($('input#chuthich'+id).val());
+        // $('input#upload' + id).val(null);
+        // update Id
     });
 });
 
@@ -127,8 +157,8 @@ $(function () {
         if (input.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
-                    // $('div.garelly' + id + ' img#imagges' + id + '').attr('src', event.target.result);
-                    $('img#img-content').attr('src', event.target.result);
+                // $('div.garelly' + id + ' img#imagges' + id + '').attr('src', event.target.result);
+                $('img#img-content').attr('src', event.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }

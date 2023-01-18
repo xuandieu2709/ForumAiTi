@@ -97,15 +97,21 @@
                     {
                         <div class="dropdown">
                             <a class=" nav-icon position-relative text-decoration-none dropbtn" href="#">
-                                    <img id="logouser" height="40" width="40"
-                                        src="@getAvatar(getUSER(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)"
-                                        alt="">
+                                <img id="logouser" height="40" width="40"
+                                src="@getAvatar(getUSER(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)" alt="">
                                 <span
                                 class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-danger">+99</span>
                             </a>
                             <div class="dropdown-content">
-                                <a href="/personal">Cá nhân</a>
-                                <a href="/qa_personal">Bài đăng</a>
+                                @if (User.IsInRole("USER"))
+                                {
+                                    <a href="/personal">Cá nhân</a>
+                                    <a href="/qa_personal">Bài đăng</a>
+                                }
+                                else
+                                {
+                                    <a href="/admin_qa">Quản lý</a>
+                                }
                                 <a href="/logout">Đăng xuất</a>
                             </div>
                         </div>

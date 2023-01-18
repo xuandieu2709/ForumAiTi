@@ -2,6 +2,7 @@
     ViewData["Title"] = "Liên hệ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model ForumAiTi.Models.GopY
 <!-- Start Content Page -->
 <div class="container-fluid bg-light py-5">
     <div class="col-md-6 m-auto text-center">
@@ -16,26 +17,26 @@
 <!-- Start Contact -->
 <div class="container mt-2 mb-2 bg-forum2 py-5">
     <div class="row py-5 contact">
-        <form class="col-md-10 m-auto" method="post" role="form">
+        <form class="col-md-10 m-auto" action="/sendSupport" method="post" role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-4">
                     <label for="inputname">Họ và tên</label>
-                    <input type="text" required class="form-control mt-1" id="name" name="name"
+                    <input type="text" required class="form-control mt-1" id="name" name="Model.HoTen"
                         placeholder="Họ và tên của bạn">
                 </div>
                 <div class="form-group col-md-6 mb-4">
                     <label for="inputemail">Email</label>
-                    <input type="email" required class="form-control mt-1" id="email" name="email"
+                    <input type="email" required class="form-control mt-1" id="email" name="Model.Email"
                         placeholder="Email của bạn">
                 </div>
             </div>
             <div class="mb-4">
                 <label for="inputsubject">Tiêu đề</label>
-                <input type="text" required class="form-control mt-1" id="subject" name="subject" placeholder="Tiêu đề">
+                <input type="text" required class="form-control mt-1" id="subject" name="Model.TieuDe" placeholder="Tiêu đề">
             </div>
             <div class="mb-4">
                 <label for="inputmessage">Nội dung</label>
-                <textarea required class="form-control mt-1" id="message" name="message" placeholder="Nội dung"
+                <textarea required class="form-control mt-1" id="message" name="Model.NoiDung" placeholder="Nội dung"
                     rows="8"></textarea>
             </div>
             <div class="row">
@@ -46,4 +47,23 @@
         </form>
     </div>
 </div>
+@if (ViewBag.MessSUcc != null)
+    {
+        @if (ViewBag.MessSUcc.Equals("1"))
+        {
+            <script type="text/javascript" charset="utf-8">
+                window.onload = function () {
+                    setTimeout(() => { alert("Cảm ơn ý kiến đóng góp của bạn.\nChúng tôi sẽ cố gắng cải thiện để phù hợp nhất với yêu cầu của mọi người."); }, 500);
+                };
+            </script>
+        }
+        else if (ViewBag.MessSUcc.Equals("2"))
+        {
+            <script type="text/javascript" charset="utf-8">
+                window.onload = function () {
+                    setTimeout(() => { alert("Đã có lỗi xảy ra!\nVui lòng thử lại sau."); }, 500);
+                };
+            </script>
+        }
+    }
 <!-- End Contact -->
