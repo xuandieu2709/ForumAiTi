@@ -3,9 +3,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ForumAiTiContext _context = new ForumAiTiContext();
     List<DanhMucHoiDap> getListHD()
+    {
+        return _context.DanhMucHoiDap.ToList();
+    }
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    List<NguoiDung> getTop5USER()
+    {
+        return _context.NguoiDung.OrderByDescending(x => x.VaiTro == "USER").Take(3).ToList();
+    }
+    List<HoiDap> getLISTQA()
+    {
+        return _context.HoiDap.ToList();
+    }
+    List<HoiDap> getLISTnewQA()
+    {
+        return _context.HoiDap.OrderBy(x => x.NgayDang).ToList();
+    }
+    List<CthoiDap> getlistDMByMA(int ma)
         {
-            return _context.DanhMucHoiDap.ToList();
+            return _context.CthoiDap.Where(x =>x.MaHoiDap == ma).Take(5).ToList();
         }
+    DanhMucHoiDap getDMbyMA(int ma)
+    {
+        return _context.DanhMucHoiDap.Where(x => x.MaDanhMuc == ma).FirstOrDefault();
+    }
+    NguoiDung getUSER(string taikhoan){
+        return _context.NguoiDung.Where(x => x.TaiKhoan == taikhoan).FirstOrDefault();
+    }
 }
 <!-- Close Header -->
 <section class="container-fluid my-2 px-5 bg-submenu p-2">
@@ -61,7 +91,7 @@
                     <div class="col-12 col-lg-6 col-md-6">
                         Thời gian đăng bài
                         <select style="border: 3px solid #f4a261;padding: 1%;" class="form-select mt-2"
-                                id="single-select-field" data-placeholder="Choose one thing">
+                            id="single-select-field" data-placeholder="Choose one thing">
                             <option></option>
                             <option>Hôm nay</option>
                             <option>Tuần trước</option>
@@ -72,22 +102,22 @@
                 </div>
             </div>
             <div class="QA my-2">
-                <div class="question row">
+                @foreach (var item in @getLISTQA())
+                {
+                 <div class="question row">
                     <div class="question-body col-12">
                         <a href="details_qa.html">
-                            <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
+                            <h4 class="question-title">@item.TieuDe</h4>
                         </a>
-                        <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                    src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                        <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                        <p class="question-content">
-                            Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                            còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                            Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                            nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                            hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                            cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                            giao tiếp hiệu quả.
+                        <p class="time-posted">Đã đăng ngày @item.NgayDang - <a href="#"><img id="question-imguser"
+                                    src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</a></p>
+                        <p class="question-list">
+                            @foreach (var item1 in @getlistDMByMA(item.MaHoiDap))
+                            {
+                                <a href="#">@getDMbyMA((int)item1.MaDanhMuc).TenDanhMuc</a>
+                            }
+                        </p>
+                        <p class="question-content">@item.NoiDung
                         </p>
                         <p>
                             <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
@@ -97,8 +127,9 @@
                             </pi>
                         </p>
                     </div>
-                </div>
-                <div class="question row">
+                </div>   
+                }
+                @* <div class="question row">
                     <div class="question-body col-12">
                         <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
                         <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
@@ -217,7 +248,7 @@
                             </pi>
                         </p>
                     </div>
-                </div>
+                </div> *@
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -239,111 +270,43 @@
             <div class="container-fluid">
                 <h2 class="py-4 bg-forum text-light text-center new-question">Câu hỏi mới nhất</h2>
                 <div class="question-div">
-                    <div class="question-sub">
+                    @foreach (var item in @getLISTnewQA())
+                    {
+                     <div class="question-sub">
                         <a href="details-qa.html">
-                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
+                            <h4 class="question-sub-title">@item.TieuDe</h4>
                         </a>
-                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
+                        <p class="question-sub-time-posted">Đăng ngày @item.NgayDang</p>
                         <a href="#">
-                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
+                            <p class="question-sub-imguser"><img src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</p>
                         </a>
-                    </div>
-                    <div class="question-sub">
-                        <a href="details-qa.html">
-                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                        </a>
-                        ~ <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                        <a href="#">
-                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                        </a>
-                    </div>
-                    <div class="question-sub">
-                        <a href="details-qa.html">
-                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                        </a>
-                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                        <a href="#">
-                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                        </a>
-                    </div>
-                    <div class="question-sub">
-                        <a href="details-qa.html">
-                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                        </a>
-                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                        <a href="#">
-                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                        </a>
-                    </div>
-                    <div class="question-sub">
-                        <a href="details-qa.html">
-                            <h4 class="question-sub-title">Cách để bỏ code vô bộ não của coder</h4>
-                        </a>
-                        <p class="question-sub-time-posted">Đăng ngày 20 / 01 / 2022</p>
-                        <a href="#">
-                            <p class="question-sub-imguser"><img src="images/user.jfif" alt=""> Boy AiTi</p>
-                        </a>
-                    </div>
+                    </div>   
+                    }
+                    
                 </div>
             </div>
             <div class="container-fluid">
                 <h2 class="py-4 bg-forum text-light text-center new-question">Thành viên ưu tú</h2>
                 <div class="listTopMember">
-                    <a href="#">
+                    @foreach (var item in @getTop5USER())
+                    {
+                        <a href="#">
                         <div class="row member">
                             <div class="col-4 col-sm-6 member-left">
-                                <img src="images/user.jfif" alt="">
+                                <img src="@getAvatar(item.HinhAnh)" alt="">
                             </div>
                             <div class="col-8 col-sm-6 member-right">
-                                <h4>Boy AiTi</h4>
-                                <p>Ngày 27 Tháng 09 năm 2001</p>
+                                <h4>@item.HoTen</h4>
+                                @if(item.SinhNhat == null)
+                                {
+                                <p>?? - ?? - ????</p>
+                                }else{
+                                <p>@item.SinhNhat</p>
+                                }
                             </div>
                         </div>
                     </a>
-                    <a href="#">
-                        <div class="row member">
-                            <div class="col-4 col-sm-6 member-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-8 col-sm-6 member-right">
-                                <h4>Boy AiTi</h4>
-                                <p>Ngày 27 Tháng 09 năm 2001</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="row member">
-                            <div class="col-4 col-sm-6 member-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-8 col-sm-6 member-right">
-                                <h4>Boy AiTi</h4>
-                                <p>Ngày 27 Tháng 09 năm 2001</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="row member">
-                            <div class="col-4 col-sm-6 member-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-8 col-sm-6 member-right">
-                                <h4>Boy AiTi</h4>
-                                <p>Ngày 27 Tháng 09 năm 2001</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="row member">
-                            <div class="col-4 col-sm-6 member-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-8 col-sm-6 member-right">
-                                <h4>Boy AiTi</h4>
-                                <p>Ngày 27 Tháng 09 năm 2001</p>
-                            </div>
-                        </div>
-                    </a>
+                    }
                 </div>
             </div>
         </div>

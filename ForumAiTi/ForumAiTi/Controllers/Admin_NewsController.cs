@@ -51,13 +51,8 @@ namespace ForumAiTi.Controllers
                     {
                         FileND.CopyTo(fileStream);
                     }
-
-            _context.Add(tinTuc);
-            int check = _context.SaveChanges();
-            var tt = _context.TinTuc.FirstOrDefault(x => x.NguoiDang == tinTuc.NguoiDang && x.NgayDang == tinTuc.NgayDang);
             foreach (var item in tinTuc.FileToForm.Select((value, i) => new { i, value }))
             {
-                // var value = item.value;
                 var index = item.i;
                 if (item.value.STT == 1)
                 {
@@ -73,33 +68,35 @@ namespace ForumAiTi.Controllers
                     tinTuc.NoiDungTinTuc.ToList()[item.i].TenFile = item.value.File.FileName;
                     tinTuc.NoiDungTinTuc.ToList()[item.i].File = ms1.ToArray();
                     tinTuc.NoiDungTinTuc.ToList()[item.i].LoaiFile = item.value.File.ContentType;
-                    tinTuc.NoiDungTinTuc.ToList()[item.i].MaTinTuc = tt.MaTinTuc;
-                    var newnd = tinTuc.NoiDungTinTuc.ToList()[item.i];
-                    string sql = "INSERT INTO [dbo].[NoiDungTinTuc] ([MaTinTuc],[NoiDung],[File],[TenFile],[LoaiFile],[ChuThich]) VALUES({0},{1},{2},{3},{4},{5})";
-                    _context.Database.ExecuteSqlRaw(sql, newnd.MaTinTuc, newnd.NoiDung, newnd.File, newnd.TenFile, newnd.LoaiFile, newnd.ChuThich);
+                    // var newnd = tinTuc.NoiDungTinTuc.ToList()[item.i];
+                    // string sql = "INSERT INTO [dbo].[NoiDungTinTuc] ([MaTinTuc],[NoiDung],[File],[TenFile],[LoaiFile],[ChuThich]) VALUES({0},{1},{2},{3},{4},{5})";
+                    // _context.Database.ExecuteSqlRaw(sql, newnd.MaTinTuc, newnd.NoiDung, newnd.File, newnd.TenFile, newnd.LoaiFile, newnd.ChuThich);
                 }
                 else
                 {
                     Console.WriteLine("LAG a stt = 0" + item.value.STT);
                 }
             }
+            _context.Add(tinTuc);
+            int check = _context.SaveChanges();
+            var tt = _context.TinTuc.OrderByDescending(x => x.NguoiDang == tinTuc.NguoiDang && x.NgayDang == tinTuc.NgayDang).FirstOrDefault();
+            Console.WriteLine(tt.MaTinTuc);
             var listDM = form["states[]"];
             // int count = listDM.Count;
             foreach (var item in listDM)
             {
-                CttinTuc ct = new CttinTuc();
-                ct.MaChuDe = Int32.Parse(item);
-                ct.MaTinTuc = tt.MaTinTuc;
                 string sql = "INSERT INTO [dbo].[CTTinTuc] ([MaChuDe],[MaTinTuc]) VALUES({0},{1})";
-                    _context.Database.ExecuteSqlRaw(sql, ct.MaChuDe,ct.MaTinTuc);
+                 _context.Database.ExecuteSqlRaw(sql,Int32.Parse(item),tt.MaTinTuc);
             }
             if (check > 0)
             {
                 _logger.LogInformation("Thêm Tin thành công!");
+                ViewBag.MESSSUCCESS = "1";
             }
             else
             {
                 _logger.LogInformation("Thêm Thất bại!");
+                ViewBag.MESSSUCCESS = "2";
             }
             return View("add_edit_news_admin");
         }

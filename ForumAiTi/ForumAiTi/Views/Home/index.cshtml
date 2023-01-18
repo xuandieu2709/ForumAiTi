@@ -1,6 +1,26 @@
 @{
     ViewData["Title"] = "Trang chủ";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    List<NguoiDung> getTop3()
+    {
+        return _context.NguoiDung.OrderByDescending(x => x.VaiTro == "USER").Take(3).ToList();
+    }
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    List<HoiDap> getTop3QA()
+    {
+        return _context.HoiDap.OrderByDescending(x => x.MaHoiDap).Take(3).ToList();
+    }
+    List<TinTuc> getTop3News()
+    {
+        return _context.TinTuc.OrderByDescending(x => x.MaTinTuc).Take(3).ToList();
+    }
 }
 <!-- Close Header -->
 <section class="container-fluid my-2 px-5 bg-submenu p-2">
@@ -102,21 +122,25 @@
         </div>
     </div>
     <div class="row">
-        <div id="divUser" class="col-12 col-md-4 p-5 mt-3 pr-2">
-            <a href="#"><img src="./assets/img/user.jfif" class="rounded-circle img-fluid border"></a>
-            <h5 class="text-center mt-3 mb-3">Girl hay dỗi</h5>
-            <p class="text-center"><a href="#" class="btn btn-success">Theo dõi ngay</a></p>
-        </div>
-        <div id="divUser" class="col-12 col-md-4 p-5 mt-3 pr-2">
+        @foreach (var item in @getTop3())
+        {
+            <div id="divUser" class="col-12 col-md-4 p-5 mt-3 pr-2">
+                <a href="#"><img src="@getAvatar(item.HinhAnh)" class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">@item.TaiKhoan</h5>
+                <p class="text-center"><a href="#" class="btn btn-success">Theo dõi ngay</a></p>
+            </div>
+        }
+
+        @* <div id="divUser" class="col-12 col-md-4 p-5 mt-3 pr-2">
             <a href="#"><img src="./assets/img/user.jfif" class="rounded-circle img-fluid border"></a>
             <h2 class="h5 text-center mt-3 mb-3">Boy AiTi</h2>
             <p class="text-center"><a href="#" class="btn btn-success">Theo dõi ngay</a></p>
-        </div>
-        <div id="divUser" class="col-12 col-md-4 p-5 mt-3 pr-2">
+            </div>
+            <div id="divUser" class="col-12 col-md-4 p-5 mt-3 pr-2">
             <a href="#"><img src="./assets/img/user.jfif" class="rounded-circle img-fluid border"></a>
             <h2 class="h5 text-center mt-3 mb-3">Súp pờ cua</h2>
             <p class="text-center"><a href="#" class="btn btn-success">Theo dõi ngay</a></p>
-        </div>
+            </div> *@
     </div>
 </section>
 <!-- End Categories of The Month -->
@@ -134,6 +158,21 @@
             </div>
         </div>
         <div class="row">
+            @foreach (var item in @getTop3QA())
+            {
+                <div class="col-12 col-md-4 mb-4">
+                <div id="divTop3" class="card h-100">
+                    <div class="card-body">
+                        <a href="" class="h2 text-decoration-none text-forum">@item.TieuDe</a>
+                        <p class="card-text mt-3">
+                            @item.NoiDung
+                        </p>
+                        <p class="text-muted"><a href="#">Xem tiếp >></a></p>
+                    </div>
+                </div>
+            </div>
+            }
+@*             
             <div class="col-12 col-md-4 mb-4">
                 <div id="divTop3" class="card h-100">
                     <div class="card-body">
@@ -190,35 +229,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 mb-4">
-                <div id="divTop3" class="card h-100">
-                    <div class="card-body">
-                        <a href="" class="h2 text-decoration-none text-forum">Thành công ở đại học
-                            hay thất bại ở trường đời?</a>
-                        <p class="card-text mt-3">
-                            Thực ra, một cuộc sống tốt đẹp và thành công không chỉ phụ thuộc vào thành tích học ở
-                            trường của bạn. Tôi không khuyến khích bất kỳ ai bỏ học. Tất cả những môn học như toán
-                            học, văn học, âm nhạc, thể dục ... đều hữu ích đối với chúng ta. Nhưng chương trình đào
-                            tạo của các trường học không hoàn hảo, thậm chí nó tạo cho học sinh một số thói quen
-                            xấu.
-
-                            Ví dụ như, nhiều người luôn ở trạng thái chờ đợi để được chọn, chỉ làm điều gì đó khi có
-                            sự cho phép, thay vì chủ động sáng tạo và bắt đầu thực hiện mơ ước riêng.
-
-                            Về cơ bản, để thành công ở trường học, bạn phải vâng lời, thành tích của bạn phụ thuộc
-                            rất nhiều vào giáo viên. Tuy nhiên, học sinh, sinh viên còn quá nhiều thứ cần phải học
-                            bên ngoài nhà trường.
-
-                            Để thành công trong cuộc sống, bạn phải làm khác đám đông. Lẽ ra, bên cạnh kiến thức cơ
-                            bản, học sinh, sinh viên nên được học cách để trở thành một người hạnh phúc, cách duy
-                            trì một mối quan hệ lành mạnh, phương pháp làm việc thông minh để năng suất và hiệu quả
-                            hơn...
-                        </p>
-                        <p class="text-muted"><a href="#">Xem tiếp >></a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div> *@
     </div>
 </section>
 <section class="bg-light">
@@ -232,37 +243,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-4 mb-4">
+            @foreach (var item in @getTop3News())
+            {
+             <div class="col-12 col-md-4 mb-4">
                 <div id="divTop3" class="card h-100 w-100">
                     <div class="card-body">
                         <div class="card-left w-25"></div>
                         <div class="card-right w-5"></div>
-                        <a href="" class="h2 text-decoration-none text-forum">Thành công ở đại học
-                            hay thất bại ở trường đời?</a>
-                        <p class="card-text mt-3">
-                            Thực ra, một cuộc sống tốt đẹp và thành công không chỉ phụ thuộc vào thành tích học ở
-                            trường của bạn. Tôi không khuyến khích bất kỳ ai bỏ học. Tất cả những môn học như toán
-                            học, văn học, âm nhạc, thể dục ... đều hữu ích đối với chúng ta. Nhưng chương trình đào
-                            tạo của các trường học không hoàn hảo, thậm chí nó tạo cho học sinh một số thói quen
-                            xấu.
-
-                            Ví dụ như, nhiều người luôn ở trạng thái chờ đợi để được chọn, chỉ làm điều gì đó khi có
-                            sự cho phép, thay vì chủ động sáng tạo và bắt đầu thực hiện mơ ước riêng.
-
-                            Về cơ bản, để thành công ở trường học, bạn phải vâng lời, thành tích của bạn phụ thuộc
-                            rất nhiều vào giáo viên. Tuy nhiên, học sinh, sinh viên còn quá nhiều thứ cần phải học
-                            bên ngoài nhà trường.
-
-                            Để thành công trong cuộc sống, bạn phải làm khác đám đông. Lẽ ra, bên cạnh kiến thức cơ
-                            bản, học sinh, sinh viên nên được học cách để trở thành một người hạnh phúc, cách duy
-                            trì một mối quan hệ lành mạnh, phương pháp làm việc thông minh để năng suất và hiệu quả
-                            hơn...
+                        <a href="" class="h2 text-decoration-none text-forum">@item.TieuDe</a>
+                        <p class="card-text mt-3">@item.NoiDung
                         </p>
                         <p class="text-muted"><a href="#">Xem tiếp >></a></p>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-4 mb-4">
+            </div>   
+            }
+            @* <div class="col-12 col-md-4 mb-4">
                 <div id="divTop3" class="card h-100">
                     <div class="card-body">
                         <a href="" class="h2 text-decoration-none text-forum">Thành công ở đại học
@@ -317,7 +313,7 @@
                         <p class="text-muted"><a href="#">Xem tiếp >></a></p>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
     </div>
 </section>
