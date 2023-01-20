@@ -164,7 +164,6 @@ C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\ob
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Login\login.cshtml.g.cs
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Login\signup.cshtml.g.cs
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\News\add_news.cshtml.g.cs
-C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\News\details-news.cshtml.g.cs
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\News\news.cshtml.g.cs
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Personal\edit_infor.cshtml.g.cs
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Personal\personal.cshtml.g.cs
@@ -203,3 +202,5 @@ C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\bi
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Text.Encoding.CodePages.dll
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\QA\ask_question.cshtml.g.cs
+C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\News\details_news.cshtml.g.cs
+C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\QA\ReplaceView.cshtml.g.cs

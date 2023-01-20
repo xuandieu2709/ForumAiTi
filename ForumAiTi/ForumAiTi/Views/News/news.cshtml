@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-lg-6 mb-0 d-flex align-items-center">
                                 <div class="text-align-left align-self-center">
-                                    <a href="#">
+                                    <a href="/details_news/@item.MaTinTuc">
                                         <h1 class="h1 text-success banner-title">@item.TieuDe</h1>
                                     </a>
                                     <p class="banner-content">@item.NoiDung
@@ -89,7 +89,7 @@
                             </div>
                             <div class="col-lg-6 mb-0 d-flex align-items-center">
                                 <div class="text-align-left align-self-center">
-                                    <a href="#">
+                                    <a href="/details_news/@item.MaTinTuc">
                                         <h1 class="h1 text-success banner-title">@item.TieuDe</h1>
                                     </a>
                                     <p class="banner-content">@item.NoiDung
@@ -159,10 +159,10 @@
                             <img class="m-0" src="@getIMG(item.HinhAnh)" alt="">
                         </div>
                         <div class="news-right col-12 col-lg-8 col-md-8">
-                            <a href="details-news.html">
+                            <a href="/details_news/@item.MaTinTuc">
                                 <h4 class="news-title">@item.TieuDe</h4>
                             </a>
-                            <p class="news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <p class="news-time-post">Đăng ngày  @String.Format("{0:dd/MM/yyyy}", item.NgayDang)</p>
                             <p class="news-list">
                                 @foreach (var item1 in getlistCDByMA(item.MaTinTuc))
                                 {
@@ -196,8 +196,8 @@
                             <img class="m-0" src="@getIMG(item.HinhAnh)" alt="">
                         </div>
                         <div class="details-news-right col-12 col-lg-7">
-                            <h4 class="details-news-title"><a href="#">@item.TieuDe</a></h4>
-                            <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <h4 class="details-news-title"><a href="/details_news/@item.MaTinTuc">@item.TieuDe</a></h4>
+                            <p class="details-news-time-post">Đăng ngày  @String.Format("{0:dd/MM/yyyy}", item.NgayDang)</p>
                             <p class="details-news-content">@item.NoiDung
                             </p>
                         </div>

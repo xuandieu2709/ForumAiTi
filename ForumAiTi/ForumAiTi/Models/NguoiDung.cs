@@ -18,6 +18,7 @@ namespace ForumAiTi.Models
             GopY = new HashSet<GopY>();
             TheoDoiMaNguoiDuocTdNavigation = new HashSet<TheoDoi>();
             TheoDoiMaNguoiTdNavigation = new HashSet<TheoDoi>();
+            ThongBao = new HashSet<ThongBao>();
             TinTuc = new HashSet<TinTuc>();
         }
 
@@ -40,6 +41,7 @@ namespace ForumAiTi.Models
         public virtual ICollection<GopY> GopY { get; set; }
         public virtual ICollection<TheoDoi> TheoDoiMaNguoiDuocTdNavigation { get; set; }
         public virtual ICollection<TheoDoi> TheoDoiMaNguoiTdNavigation { get; set; }
+        public virtual ICollection<ThongBao> ThongBao { get; set; }
         public virtual ICollection<TinTuc> TinTuc { get; set; }
     }
 }

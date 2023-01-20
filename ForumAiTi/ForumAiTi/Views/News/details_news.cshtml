@@ -1,0 +1,164 @@
+@{
+    ViewData["Title"] = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    List<ChuDe> getListCDTop5()
+    {
+        return _context.ChuDe.Take(5).ToList();
+    }
+    ChuDe getCDbyMA(int ma)
+    {
+        return _context.ChuDe.Where(x => x.MaChuDe == ma).FirstOrDefault();
+    }
+     string getIMG(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    List<TinTuc> getTop3News()
+    {
+        return _context.TinTuc.OrderByDescending(x => x.MaTinTuc).Take(3).ToList();
+    }
+    List<TinTuc> getTop5()
+    {
+        return _context.TinTuc.OrderByDescending(x => x.MaTinTuc).Take(5).ToList();
+    }
+}
+@model ForumAiTi.Models.TinTuc
+<section class="container-fluid my-2 px-5 bg-submenu p-2">
+    <div class="container-fluid bg-forum2">
+        <h3 class="text-forum-orange mb-0 p-2">
+            <oke class="bg-text-forum p-1">Forum</oke>
+            <oke class="text-forum-submenu">AiTi</oke> / Tin tức
+        </h3>
+    </div>
+</section>
+<section class="mx-5 my-2 ">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-8">
+            <div class="row p-3 news-details bg-question-light">
+                <h2 class="details-title">@Model.TieuDe</h2>
+                <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", Model.NgayDang)</p>
+                <p class="details-list">
+                    @foreach (var item in Model.CttinTuc)
+                    {
+                        <a href="#">@getCDbyMA((int)item.MaChuDe).TenChuDe</a>
+                    }
+                </p>
+                <img class="details-img" src="@getIMG(Model.HinhAnh)" alt="">
+                <p class="details-content">
+                    @Model.NoiDung
+                </p>
+                @foreach (var item in Model.NoiDungTinTuc)
+                {
+                    <div class="news-paragraph p-0">
+                    <p class="news-paragraph-content">
+                        @item.NoiDung
+                    </p>
+                    <img src="@getIMG(Model.HinhAnh)" alt="">
+                    <p class="paragraph-note-img">@item.ChuThich</p>
+                </div>
+                }
+            </div>
+            <h2 class="py-4 bg-forum text-center new-question">Tin tức liên quan</h2>
+            <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    @foreach (var item in getTop3News())
+        {
+            if (item == getTop3News().ToList()[0])
+            {
+                <div class="carousel-item active">
+                    <div class="container">
+                        <div class="row p-5">
+                            <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                <img class="img-fluid" src="@getIMG(item.HinhAnh)" alt="">
+                            </div>
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left align-self-center">
+                                    <a href="#">
+                                        <h1 class="h1 text-success banner-title">@item.TieuDe</h1>
+                                    </a>
+                                    <p class="banner-content">@item.NoiDung
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row p-5">
+                            <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                <img class="img-fluid" src="@getIMG(item.HinhAnh)" alt="">
+                            </div>
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left align-self-center">
+                                    <a href="#">
+                                        <h1 class="h1 text-success banner-title">@item.TieuDe</h1>
+                                    </a>
+                                    <p class="banner-content">@item.NoiDung
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+                </div>
+                <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel"
+                    role="button" data-bs-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel"
+                    role="button" data-bs-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4 p-0">
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-center new-question">Tin tức nổi bật</h2>
+                <div class="question-div">
+                                        @foreach (var item in getTop5())
+                    {
+                        <div class="details-news row">
+                        <div class="details-news-left p-0 col-12 col-lg-5">
+                            <img class="m-0" src="@getIMG(item.HinhAnh)" alt="">
+                        </div>
+                        <div class="details-news-right col-12 col-lg-7">
+                            <h4 class="details-news-title"><a href="/details_news/@item.MaTinTuc">@item.TieuDe</a></h4>
+                            <p class="details-news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
+                            <p class="details-news-content">@item.NoiDung
+                            </p>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="container-fluid">
+                <h2 class="py-4 bg-forum text-center new-question">Danh mục ưa thích</h2>
+                <div class="listcat bg-forum2">
+                    @foreach (var item in getListCDTop5())
+                    {
+                     <a href="details-qa.html">
+                        <h4 class="py-2 bg-danger text-center">@item.TenChuDe</h4>
+                    </a>   
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Categories of The Month -->

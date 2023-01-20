@@ -137,7 +137,7 @@ $(function () {
     $(document).on('click', 'i[id*="imagges"]', function () {
         var id = $(this).attr('id');
         id = id.substring(7, id.length);
-        $('div.garelly' + id + ' img#imagges' + id + '').remove();
+        // $('div.garelly' + id + ' img#imagges' + id + '').remove();
         $(this).remove();
         $('input#imagges' + id).remove();
         $('img#imagges' + id).remove();

@@ -36,6 +36,7 @@ namespace ForumAiTi.Models
         public virtual DbSet<NoiDungHoiDap> NoiDungHoiDap { get; set; }
         public virtual DbSet<NoiDungTinTuc> NoiDungTinTuc { get; set; }
         public virtual DbSet<TheoDoi> TheoDoi { get; set; }
+        public virtual DbSet<ThongBao> ThongBao { get; set; }
         public virtual DbSet<TinTuc> TinTuc { get; set; }
         public virtual DbSet<TroChuyen> TroChuyen { get; set; }
 
@@ -179,9 +180,9 @@ namespace ForumAiTi.Models
                     .HasForeignKey(d => d.MaChuDe)
                     .HasConstraintName("FK_CTTinTuc_ChuDe");
 
-                entity.HasOne(d => d.MaChuDe1)
+                entity.HasOne(d => d.MaTinTucNavigation)
                     .WithMany(p => p.CttinTuc)
-                    .HasForeignKey(d => d.MaChuDe)
+                    .HasForeignKey(d => d.MaTinTuc)
                     .HasConstraintName("FK_CTTinTuc_TinTuc");
             });
 
@@ -390,6 +391,22 @@ namespace ForumAiTi.Models
                     .WithMany(p => p.TheoDoiMaNguoiTdNavigation)
                     .HasForeignKey(d => d.MaNguoiTd)
                     .HasConstraintName("FK_TheoDoi_NguoiDung");
+            });
+
+            modelBuilder.Entity<ThongBao>(entity =>
+            {
+                entity.HasKey(e => e.MaThongBao);
+
+                entity.Property(e => e.NoiDung).HasMaxLength(1000);
+
+                entity.Property(e => e.TaiKhoan)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.TaiKhoanNavigation)
+                    .WithMany(p => p.ThongBao)
+                    .HasForeignKey(d => d.TaiKhoan)
+                    .HasConstraintName("FK_ThongBao_NguoiDung");
             });
 
             modelBuilder.Entity<TinTuc>(entity =>

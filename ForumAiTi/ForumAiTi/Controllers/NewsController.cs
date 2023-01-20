@@ -17,12 +17,21 @@ namespace ForumAiTi.Controllers
         {
             _logger = logger;
         }
-
+        private ForumAiTiContext _context = new ForumAiTiContext();
 
         [HttpGet("/news")]
         public IActionResult news()
         {
             return View();
+        }
+
+        [HttpGet("/details_news/{MaTinTuc}")]
+        public IActionResult details_news(int MaTinTuc)
+        {
+            var tt = _context.TinTuc.Where(x => x.MaTinTuc == MaTinTuc).FirstOrDefault();
+            tt.CttinTuc = _context.CttinTuc.Where(x => x.MaTinTuc == MaTinTuc).ToList();
+            tt.NoiDungTinTuc = _context.NoiDungTinTuc.Where(x => x.MaTinTuc == MaTinTuc).ToList();
+            return View(tt);
         }
     }
 }

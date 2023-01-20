@@ -28,6 +28,7 @@ namespace ForumAiTi.Models
         public bool? TrangThai { get; set; }
         public string NguoiDang { get; set; }
         public DateTime? NgayDang { get; set; }
+        public int? LuotXem { get; set; }
 
         public virtual ICollection<BinhLuan> BinhLuan { get; set; }
         public virtual ICollection<CthoiDap> CthoiDap { get; set; }

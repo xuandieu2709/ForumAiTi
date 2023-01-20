@@ -13,7 +13,7 @@ namespace ForumAiTi.Models
         public int? MaChuDe { get; set; }
         public int? MaTinTuc { get; set; }
 
-        public virtual TinTuc MaChuDe1 { get; set; }
         public virtual ChuDe MaChuDeNavigation { get; set; }
+        public virtual TinTuc MaTinTucNavigation { get; set; }
     }
 }
