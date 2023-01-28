@@ -6,12 +6,11 @@
 
 		$('.js-fullheight').css('height', 'auto');
 		$(window).resize(function(){
-			$('.js-fullheight').css('height', 'auto');
+			$('.js-fullheight').css('height', '100%');
 		});
 
 	};
 	fullHeight();
-
 	$(".toggle-password").click(function() {
 
 	  $(this).toggleClass("fa-eye fa-eye-slash");

@@ -15,6 +15,7 @@ namespace ForumAiTi.Models
         public string TieuDe { get; set; }
         public string Email { get; set; }
         public string NguoiGui { get; set; }
+        public DateTime? ThoiGianGui { get; set; }
 
         public virtual NguoiDung NguoiGuiNavigation { get; set; }
     }

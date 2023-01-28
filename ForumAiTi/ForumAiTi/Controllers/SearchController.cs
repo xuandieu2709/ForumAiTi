@@ -6,21 +6,49 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ForumAiTi.Controllers
 {
     public class SearchController : Controller
     {
         private readonly ILogger<SearchController> _logger;
+        private ForumAiTiContext _context = new ForumAiTiContext();
 
         public SearchController(ILogger<SearchController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult search()
+        [HttpPost("/search")]
+        public IActionResult search(string search)
         {
+            // var list = _context.HoiDap.FromSqlRaw("")
+            // var list = _context.HoiDap.FromSqlRaw($"Select * from TinTuc where CONCAT_WS(TieuDe,NoiDung,NguoiDang) like N'%"+search+"%'").ToList();
+            // var list1 = _context.TinTuc.FromSqlRaw($"Select * from HoiDap where CONCAT_WS(TieuDe,NoiDung,NguoiDang) like N'%"+search+"%'").ToList();
+            var list1 = _context.HoiDap.Where(x => x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search)).ToList();
+            var list = _context.TinTuc.Where(x => x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search)).ToList();
+            ViewBag.ListHD = list1;
+            ViewBag.ListTT = list;
+            ViewBag.Keyword = search;
             return View();
         }
+        // public string utf8Convert(string s)
+        // {
+        //     string stFormD = s.Normalize(NormalizationForm.FormD);
+        //     StringBuilder sb = new StringBuilder();
+        //     for (int ich = 0; ich < stFormD.Length; ich++)
+        //     {
+        //         System.Globalization.UnicodeCategory uc = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
+        //         if (uc != System.Globalization.UnicodeCategory.NonSpacingMark)
+        //         {
+        //             sb.Append(stFormD[ich]);
+        //         }
+        //     }
+        //     sb = sb.Replace('Đ', 'D');
+        //     sb = sb.Replace('đ', 'd');
+        //     return (sb.ToString().Normalize(NormalizationForm.FormD));
+        // }
     }
 }

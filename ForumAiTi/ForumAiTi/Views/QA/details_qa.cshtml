@@ -66,7 +66,7 @@
                     <div class="row p-2 details">
                         <h2 class="details-title">@Model.TieuDe</h2>
                         <p id="MaHD" hidden>@Model.MaHoiDap</p>
-                        <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", Model.NgayDang) - <a href="#"><img id="question-imguser"
+                        <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", Model.NgayDang) - <a href="/personal/@Model.NguoiDang"><img id="question-imguser"
                                     src="@getIMG(getUSERbyTK(Model.NguoiDang).HinhAnh)" alt=""> @getUSERbyTK(Model.NguoiDang).HoTen</a></p>
                         <p class="details-list">
                             @foreach (var item in Model.CthoiDap)
@@ -76,7 +76,7 @@
                         </p>
                         <p class="details-content">@Model.NoiDung
                         </p>
-                        @if(Model.NoiDungHoiDap.Count != 0)
+                        @if(Model != null && (Model.HinhAnh1 != null ||  Model.HinhAnh3 != null ||  Model.HinhAnh2 != null))
                         {
                             <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
                             <ol class="carousel-indicators">
@@ -214,7 +214,7 @@
                             <h4 class="question-sub-title">@item.TieuDe</h4>
                         </a>
                         <p class="question-sub-time-posted">Đăng ngày @item.NgayDang</p>
-                        <a href="#">
+                        <a href="/personal/@item.NguoiDang">
                             <p class="question-sub-imguser"><img src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</p>
                         </a>
                     </div>   
@@ -226,7 +226,7 @@
                     <div class="listTopMember">
                                             @foreach (var item in @getTop5USER())
                     {
-                        <a href="#">
+                        <a href="/personal/@item.TaiKhoan">
                         <div class="row member">
                             <div class="col-4 col-sm-6 member-left">
                                 <img src="@getAvatar(item.HinhAnh)" alt="">

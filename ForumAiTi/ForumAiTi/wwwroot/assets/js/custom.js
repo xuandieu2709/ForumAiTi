@@ -40,7 +40,7 @@ $(document).on('click', '#btn-add', function () {
     });
     var text = '<div class="ask-post row" id="divpost' + count + '">'
         + '<div class="col-12">'
-        +'<input type="number" value="0" hidden name="TinTuc.FileToForm['+count+'].STT" id="chuthich'+count+'">'
+        + '<input type="number" value="0" hidden name="TinTuc.FileToForm[' + count + '].STT" id="chuthich' + count + '">'
         + '<input type="file" accept="image/*" hidden name="TinTuc.FileToForm[' + count + '].File" id="upload' + count + '">'
         + '<label for="upload' + count + '"><i class="fa fa-image" aria-hidden="true"></i></label>'
         + '<textarea name="TinTuc.NoiDungTinTuc[' + count + '].NoiDung" id="content-des' + count + '" required></textarea>'
@@ -68,16 +68,16 @@ $(document).on('click', 'button[id*="btn-remove"]', function () {
         id = id.substring(7, id.length);
         if (Number(id) === 0) {
         } else {
-            $('button#btn-remove'+id).removeClass('btn-remove'+id).addClass('btn-remove'+count).attr('id','btn-remove'+count);
+            $('button#btn-remove' + id).removeClass('btn-remove' + id).addClass('btn-remove' + count).attr('id', 'btn-remove' + count);
             $('div#divpost' + id).attr('id', 'divpost' + count);
-            $('input#chuthich'+id).attr('id','chuthich'+count).attr('name','TinTuc.FileToForm['+count+'].ChuThich');
+            $('input#chuthich' + id).attr('id', 'chuthich' + count).attr('name', 'TinTuc.FileToForm[' + count + '].ChuThich');
             $('input#upload' + id).attr('id', 'upload' + count).attr('name', 'TinTuc.FileToForm[' + count + '].File');
             $('label[for="upload' + id + '"]').attr('for', 'upload' + count);
             $('textarea#content-des' + id).attr('id', 'content-des' + count + '').attr('name', 'TinTuc.NoiDungTinTuc[' + count + '].NoiDung');
-           //
+            //
             $('div.garelly' + id).addClass('garelly' + count + '').removeClass('garelly' + id + '');
-            $('i#imagges'+id).attr('id','imagges'+count);
-            $('input#imagges' + id).attr('id','imagges'+count).attr('name','TinTuc.NoiDungTinTuc['+count+'].ChuThich');
+            $('i#imagges' + id).attr('id', 'imagges' + count);
+            $('input#imagges' + id).attr('id', 'imagges' + count).attr('name', 'TinTuc.NoiDungTinTuc[' + count + '].ChuThich');
             //
             $('div#paragraph' + id).attr('id', 'paragraph' + count + '');
             $('p#content-des' + id).attr('id', 'content-des' + count + '');
@@ -112,7 +112,7 @@ $(function () {
                     $($.parseHTML('<img id="imagges' + id + '">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
                     $('div.garelly' + id + ' img#imagges' + id + '')
                         .after('<i class="fa fa-times" aria-hidden="true" id="imagges' + id + '"></i>'
-                            + '<input placeholder="Chú thích hình ảnh rất cần đấy bạn nhé..." name="TinTuc.NoiDungTinTuc['+id+'].ChuThich" type="text" id="imagges' + id + '" />');
+                            + '<input placeholder="Chú thích hình ảnh rất cần đấy bạn nhé..." name="TinTuc.NoiDungTinTuc[' + id + '].ChuThich" type="text" id="imagges' + id + '" />');
                     $('img#imagges' + id).attr('src', event.target.result);
                     // preview
                     var text = '<img src="' + event.target.result + '" id="imagges' + id + '" alt="">'
@@ -129,8 +129,19 @@ $(function () {
     $(document).on('change', 'input[id*="upload"]', function () {
         var id = $(this).attr('id');
         id = id.substring(6, id.length);
-        imagesPreview(this, 'div.garelly' + id, id);
-        $('input#chuthich'+id).attr('value', '1');
+        if ($('input#upload'+id)[0].files[0]) {
+            console.log("have file");
+            imagesPreview(this, 'div.garelly' + id, id);
+            $('input#chuthich' + id).attr('value', '1');
+        } else {
+            console.log("no file");
+            $('i#imagges' + id).remove();
+            $('input#imagges' + id).remove();
+            $('img#imagges' + id).remove();
+            $('p#' + $(this).attr('id')).remove();
+            $('input#imagges' + id).val('');
+            $('input#chuthich' + id).attr('value', '0');
+        }
         // alert($('input#chuthich'+id).val());
     });
     // remove image
@@ -143,7 +154,7 @@ $(function () {
         $('img#imagges' + id).remove();
         $('p#' + $(this).attr('id')).remove();
         $('input#imagges' + id).val('');
-        $('input#chuthich'+id).attr('value', '0');
+        $('input#chuthich' + id).attr('value', '0');
         // alert($('input#chuthich'+id).val());
         // $('input#upload' + id).val(null);
         // update Id
@@ -153,7 +164,7 @@ $(function () {
 // img content
 $(function () {
     // Multiple images preview in browser
-    var imagesPreview = function (input, placeToInsertImagePreview) {
+    var imagesPreview1 = function (input) {
         if (input.files) {
             var reader = new FileReader();
             reader.onload = function (event) {
@@ -164,6 +175,14 @@ $(function () {
         }
     };
     $(document).on('change', 'input[id="changeimg"]', function () {
-        imagesPreview(this);
+        var id = $(this).attr('id');
+        id = id.substring(9, id.length);
+        if($('input#changeimg'+id)[0].files[0])
+        {
+            imagesPreview1(this);
+        }
+        else{
+            $('img#img-content').attr('src',"assets/img/img3.webp");
+        }
     });
 });

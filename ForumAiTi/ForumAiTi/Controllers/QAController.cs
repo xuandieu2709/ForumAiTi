@@ -55,27 +55,47 @@ namespace ForumAiTi.Controllers
             foreach (var file in files)
             {
                 MemoryStream ms = new MemoryStream();
-                file.CopyTo(ms);
                 if (files.Count() == 1)
                 {
                     if (files[0] != null && files[0] == file)
                     {
+                        file.CopyTo(ms);
                         hoidap.TenHinh1 = file.FileName;
                         hoidap.HinhAnh1 = ms.ToArray();
                     }
                 }
                 if (files.Count() == 2)
                 {
+                    if (files[0] != null && files[0] == file)
+                    {
+                        file.CopyTo(ms);
+                        hoidap.TenHinh1 = file.FileName;
+                        hoidap.HinhAnh1 = ms.ToArray();
+                    }
                     if (files[1] != null && files[1] == file)
                     {
+                        file.CopyTo(ms);
                         hoidap.TenHinh2 = file.FileName;
                         hoidap.HinhAnh2 = ms.ToArray();
                     }
                 }
                 if (files.Count() == 3)
                 {
+                    if (files[0] != null && files[0] == file)
+                    {
+                        file.CopyTo(ms);
+                        hoidap.TenHinh1 = file.FileName;
+                        hoidap.HinhAnh1 = ms.ToArray();
+                    }
+                    if (files[1] != null && files[1] == file)
+                    {
+                        file.CopyTo(ms);
+                        hoidap.TenHinh2 = file.FileName;
+                        hoidap.HinhAnh2 = ms.ToArray();
+                    }
                     if (files[2] != null && files[2] == file)
                     {
+                        file.CopyTo(ms);
                         hoidap.TenHinh3 = file.FileName;
                         hoidap.HinhAnh3 = ms.ToArray();
                     }

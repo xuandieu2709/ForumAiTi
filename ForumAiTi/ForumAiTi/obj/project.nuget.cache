@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "F0YJyZz9WtEutQE+165xfchaC9R5oXhnJ3+/AYVAGNg9HbpeRtvng1twVsDRGYVBggP13w3yPYjlcDz9lvJSQg==",
+  "dgSpecHash": "972ptHJXNT739msQ6J5+Yu23kIT3StXiEg5XnaFxhyglczW3IZCJSQvDheorDfok+qnitcAPoV+0YXkYi8gDaA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Dell\\OneDrive - hcmunre.edu.vn\\Desktop\\ForumAiTi\\ForumAiTi\\ForumAiTi\\ForumAiTi.csproj",
   "expectedPackageFiles": [
@@ -162,7 +162,7 @@
     "C:\\Users\\Dell\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.security.securestring\\4.3.0\\system.security.securestring.4.3.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
-    "C:\\Users\\Dell\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\system.text.encoding.codepages\\7.0.0\\system.text.encoding.codepages.7.0.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",

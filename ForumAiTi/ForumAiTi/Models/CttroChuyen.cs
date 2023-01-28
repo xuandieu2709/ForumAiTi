@@ -13,6 +13,7 @@ namespace ForumAiTi.Models
         public string NguoiGui { get; set; }
         public string NguoiNhan { get; set; }
         public string NoiDung { get; set; }
+        public bool? TinhTrang { get; set; }
         public byte[] File { get; set; }
         public string TenFile { get; set; }
         public string LoaiFile { get; set; }
@@ -20,6 +21,7 @@ namespace ForumAiTi.Models
         public DateTime? ThoiGianGui { get; set; }
 
         public virtual TroChuyen MaTroChuyenNavigation { get; set; }
+        public virtual NguoiDung NguoiGuiNavigation { get; set; }
         public virtual NguoiDung NguoiNhanNavigation { get; set; }
     }
 }

@@ -18,7 +18,11 @@ namespace ForumAiTi.Models
         public string BdnguoiGui { get; set; }
         public string BdnguoiNhan { get; set; }
         public DateTime? ThoiGianTao { get; set; }
+        public string ThanhVien1 { get; set; }
+        public string ThanhVien2 { get; set; }
 
+        public virtual NguoiDung ThanhVien1Navigation { get; set; }
+        public virtual NguoiDung ThanhVien2Navigation { get; set; }
         public virtual ICollection<CttroChuyen> CttroChuyen { get; set; }
     }
 }

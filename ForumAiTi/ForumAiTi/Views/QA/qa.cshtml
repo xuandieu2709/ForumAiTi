@@ -26,14 +26,15 @@
         return _context.HoiDap.OrderBy(x => x.NgayDang).ToList();
     }
     List<CthoiDap> getlistDMByMA(int ma)
-        {
-            return _context.CthoiDap.Where(x =>x.MaHoiDap == ma).Take(5).ToList();
-        }
+    {
+        return _context.CthoiDap.Where(x => x.MaHoiDap == ma).Take(5).ToList();
+    }
     DanhMucHoiDap getDMbyMA(int ma)
     {
         return _context.DanhMucHoiDap.Where(x => x.MaDanhMuc == ma).FirstOrDefault();
     }
-    NguoiDung getUSER(string taikhoan){
+    NguoiDung getUSER(string taikhoan)
+    {
         if (taikhoan == null)
         {
             return new NguoiDung();
@@ -42,7 +43,7 @@
     }
     int CountComment(int MaHoiDap)
     {
-        var list = _context.BinhLuan.Where(x=> x.MaHoiDap == MaHoiDap).ToList();
+        var list = _context.BinhLuan.Where(x => x.MaHoiDap == MaHoiDap).ToList();
         int count = 0;
         count = list.Count();
         return count;
@@ -112,44 +113,40 @@
                     </div>
                 </div>
             </div>
-            <div class="QA my-2">
+            <div class="QA my-2" id="demoqa">
                 @foreach (var item in @getLISTQA())
                 {
-                 <div class="question row">
-                    <div class="question-body col-12">
-                        <p hidden id="MaHD">@item.MaHoiDap</p>
-                        <a href="/details_qa/@item.MaHoiDap">
-                            <h4 class="question-title">@item.TieuDe</h4>
-                        </a>
-                        <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang) - <a href="#"><img id="question-imguser"
-                                    src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</a></p>
-                        <p class="question-list">
-                            @foreach (var item1 in @getlistDMByMA(item.MaHoiDap))
-                            {
-                                <a href="#">@getDMbyMA((int)item1.MaDanhMuc).TenDanhMuc</a>
-                            }
-                        </p>
-                        <p class="question-content">@item.NoiDung
-                        </p>
-                        <p>
-                            <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> @item.LuotXem Lượt xem
-                            </pi>
-                            <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> @CountComment(item.MaHoiDap) Bình
-                                luận
-                            </pi>
-                        </p>
+                    <div class="question row">
+                        <div class="question-body col-12">
+                            <p hidden id="MaHD">@item.MaHoiDap</p>
+                            <a href="/details_qa/@item.MaHoiDap">
+                                <h4 class="question-title">@item.TieuDe</h4>
+                            </a>
+                            <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang) - <a
+                                    href="/personal/@item.NguoiDang"><img id="question-imguser" src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)"
+                                        alt=""> @getUSER(item.NguoiDang).HoTen</a></p>
+                            <p class="question-list">
+                                @foreach (var item1 in @getlistDMByMA(item.MaHoiDap))
+                                {
+                                    <a href="#">@getDMbyMA((int)item1.MaDanhMuc).TenDanhMuc</a>
+                                }
+                            </p>
+                            <p class="question-content">@item.NoiDung
+                            </p>
+                            <p>
+                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> @item.LuotXem Lượt
+                                    xem
+                                </pi>
+                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i>
+                                    @CountComment(item.MaHoiDap) Bình
+                                    luận
+                                </pi>
+                            </p>
+                        </div>
                     </div>
-                </div>   
                 }
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Trước</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Sau</a></li>
-                    </ul>
-                </nav>
+                <script>
+                </script>
             </div>
         </div>
         <div class="col-12 col-md-4 col-lg-4 p-0">
@@ -163,17 +160,19 @@
                 <div class="question-div">
                     @foreach (var item in @getLISTnewQA())
                     {
-                     <div class="question-sub">
-                        <a href="/details_qa/@item.MaHoiDap">
-                            <h4 class="question-sub-title">@item.TieuDe</h4>
-                        </a>
-                        <p class="question-sub-time-posted">Đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang)</p>
-                        <a href="#">
-                            <p class="question-sub-imguser"><img src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</p>
-                        </a>
-                    </div>   
+                        <div class="question-sub">
+                            <a href="/details_qa/@item.MaHoiDap">
+                                <h4 class="question-sub-title">@item.TieuDe</h4>
+                            </a>
+                            <p class="question-sub-time-posted">Đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang)
+                            </p>
+                            <a href="/personal/@item.NguoiDang">
+                                <p class="question-sub-imguser"><img src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)"
+                                        alt=""> @getUSER(item.NguoiDang).HoTen</p>
+                            </a>
+                        </div>
                     }
-                    
+
                 </div>
             </div>
             <div class="container-fluid">
@@ -181,22 +180,24 @@
                 <div class="listTopMember">
                     @foreach (var item in @getTop5USER())
                     {
-                        <a href="#">
-                        <div class="row member">
-                            <div class="col-4 col-sm-6 member-left">
-                                <img src="@getAvatar(item.HinhAnh)" alt="">
+                        <a href="/personal/@item.TaiKhoan">
+                            <div class="row member">
+                                <div class="col-4 col-sm-6 member-left">
+                                    <img src="@getAvatar(item.HinhAnh)" alt="">
+                                </div>
+                                <div class="col-8 col-sm-6 member-right">
+                                    <h4>@item.HoTen</h4>
+                                    @if (item.SinhNhat == null)
+                                    {
+                                        <p>?? - ?? - ????</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@item.SinhNhat</p>
+                                    }
+                                </div>
                             </div>
-                            <div class="col-8 col-sm-6 member-right">
-                                <h4>@item.HoTen</h4>
-                                @if(item.SinhNhat == null)
-                                {
-                                <p>?? - ?? - ????</p>
-                                }else{
-                                <p>@item.SinhNhat</p>
-                                }
-                            </div>
-                        </div>
-                    </a>
+                        </a>
                     }
                 </div>
             </div>

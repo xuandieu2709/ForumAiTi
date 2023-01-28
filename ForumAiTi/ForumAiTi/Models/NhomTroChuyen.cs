@@ -12,6 +12,7 @@ namespace ForumAiTi.Models
         public NhomTroChuyen()
         {
             CtntroChuyen = new HashSet<CtntroChuyen>();
+            ThanhVienNhomTc = new HashSet<ThanhVienNhomTc>();
         }
 
         public int MaNhom { get; set; }
@@ -19,5 +20,6 @@ namespace ForumAiTi.Models
         public DateTime? ThoiGianTao { get; set; }
 
         public virtual ICollection<CtntroChuyen> CtntroChuyen { get; set; }
+        public virtual ICollection<ThanhVienNhomTc> ThanhVienNhomTc { get; set; }
     }
 }

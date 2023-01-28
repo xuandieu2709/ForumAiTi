@@ -26,6 +26,7 @@ namespace ForumAiTi.Controllers
 
         }
         private ForumAiTiContext _context = new ForumAiTiContext();
+        
         [HttpGet("/add_news")]
         public IActionResult add_news()
         {
@@ -42,56 +43,104 @@ namespace ForumAiTi.Controllers
         {
             tinTuc.NguoiDang = User.FindFirst("TaiKhoan").Value.Trim();
             tinTuc.TrangThai = true;
-            using (MemoryStream ms = new MemoryStream())
+            if (FileND != null)
             {
-                FileND.CopyTo(ms);
-                tinTuc.HinhAnh = ms.ToArray();
-                ms.SetLength(0);
-            }
-            tinTuc.TenFile = FileND.FileName;
-            var file1 = Path.Combine(_environment.ContentRootPath, "wwwroot/images/TinTuc", FileND.FileName);
-            using (var fileStream = new FileStream(file1, FileMode.Create))
-            {
-                FileND.CopyTo(fileStream);
-            }
-            foreach (var item in tinTuc.FileToForm.Select((value, i) => new { i, value }))
-            {
-                var index = item.i;
-                if (item.value.STT == 1)
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    using (MemoryStream ms1 = new MemoryStream())
-                    {
-                        Console.WriteLine(ms1.ToArray());
-                        ms1.SetLength(0);
-                        item.value.File.CopyTo(ms1);
-                        tinTuc.NoiDungTinTuc.ToList()[item.i].File = ms1.ToArray();
-                    }
-                    using (var fileStream1 = new FileStream(file1, FileMode.Create))
-                    {
-                        item.value.File.CopyTo(fileStream1);
-                    }
-                    tinTuc.NoiDungTinTuc.ToList()[item.i].TenFile = item.value.File.FileName;
-                    tinTuc.NoiDungTinTuc.ToList()[item.i].LoaiFile = item.value.File.ContentType;
-                    // var newnd = tinTuc.NoiDungTinTuc.ToList()[item.i];
-                    // string sql = "INSERT INTO [dbo].[NoiDungTinTuc] ([MaTinTuc],[NoiDung],[File],[TenFile],[LoaiFile],[ChuThich]) VALUES({0},{1},{2},{3},{4},{5})";
-                    // _context.Database.ExecuteSqlRaw(sql, newnd.MaTinTuc, newnd.NoiDung, newnd.File, newnd.TenFile, newnd.LoaiFile, newnd.ChuThich);
+                    FileND.CopyTo(ms);
+                    tinTuc.HinhAnh = ms.ToArray();
+                    ms.SetLength(0);
+                    ms.Close();
+                    Console.WriteLine(ms.ToString());
                 }
-                else
+                tinTuc.TenFile = FileND.FileName;
+                var file = Path.Combine(_environment.ContentRootPath, "wwwroot/images/TinTuc", FileND.FileName);
+                using (var fileStream = new FileStream(file, FileMode.Create))
                 {
-                    Console.WriteLine("LAG a stt = 0" + item.value.STT);
+                    FileND.CopyTo(fileStream);
                 }
             }
+            List<NoiDungTinTuc> list = tinTuc.NoiDungTinTuc.ToList();
+            tinTuc.NoiDungTinTuc = null;
             _context.Add(tinTuc);
             int check = _context.SaveChanges();
-            var tt = _context.TinTuc.OrderByDescending(x => x.NguoiDang == tinTuc.NguoiDang && x.NgayDang == tinTuc.NgayDang).FirstOrDefault();
+            var tt = _context.TinTuc.FromSqlRaw("SELECT * from TinTuc where MaTinTuc = IDENT_CURRENT('TinTuc')").FirstOrDefault();
             Console.WriteLine(tt.MaTinTuc);
-            var listDM = form["states[]"];
-            // int count = listDM.Count;
-            foreach (var item in listDM)
+            if (check > 0 && tt.NguoiDang.Trim().Equals(User.FindFirst("TaiKhoan").Value.Trim()))
             {
-                string sql = "INSERT INTO [dbo].[CTTinTuc] ([MaChuDe],[MaTinTuc]) VALUES({0},{1})";
-                _context.Database.ExecuteSqlRaw(sql, Int32.Parse(item), tt.MaTinTuc);
+                // foreach (var item in tinTuc.FileToForm.Select((value, i) => new { i, value }))
+                // {
+                //     var index = item.i;
+                //     // STT check xem có hinh hay k 1 co 0 la k co
+                //     if (item.value.STT == 1)
+                //     {
+                //         var newnd = new NoiDungTinTuc();
+                //         using (var ms1 = new MemoryStream())
+                //         {
+                //             // Console.WriteLine(ms.ToString());
+                //             // ms1.SetLength(0);
+                //             item.value.File.CopyTo(ms1);
+                //             newnd.File = ms1.ToArray();
+                //             newnd.TenFile = item.value.File.FileName;
+                //             newnd.LoaiFile = item.value.File.ContentType;
+                //             newnd.NoiDung = tinTuc.NoiDungTinTuc.ToList()[item.i].NoiDung;
+                //             newnd.ChuThich = tinTuc.NoiDungTinTuc.ToList()[item.i].ChuThich;
+                //             string sql = "INSERT INTO [dbo].[NoiDungTinTuc] ([MaTinTuc],[NoiDung],[File],[TenFile],[LoaiFile],[ChuThich]) VALUES({0},{1},{2},{3},{4},{5})";
+                //             _context.Database.ExecuteSqlRaw(sql, tt.MaTinTuc, newnd.NoiDung, newnd.File, newnd.TenFile, newnd.LoaiFile, newnd.ChuThich);
+                //             var file1 = Path.Combine(_environment.ContentRootPath, "wwwroot/images/TinTuc", FileND.FileName);
+                //             using (var fileStream1 = new FileStream(file1, FileMode.Create))
+                //             {
+                //                 item.value.File.CopyTo(fileStream1);
+                //             }
+                //         }
+                //     }
+                //     else
+                //     {
+                //         Console.WriteLine("Hinh k có = 0" + item.value.STT);
+                //     }
+                // }
+                int count = 0;
+                foreach (var item in tinTuc.FileToForm)
+                {
+                    // STT check xem có hinh hay k 1 co 0 la k co
+                    if (item.STT == 1)
+                    {
+                        var newnd = new NoiDungTinTuc();
+                        using (var ms1 = new MemoryStream())
+                        {
+                            // Console.WriteLine(ms.ToString());
+                            // ms1.SetLength(0);
+                            item.File.CopyTo(ms1);
+                            newnd.MaTinTuc = tt.MaTinTuc;
+                            newnd.File = ms1.ToArray();
+                            newnd.TenFile = item.File.FileName;
+                            newnd.LoaiFile = item.File.ContentType;
+                            newnd.NoiDung = list[count].NoiDung;
+                            newnd.ChuThich = list[count].ChuThich;
+                            string sql = "INSERT INTO [dbo].[NoiDungTinTuc] ([MaTinTuc],[NoiDung],[File],[TenFile],[LoaiFile],[ChuThich]) VALUES({0},{1},{2},{3},{4},{5})";
+                            _context.Database.ExecuteSqlRaw(sql, newnd.MaTinTuc, newnd.NoiDung, newnd.File, newnd.TenFile, newnd.LoaiFile, newnd.ChuThich);
+                        }
+                        var file1 = Path.Combine(_environment.ContentRootPath, "wwwroot/images/TinTuc", FileND.FileName);
+                        using (var fileStream1 = new FileStream(file1, FileMode.Create))
+                        {
+                            item.File.CopyTo(fileStream1);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Hinh k có = 0" + item.STT);
+                    }
+                    count++;
+                }
+                var listDM = form["states[]"];
+                // int count = listDM.Count;
+                foreach (var item in listDM)
+                {
+                    string sql = "INSERT INTO [dbo].[CTTinTuc] ([MaChuDe],[MaTinTuc]) VALUES({0},{1})";
+                    _context.Database.ExecuteSqlRaw(sql, Int32.Parse(item), tt.MaTinTuc);
+                }
             }
+
             if (check > 0)
             {
                 _logger.LogInformation("Thêm Tin thành công!");
@@ -102,7 +151,7 @@ namespace ForumAiTi.Controllers
                 _logger.LogInformation("Thêm Thất bại!");
                 ViewBag.MESSSUCCESS = "2";
             }
-            return RedirectToAction("add_news");
+            return View("add_edit_news_admin");
         }
 
     }

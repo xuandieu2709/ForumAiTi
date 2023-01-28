@@ -506,8 +506,14 @@ div[class*="garrellyIMG"]>input:focus {
 }
 
 input[type="file"] {
-    display: none;
+    /* display: none; */
+    width: 5px;
+    height: 5px;
 }
+/* input[id*="chuthich"] {
+    display: none;
+} */
+
 
 /* end */
 /* MEMEBER */
@@ -1445,10 +1451,36 @@ tbody > tr > td > img
 #templatemo_search
 {
     background-color: #264653 !important; 
-     opacity: 0.5;
+     opacity: 0.8;
 }
 #div-searchsearch
 {
     /* position: absolute; */
     z-index: 1;
+}
+/*  */
+.btn-follow
+{
+    width: 100%;
+    background-color: #264653;
+    color: #fff;
+    border: 2px solid #e9c46a;
+    margin: 2%;
+}
+.btn-chat
+{
+    width: 100%;
+    background-color: #264653;
+    border: 2px solid #e9c46a;
+    color: #fff;
+    margin: 2%;
+}
+.btn-chat:hover,.btn-follow:hover{
+    background-color: #e9c46a;
+    border: 2px solid #264653;
+}
+.text-midle{
+    
+    margin-top: 10%;
+    margin-bottom: 10%;
 }

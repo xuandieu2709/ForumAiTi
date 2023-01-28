@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using SignalRChat.Hubs;
 
 namespace ForumAiTi
 {
@@ -32,7 +33,7 @@ namespace ForumAiTi
             services.AddControllersWithViews();
             //
             services.AddRazorPages();
-            // services.AddSignalR();
+            services.AddSignalR();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -96,6 +97,7 @@ namespace ForumAiTi
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

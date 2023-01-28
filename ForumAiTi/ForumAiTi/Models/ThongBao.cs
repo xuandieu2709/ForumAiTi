@@ -9,11 +9,21 @@ namespace ForumAiTi.Models
 {
     public partial class ThongBao
     {
-        public int MaThongBao { get; set; }
-        public string NoiDung { get; set; }
-        public bool? TrangThai { get; set; }
-        public string TaiKhoan { get; set; }
+        public ThongBao()
+        {
+            CtthongBao = new HashSet<CtthongBao>();
+        }
 
-        public virtual NguoiDung TaiKhoanNavigation { get; set; }
+        public int MaThongBao { get; set; }
+        public string TieuDe { get; set; }
+        public string NoiDung { get; set; }
+        public byte[] File { get; set; }
+        public string TenFile { get; set; }
+        public string LoaiFile { get; set; }
+        public bool? TrangThai { get; set; }
+        public string NguoiTao { get; set; }
+
+        public virtual NguoiDung NguoiTaoNavigation { get; set; }
+        public virtual ICollection<CtthongBao> CtthongBao { get; set; }
     }
 }

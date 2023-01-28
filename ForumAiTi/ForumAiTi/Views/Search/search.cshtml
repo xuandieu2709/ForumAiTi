@@ -1,6 +1,53 @@
 @{
     ViewData["Title"] = "Tìm kiếm";
 	Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    List<CthoiDap> getlistDMByMA(int ma)
+    {
+        return _context.CthoiDap.Where(x => x.MaHoiDap == ma).Take(5).ToList();
+    }
+    DanhMucHoiDap getDMbyMA(int ma)
+    {
+        return _context.DanhMucHoiDap.Where(x => x.MaDanhMuc == ma).FirstOrDefault();
+    }
+    NguoiDung getUSER(string taikhoan)
+    {
+        if (taikhoan == null)
+        {
+            return new NguoiDung();
+        }
+        return _context.NguoiDung.Where(x => x.TaiKhoan == taikhoan).FirstOrDefault();
+    }
+    int CountComment(int MaHoiDap)
+    {
+        var list = _context.BinhLuan.Where(x => x.MaHoiDap == MaHoiDap).ToList();
+        int count = 0;
+        count = list.Count();
+        return count;
+    }
+    //
+    string getIMG(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    List<CttinTuc> getlistCDByMA(int ma)
+    {
+        return _context.CttinTuc.Where(x => x.MaTinTuc == ma).Take(5).ToList();
+    }
+    ChuDe getCDbyMA(int ma)
+    {
+        return _context.ChuDe.Where(x => x.MaChuDe == ma).FirstOrDefault();
+    }
 }
     <!-- Close Header -->
     <section class="container-fluid my-2 px-5 bg-submenu p-2">
@@ -35,164 +82,40 @@
                 <div class="container-fluid">
                     <h2 class="py-4 bg-forum text-center new-question">Hỏi đáp</h2>
                     <div class="QA my-2">
-                        <div class="question row">
-                            <div class="question-body col-12">
-                                <a href="details_qa.html">
-                                    <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                                </a>
-                                <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img
-                                            id="question-imguser" src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                                <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a>
-                                </p>
-                                <p class="question-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                                <p>
-                                    <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                    </pi>
-                                    <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80
-                                        Bình
-                                        luận
-                                    </pi>
-                                </p>
-                            </div>
+                        @if (((IEnumerable<HoiDap>)ViewBag.ListHD).Count() > 0)
+                        {
+                         @foreach (var item in ViewBag.ListHD)
+                {
+                    <div class="question row">
+                        <div class="question-body col-12">
+                            <p hidden id="MaHD">@item.MaHoiDap</p>
+                            <a href="/details_qa/@item.MaHoiDap">
+                                <h4 class="question-title">@item.TieuDe</h4>
+                            </a>
+                            <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang) - <a
+                                    href="#"><img id="question-imguser" src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)"
+                                        alt=""> @getUSER(item.NguoiDang).HoTen</a></p>
+                            <p class="question-list">
+                                @foreach (var item1 in @getlistDMByMA(item.MaHoiDap))
+                                {
+                                    <a href="#">@getDMbyMA((int)item1.MaDanhMuc).TenDanhMuc</a>
+                                }
+                            </p>
+                            <p class="question-content">@item.NoiDung
+                            </p>
+                            <p>
+                                <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> @item.LuotXem Lượt
+                                    xem
+                                </pi>
+                                <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i>
+                                    @CountComment(item.MaHoiDap) Bình
+                                    luận
+                                </pi>
+                            </p>
                         </div>
-                        <div class="question row">
-                            <div class="question-body col-12">
-                                <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                                <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img
-                                            id="question-imguser" src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                                <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a>
-                                </p>
-                                <p class="question-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                                <p>
-                                    <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                    </pi>
-                                    <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80
-                                        Bình
-                                        luận
-                                    </pi>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="question row">
-                            <div class="question-body col-12">
-                                <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                                <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img
-                                            id="question-imguser" src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                                <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a>
-                                </p>
-                                <p class="question-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                                <p>
-                                    <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                    </pi>
-                                    <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80
-                                        Bình
-                                        luận
-                                    </pi>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="question row">
-                            <div class="question-body col-12">
-                                <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                                <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img
-                                            id="question-imguser" src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                                <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a>
-                                </p>
-                                <p class="question-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                                <p>
-                                    <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                    </pi>
-                                    <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80
-                                        Bình
-                                        luận
-                                    </pi>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="question row">
-                            <div class="question-body col-12">
-                                <h4 class="question-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4>
-                                <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img
-                                            id="question-imguser" src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                                <p class="question-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a>
-                                </p>
-                                <p class="question-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà
-                                    họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của
-                                    bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ
-                                    chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn
-                                    là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ
-                                    năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                                <p>
-                                    <pi class="question-watch"><i class="fa fa-eye" aria-hidden="true"></i> 230 Lượt xem
-                                    </pi>
-                                    <pi class="question-comment"><i class="fa fa-comment" aria-hidden="true"></i> 80
-                                        Bình
-                                        luận
-                                    </pi>
-                                </p>
-                            </div>
-                        </div>
-                        <nav aria-label="Page navigation example">
+                    </div>
+                }   
+                <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item"><a class="page-link" href="#">Trước</a></li>
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -201,6 +124,11 @@
                                 <li class="page-item"><a class="page-link" href="#">Sau</a></li>
                             </ul>
                         </nav>
+                        }else{
+                            <div class="question row p-5">
+                                <h1 class="text-center">Không tìm thấy kết quả phù hợp</h1>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -208,102 +136,34 @@
                 <div class="container-fluid">
                     <h2 class="py-4 bg-forum text-center new-question">Tin tức</h2>
                     <div class="div-news my-2 mt-3">
-                        <div class="news row">
-                            <div class="news-left p-0 col-12 col-lg-4 col-md-4">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="news-right col-12 col-lg-8 col-md-8">
-                                <a href="details-news.html"><h4 class="news-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4></a>
-                                <p class="news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="news-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                                <p class="news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
+                        @if(((IEnumerable<TinTuc>)ViewBag.ListTT).Count() > 0)
+                        {
+                            @foreach (var item in ViewBag.ListTT)
+                {
+                    <div class="news row">
+                        <div class="news-left p-0 col-12 col-lg-4 col-md-4">
+                            <img class="m-0" src="@getIMG(item.HinhAnh)" alt="">
                         </div>
-                        <div class="news row">
-                            <div class="news-left p-0 col-12 col-lg-4 col-md-4">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="news-right col-12 col-lg-8 col-md-8">
-                                <a href="details-news.html"><h4 class="news-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4></a>
-                                <p class="news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="news-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                                <p class="news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
+                        <div class="news-right col-12 col-lg-8 col-md-8">
+                            <a href="/details_news/@item.MaTinTuc">
+                                <h4 class="news-title">@item.TieuDe</h4>
+                            </a>
+                            <p class="news-time-post">Đăng ngày  @String.Format("{0:dd/MM/yyyy}", item.NgayDang)</p>
+                            <p class="news-list">
+                                @if(getlistCDByMA(item.MaTinTuc).Count() != 0)
+                                {
+                                    @foreach (var item1 in getlistCDByMA(item.MaTinTuc))
+                                {
+                                    <a href="#">@getCDbyMA((int)item1.MaChuDe).TenChuDe</a>
+                                }
+                                }
+                            </p>
+                            <p class="news-content">@item.NoiDung
+                            </p>
                         </div>
-                        <div class="news row">
-                            <div class="news-left p-0 col-12 col-lg-4 col-md-4">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="news-right col-12 col-lg-8 col-md-8">
-                                <a href="details-news.html"><h4 class="news-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4></a>
-                                <p class="news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="news-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                                <p class="news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="news row">
-                            <div class="news-left p-0 col-12 col-lg-4 col-md-4">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="news-right col-12 col-lg-8 col-md-8">
-                                <a href="details-news.html"><h4 class="news-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4></a>
-                                <p class="news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="news-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                                <p class="news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="news row">
-                            <div class="news-left p-0 col-12 col-lg-4 col-md-4">
-                                <img class="m-0" src="assets/img/img3.webp" alt="">
-                            </div>
-                            <div class="news-right col-12 col-lg-8 col-md-8">
-                                <a href="details-news.html"><h4 class="news-title">Thành công ở đại học là gì? Bí quyết để thành công?</h4></a>
-                                <p class="news-time-post">Đăng ngày 27 tháng 9 năm 2023</p>
-                                <p class="news-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                                <p class="news-content">
-                                    Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                    còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                    Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                    nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                    hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                    cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                    giao tiếp hiệu quả.
-                                </p>
-                            </div>
-                        </div>
-                        <nav aria-label="Page navigation example">
+                    </div>
+                }
+                <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item"><a class="page-link" href="#">Trước</a></li>
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -312,6 +172,12 @@
                                 <li class="page-item"><a class="page-link" href="#">Sau</a></li>
                             </ul>
                         </nav>
+                        }else
+                        {
+                            <div class="news row p-5">
+                                <h1 class="text-center">Không tìm thấy kết quả phù hợp</h1>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

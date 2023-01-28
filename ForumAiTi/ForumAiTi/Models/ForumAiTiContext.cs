@@ -24,6 +24,7 @@ namespace ForumAiTi.Models
         public virtual DbSet<ChuDe> ChuDe { get; set; }
         public virtual DbSet<CthoiDap> CthoiDap { get; set; }
         public virtual DbSet<CtntroChuyen> CtntroChuyen { get; set; }
+        public virtual DbSet<CtthongBao> CtthongBao { get; set; }
         public virtual DbSet<CttinTuc> CttinTuc { get; set; }
         public virtual DbSet<CttroChuyen> CttroChuyen { get; set; }
         public virtual DbSet<DanhMucHoiDap> DanhMucHoiDap { get; set; }
@@ -35,6 +36,7 @@ namespace ForumAiTi.Models
         public virtual DbSet<NhomTroChuyen> NhomTroChuyen { get; set; }
         public virtual DbSet<NoiDungHoiDap> NoiDungHoiDap { get; set; }
         public virtual DbSet<NoiDungTinTuc> NoiDungTinTuc { get; set; }
+        public virtual DbSet<ThanhVienNhomTc> ThanhVienNhomTc { get; set; }
         public virtual DbSet<TheoDoi> TheoDoi { get; set; }
         public virtual DbSet<ThongBao> ThongBao { get; set; }
         public virtual DbSet<TinTuc> TinTuc { get; set; }
@@ -166,6 +168,27 @@ namespace ForumAiTi.Models
                     .HasConstraintName("FK_CTNTroChuyen_NguoiDung");
             });
 
+            modelBuilder.Entity<CtthongBao>(entity =>
+            {
+                entity.HasKey(e => e.MaChiTiet);
+
+                entity.ToTable("CTThongBao");
+
+                entity.Property(e => e.NguoiNhan)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.MaThongBaoNavigation)
+                    .WithMany(p => p.CtthongBao)
+                    .HasForeignKey(d => d.MaThongBao)
+                    .HasConstraintName("FK_CTThongBao_ThongBao");
+
+                entity.HasOne(d => d.NguoiNhanNavigation)
+                    .WithMany(p => p.CtthongBao)
+                    .HasForeignKey(d => d.NguoiNhan)
+                    .HasConstraintName("FK_CTThongBao_NguoiDung");
+            });
+
             modelBuilder.Entity<CttinTuc>(entity =>
             {
                 entity.HasKey(e => e.MaCt)
@@ -213,8 +236,13 @@ namespace ForumAiTi.Models
                     .HasForeignKey(d => d.MaTroChuyen)
                     .HasConstraintName("FK_CTTroChuyen_TroChuyen");
 
+                entity.HasOne(d => d.NguoiGuiNavigation)
+                    .WithMany(p => p.CttroChuyenNguoiGuiNavigation)
+                    .HasForeignKey(d => d.NguoiGui)
+                    .HasConstraintName("FK_CTTroChuyen_NguoiDung1");
+
                 entity.HasOne(d => d.NguoiNhanNavigation)
-                    .WithMany(p => p.CttroChuyen)
+                    .WithMany(p => p.CttroChuyenNguoiNhanNavigation)
                     .HasForeignKey(d => d.NguoiNhan)
                     .HasConstraintName("FK_CTTroChuyen_NguoiDung");
             });
@@ -239,6 +267,8 @@ namespace ForumAiTi.Models
                 entity.Property(e => e.NguoiGui)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ThoiGianGui).HasColumnType("datetime");
 
                 entity.Property(e => e.TieuDe).HasMaxLength(200);
 
@@ -301,11 +331,17 @@ namespace ForumAiTi.Models
                     .HasMaxLength(1)
                     .IsUnicode(false);
 
+                entity.Property(e => e.GtbanThan)
+                    .HasColumnName("GTBanThan")
+                    .HasMaxLength(500);
+
                 entity.Property(e => e.HoTen).HasMaxLength(50);
 
                 entity.Property(e => e.MatKhau)
                     .HasMaxLength(25)
                     .IsUnicode(false);
+
+                entity.Property(e => e.NgheNghiep).HasMaxLength(100);
 
                 entity.Property(e => e.Nickname).HasMaxLength(50);
 
@@ -364,6 +400,30 @@ namespace ForumAiTi.Models
                     .HasConstraintName("FK_NoiDungTinTuc_TinTuc");
             });
 
+            modelBuilder.Entity<ThanhVienNhomTc>(entity =>
+            {
+                entity.HasKey(e => e.MaNhomTv)
+                    .HasName("PK_ThanhVienNhom");
+
+                entity.ToTable("ThanhVienNhomTC");
+
+                entity.Property(e => e.MaNhomTv).HasColumnName("MaNhomTV");
+
+                entity.Property(e => e.ThanhVien)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.MaNhomNavigation)
+                    .WithMany(p => p.ThanhVienNhomTc)
+                    .HasForeignKey(d => d.MaNhom)
+                    .HasConstraintName("FK_ThanhVienNhomTC_NhomTroChuyen");
+
+                entity.HasOne(d => d.ThanhVienNavigation)
+                    .WithMany(p => p.ThanhVienNhomTc)
+                    .HasForeignKey(d => d.ThanhVien)
+                    .HasConstraintName("FK_ThanhVienNhomTC_NguoiDung");
+            });
+
             modelBuilder.Entity<TheoDoi>(entity =>
             {
                 entity.HasKey(e => e.MaTheoDoi);
@@ -397,15 +457,21 @@ namespace ForumAiTi.Models
             {
                 entity.HasKey(e => e.MaThongBao);
 
-                entity.Property(e => e.NoiDung).HasMaxLength(1000);
+                entity.Property(e => e.LoaiFile).HasMaxLength(1000);
 
-                entity.Property(e => e.TaiKhoan)
+                entity.Property(e => e.NguoiTao)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.TaiKhoanNavigation)
+                entity.Property(e => e.NoiDung).HasMaxLength(1000);
+
+                entity.Property(e => e.TenFile).HasMaxLength(1000);
+
+                entity.Property(e => e.TieuDe).HasMaxLength(1000);
+
+                entity.HasOne(d => d.NguoiTaoNavigation)
                     .WithMany(p => p.ThongBao)
-                    .HasForeignKey(d => d.TaiKhoan)
+                    .HasForeignKey(d => d.NguoiTao)
                     .HasConstraintName("FK_ThongBao_NguoiDung");
             });
 
@@ -441,7 +507,25 @@ namespace ForumAiTi.Models
                     .HasColumnName("BDNguoiNhan")
                     .HasMaxLength(250);
 
+                entity.Property(e => e.ThanhVien1)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ThanhVien2)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ThoiGianTao).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ThanhVien1Navigation)
+                    .WithMany(p => p.TroChuyenThanhVien1Navigation)
+                    .HasForeignKey(d => d.ThanhVien1)
+                    .HasConstraintName("FK_TroChuyen_NguoiDung");
+
+                entity.HasOne(d => d.ThanhVien2Navigation)
+                    .WithMany(p => p.TroChuyenThanhVien2Navigation)
+                    .HasForeignKey(d => d.ThanhVien2)
+                    .HasConstraintName("FK_TroChuyen_NguoiDung1");
             });
 
             OnModelCreatingPartial(modelBuilder);

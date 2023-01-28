@@ -14,17 +14,24 @@ namespace ForumAiTi.Models
             BinhLuan = new HashSet<BinhLuan>();
             ChiTietMxh = new HashSet<ChiTietMxh>();
             CtntroChuyen = new HashSet<CtntroChuyen>();
-            CttroChuyen = new HashSet<CttroChuyen>();
+            CtthongBao = new HashSet<CtthongBao>();
+            CttroChuyenNguoiGuiNavigation = new HashSet<CttroChuyen>();
+            CttroChuyenNguoiNhanNavigation = new HashSet<CttroChuyen>();
             GopY = new HashSet<GopY>();
+            ThanhVienNhomTc = new HashSet<ThanhVienNhomTc>();
             TheoDoiMaNguoiDuocTdNavigation = new HashSet<TheoDoi>();
             TheoDoiMaNguoiTdNavigation = new HashSet<TheoDoi>();
             ThongBao = new HashSet<ThongBao>();
             TinTuc = new HashSet<TinTuc>();
+            TroChuyenThanhVien1Navigation = new HashSet<TroChuyen>();
+            TroChuyenThanhVien2Navigation = new HashSet<TroChuyen>();
         }
 
         public string HoTen { get; set; }
         public DateTime? SinhNhat { get; set; }
         public string Nickname { get; set; }
+        public string GtbanThan { get; set; }
+        public string NgheNghiep { get; set; }
         public byte[] HinhAnh { get; set; }
         public string Email { get; set; }
         public string GioiTinh { get; set; }
@@ -37,11 +44,16 @@ namespace ForumAiTi.Models
         public virtual ICollection<BinhLuan> BinhLuan { get; set; }
         public virtual ICollection<ChiTietMxh> ChiTietMxh { get; set; }
         public virtual ICollection<CtntroChuyen> CtntroChuyen { get; set; }
-        public virtual ICollection<CttroChuyen> CttroChuyen { get; set; }
+        public virtual ICollection<CtthongBao> CtthongBao { get; set; }
+        public virtual ICollection<CttroChuyen> CttroChuyenNguoiGuiNavigation { get; set; }
+        public virtual ICollection<CttroChuyen> CttroChuyenNguoiNhanNavigation { get; set; }
         public virtual ICollection<GopY> GopY { get; set; }
+        public virtual ICollection<ThanhVienNhomTc> ThanhVienNhomTc { get; set; }
         public virtual ICollection<TheoDoi> TheoDoiMaNguoiDuocTdNavigation { get; set; }
         public virtual ICollection<TheoDoi> TheoDoiMaNguoiTdNavigation { get; set; }
         public virtual ICollection<ThongBao> ThongBao { get; set; }
         public virtual ICollection<TinTuc> TinTuc { get; set; }
+        public virtual ICollection<TroChuyen> TroChuyenThanhVien1Navigation { get; set; }
+        public virtual ICollection<TroChuyen> TroChuyenThanhVien2Navigation { get; set; }
     }
 }

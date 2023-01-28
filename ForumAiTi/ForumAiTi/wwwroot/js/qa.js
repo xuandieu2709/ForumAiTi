@@ -39,7 +39,15 @@ $(function () {
         }
     };
     $(document).on('change', 'input[id="upload"]', function () {
-        imagesPreview(this);
+        var id = $(this).attr('id');
+        id = id.substring(6, id.length);
+        if($('input#upload'+id)[0].files[0])
+        {
+            imagesPreview(this);
+        }else{
+            $('.garellyImages').empty();
+            $('input#upload').val("");
+        }
     });
 });
 $(document).on('click', 'i#img0', function () {
