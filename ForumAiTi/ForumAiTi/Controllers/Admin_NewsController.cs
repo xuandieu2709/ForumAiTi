@@ -35,7 +35,8 @@ namespace ForumAiTi.Controllers
         [HttpGet("/admin_news")]
         public IActionResult admin_news()
         {
-            return View();
+            var tt = _context.TinTuc.ToList();
+            return View(tt);
         }
         [Authorize(Roles = "ADMIN")]
         [HttpPost("/add_news_admin")]

@@ -208,3 +208,4 @@ C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\bi
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Chat\Index.cshtml.g.cs
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Chat\searchChat.cshtml.g.cs
 C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Chat\ReplaceChat.cshtml.g.cs
+C:\Users\Dell\OneDrive - hcmunre.edu.vn\Desktop\ForumAiTi\ForumAiTi\ForumAiTi\obj\Debug\netcoreapp3.1\Razor\Views\Chat\ReplaceDivDetails.cshtml.g.cs

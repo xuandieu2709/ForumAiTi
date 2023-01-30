@@ -1,7 +1,20 @@
 @{
     ViewData["Title"] = "Quản lý tin tức";
 	Layout = "~/Views/Shared/_Layout_admin.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    NguoiDung getUserByTK(string Tk)
+    {
+        return _context.NguoiDung.Where(x => x.TaiKhoan == Tk).FirstOrDefault();
+    }
 }
+@model List<TinTuc>
     <!-- Close Header -->
     <section class="container-fluid my-2 px-5 bg-submenu p-2">
         <div class="container-fluid bg-forum2">
@@ -33,167 +46,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì.
-                                    Bằng cách tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có
-                                    cơ hội hẹn hò với cô nàng trong mơ của mình!
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                <td>@item.TieuDe</td>
+                                <td>@item.NoiDung
                                 </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
+                                <td><img src="@getAvatar(item.HinhAnh)" alt=""></td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.NgayDang)</td>
+                                <td>@getUserByTK(item.NguoiDang).HoTen</td>
                             </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 0?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì.
-                                    Bằng cách tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có
-                                    cơ hội hẹn hò với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 2?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì.
-                                    Bằng cách tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có
-                                    cơ hội hẹn hò với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 1?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì.
-                                    Bằng cách tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có
-                                    cơ hội hẹn hò với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-05-25</td>
-                                <td>Admin</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 0?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã
-                                    từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì. Bằng
-                                    cách
-                                    tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có cơ hội hẹn
-                                    hò
-                                    với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 2?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã
-                                    từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì. Bằng
-                                    cách
-                                    tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có cơ hội hẹn
-                                    hò
-                                    với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 1?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã
-                                    từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì. Bằng
-                                    cách
-                                    tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có cơ hội hẹn
-                                    hò
-                                    với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-05-25</td>
-                                <td>Admin</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 0?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì.
-                                    Bằng cách tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có
-                                    cơ hội hẹn hò với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 2?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì.
-                                    Bằng cách tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có
-                                    cơ hội hẹn hò với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 1?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì.
-                                    Bằng cách tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có
-                                    cơ hội hẹn hò với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-05-25</td>
-                                <td>Admin</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 0?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã
-                                    từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì. Bằng
-                                    cách
-                                    tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có cơ hội hẹn
-                                    hò
-                                    với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 2?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã
-                                    từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì. Bằng
-                                    cách
-                                    tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có cơ hội hẹn
-                                    hò
-                                    với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-04-25</td>
-                                <td>Boy AiTi</td>
-                            </tr>
-                            <tr>
-                                <td>Cách để có được một cô nàng xinh đẹp 1?</td>
-                                <td>Tán tỉnh cô nàng nào đó là việc vừa hồi hộp vừa thú vị. Cho dù đó là cô gái mà bạn
-                                    đã
-                                    từng quen biết hay mới gặp, việc tán tỉnh chỉ dễ dàng khi bạn biết nên làm gì. Bằng
-                                    cách
-                                    tiếp cận cô ấy với sự tự tin, bộc lộ cá tính và tìm hiểu nàng, bạn sẽ có cơ hội hẹn
-                                    hò
-                                    với cô nàng trong mơ của mình!
-                                </td>
-                                <td><img src="assets/img/img3.webp" alt=""></td>
-                                <td>2011-05-25</td>
-                                <td>Admin</td>
-                            </tr>
+                            }
+                            
                         </tbody>
                         <tfoot>
                             <tr>

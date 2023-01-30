@@ -41,10 +41,9 @@ $(function () {
     $(document).on('change', 'input[id="upload"]', function () {
         var id = $(this).attr('id');
         id = id.substring(6, id.length);
-        if($('input#upload'+id)[0].files[0])
-        {
+        if ($('input#upload' + id)[0].files[0]) {
             imagesPreview(this);
-        }else{
+        } else {
             $('.garellyImages').empty();
             $('input#upload').val("");
         }
@@ -61,8 +60,8 @@ $(document).on('click', 'button#btnComment', function (event) {
     var ma = Number($('p#MaHD').text());
     var formData = new FormData();
     formData.append('file', $('input#upload')[0].files[0]); // myFile is the input type="file" control
-    formData.append('ma',ma);
-    formData.append('comment',comment);
+    formData.append('ma', ma);
+    formData.append('comment', comment);
     $.ajax({
         type: 'POST',
         processData: false,  // tell jQuery not to process the data
@@ -73,15 +72,32 @@ $(document).on('click', 'button#btnComment', function (event) {
             $('div#section_comment').replaceWith(result);
         },
         error: function (result) {
-            alert("Thất bại!" + result);
+            // getReq(document.URL);
+            if(Number(result.status) === 401)
+            {
+                window.location.href = "/login?ReturnUrl=%2F";
+            }
+            else{
+            alert("Đã có lỗi xảy ra!");
+            }
+            // console.log(result + result.status);
         }
     });
 });
-
-$(document).ready(function(){
+// function xhrRequest() {
+//     console.log(this.status);
+//     alert(this.status)
+// }
+// function getReq(url) {
+//     var oReq = new XMLHttpRequest();
+//     oReq.addEventListener("load", xhrRequest);
+//     oReq.open("POST", "/comment_qa");
+//     oReq.send();
+// }
+$(document).ready(function () {
     $("#loadcomment").slice(0, 5).show();
-    
-  });
+
+});
   // $(document).on("button#load-more","click", function(e){
     //   e.preventDefault();
     //   $("div#loadcomment:hidden").slice(0, 5).slideDown();

@@ -1,0 +1,178 @@
+@{
+    ForumAiTiContext _context = new ForumAiTiContext();
+    List<CttroChuyen> getListTCbyMa(int ma)
+    {
+        return _context.CttroChuyen.Where(x => x.MaTroChuyen == ma).ToList();
+    }
+    CttroChuyen getLastMess(int ma)
+    {
+        return _context.CttroChuyen.OrderByDescending(x => x.ThoiGianGui).FirstOrDefault(x => x.MaTroChuyen == ma);
+    }
+    CttroChuyen getFinalMess(string taikhoan)
+        {
+            CttroChuyen final = _context.CttroChuyen.OrderByDescending(x =>x.ThoiGianGui).FirstOrDefault(x => x.NguoiGui == taikhoan || x.NguoiGui == User.FindFirst("TaiKhoan").Value.Trim());
+            return final;
+        }
+    NguoiDung getUSERByTK(string tk)
+    {
+        return _context.NguoiDung.Where(x => x.TaiKhoan == tk).FirstOrDefault();
+    }
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+}
+<div class="col-md-6 col-lg-7 col-xl-8 bg-light" id="repalceblockChat">
+                            @if (ViewBag.ListChat == null)
+                            {
+                                <div class="d-block m-auto p-5">
+                                    <h1 class="text-center">Hãy theo dõi các thành viên trong Forum để trò chuyện với nhau
+                                        bạn nhé!</h1>
+                                </div>
+                            }
+                            else
+                            {
+                                @if(User.FindFirst("TaiKhoan").Value.Trim() == ViewBag.ListChat.ThanhVien1)
+                                    {
+                                        <div class="py-3 m-0 bg-forum row">
+                                    <div class="col-4 col-lg-2 col-md-3">
+                                        <img id="avatar-chat" src="@getAvatar(getUSERByTK(ViewBag.ListChat.ThanhVien2).HinhAnh)" alt="">
+                                            <input type="text" hidden name="" id="user2" value="@getUSERByTK(ViewBag.ListChat.ThanhVien2).TaiKhoan">
+                                    </div>
+                                    <div class="col-6 col-lg-8 col-md-7 m-auto">
+                                        <h4 id="name-chat">@getUSERByTK(ViewBag.ListChat.ThanhVien2).HoTen</h4>
+                                    </div>
+                                    <div class="col-1 ml-auto m-auto dropdown1">
+                                        <i class="fa fa-ellipsis-v dropbtn1" aria-hidden="true"></i>
+                                        <div class="dropdown-content1">
+                                            <a href="/personal/@getUSERByTK(ViewBag.ListChat.ThanhVien2).TaiKhoan"><i class="fa fa-info-circle"></i> Thông tin</a>
+                                            <a href="#"><i class="fa fa-minus-circle" aria-hidden="true"></i> Bỏ theo dõi
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                    }else
+                                    {
+                                        <div class="py-3 m-0 bg-forum row">
+                                    <div class="col-4 col-lg-2 col-md-3">
+                                        <img id="avatar-chat" src="@getAvatar(getUSERByTK(ViewBag.ListChat.ThanhVien1).HinhAnh)" alt="">
+                                        <input type="text" hidden name="" id="user2" value="@getUSERByTK(ViewBag.ListChat.ThanhVien1).TaiKhoan">
+                                    </div>
+                                    <div class="col-6 col-lg-8 col-md-7 m-auto">
+                                        <h4 id="name-chat">@getUSERByTK(ViewBag.ListChat.ThanhVien1).HoTen</h4>
+                                        
+                                    </div>
+                                    <div class="col-1 ml-auto m-auto dropdown1">
+                                        <i class="fa fa-ellipsis-v dropbtn1" aria-hidden="true"></i>
+                                        <div class="dropdown-content1">
+                                            <a href="/personal/@getUSERByTK(ViewBag.ListChat.ThanhVien1).TaiKhoan"><i class="fa fa-info-circle"></i> Thông tin</a>
+                                            <a href="#"><i class="fa fa-minus-circle" aria-hidden="true"></i> Bỏ theo dõi
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                    }
+                                <input type="text" hidden id="MaChat" value="@(ViewBag.ListChat.MaTroChuyen)">
+                                <div id="details-chat" class="pt-3 pe-3" data-mdb-perfect-scrollbar="true"
+                                    style="position: relative; height: 400px">
+                                    @if(getListTCbyMa(ViewBag.ListChat.MaTroChuyen).Count() == 0)
+                                    {
+                                        <div class="m-auto p-auto">
+                                        <h2 class="text-center text-midle">Hãy bắt đầu cuộc trò chuyện ngay nào.</h2>
+                                        </div>
+                                    }
+                                    else{
+                                        @foreach (var item in getListTCbyMa(ViewBag.ListChat.MaTroChuyen))
+                                        {
+                                         @if(item.NguoiGui == User.FindFirst("TaiKhoan").Value.Trim())
+                                         {
+                                            <div class="d-flex flex-row justify-content-end">
+                                                <div>
+                                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                                        @item.NoiDung</p>
+                                                    <p class="small me-3 mb-3 rounded-3 text-muted">@String.Format("{0:HH:mm:ss dd/MM/yyyy}", item.ThoiGianGui)</p>
+                                                </div>
+                                            </div>
+                                            
+                                         }  
+                                         else{
+                                    <div class="d-flex flex-row justify-content-start">
+                                        <div>
+                                            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">
+                                                @item.NoiDung</p>
+                                            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">@String.Format("{0:HH:mm:ss dd/MM/yyyy}", item.ThoiGianGui)
+                                            </p>
+                                        </div>
+                                    </div>
+                                         } 
+                                        }
+                                    }
+
+                                </div>
+                                    <div class="row m-0">
+                                        <div id="div-send-chat"
+                                            class="col-12 row m-0 d-flex justify-content-start align-items-center pt-1 mt-2">
+                                            <div class="col-2 col-lg-1 float-right" id="div-left">
+                                                <img src="@getAvatar(getUSERByTK(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)"
+                                                    alt="avatar 3" id="avatarSendChat">
+                                            </div>
+                                            <div class="col-9 col-lg-10" id="div-right">
+                                                <input type="text" value="@User.FindFirst("TaiKhoan").Value.Trim()"
+                                                    id="username" hidden>
+                                                <a class="ms-1"><input hidden type="file" name="" id="upfilechat"><label
+                                                        for="upfilechat"><i class="fa fa-paperclip"></i></label></a>
+                                                <a class="ms-lg-3"><i class="fa fa-smile"></i></a>
+                                                <textarea type="text" class="form-control form-control-lg m-1"
+                                                    id="exampleFormControlInput2" placeholder="Soạn tin..."></textarea>
+                                            </div>
+                                            <div class="col-1 m-auto float-left">
+                                                <button type="button" class="bg-forum2" id="btn-submid-send"><i
+                                                        class="fa fa-paper-plane"></i></button>
+                                            </div>
+                                            <div class="col-1"></div>
+                                            <div class="col-11 float-right mt-1" id="div-img-chat">
+                                            </div>
+                                            <script>
+                                                $(function () {
+                                                    // Multiple images preview in browser
+                                                    var imagesPreview = function (input, placeToInsertImagePreview, id) {
+                                                        if (input.files) {
+                                                            var reader = new FileReader();
+                                                            reader.onload = function (event) {
+                                                                if ($('div#div-img-chat' + id + ' img#imagges' + id + '').length > 0) {
+                                                                    // $('div.garelly' + id + ' img#imagges' + id + '').attr('src', event.target.result);
+                                                                    $('img#imagges' + id + '').attr('src', event.target.result);
+                                                                }
+                                                                else {
+                                                                    $($.parseHTML('<img id="imagges' + id + '">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                                                                    $('div#div-img-chat' + id + ' img#imagges' + id + '')
+                                                                        .after('<i class="fa fa-times" aria-hidden="true" id="imagges' + id + '"></i>');
+                                                                }
+                                                            }
+                                                            reader.readAsDataURL(input.files[0]);
+                                                        }
+                                                    };
+                                                    $(document).on('change', 'input[id*="upfilechat"]', function () {
+                                                        var id = $(this).attr('id');
+                                                        id = id.substring(10, id.length);
+                                                        imagesPreview(this, 'div#div-img-chat' + id, id);
+                                                    });
+                                                    // remove image
+                                                    $(document).on('click', 'i[id*="imagges"]', function () {
+                                                        var id = $(this).attr('id');
+                                                        id = id.substring(7, id.length);
+                                                        $('div#div-img-chat' + id + ' img#imagges' + id + '').remove();
+                                                        $('input#upfilechat' + id + '').val("");
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                            }
+                        </div>
+            <script>
+                $('#details-chat').scrollTop($('#details-chat')[0].scrollHeight);
+            </script>

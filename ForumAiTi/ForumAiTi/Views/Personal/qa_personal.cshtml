@@ -1,7 +1,49 @@
 @{
     ViewData["Title"] = "Bài đăng cá nhân";
 	Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    
+    //
+    DanhMucHoiDap getDMbyMA(int ma)
+    {
+        return _context.DanhMucHoiDap.Where(x => x.MaDanhMuc == ma).FirstOrDefault();
+    }
+    string getIMG(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    NguoiDung getUSERbyTK(string tk)
+    {
+        return _context.NguoiDung.Where(x => x.TaiKhoan == tk).FirstOrDefault();
+    }
+    
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    NguoiDung getUSER(string taikhoan)
+    {
+        return _context.NguoiDung.Where(x => x.TaiKhoan == taikhoan).FirstOrDefault();
+    }
+    
+    List<BinhLuan> getListBLByMa(int MaHD)
+    {
+        var list = _context.BinhLuan.Where(x => x.MaHoiDap == MaHD).ToList();
+        return list;
+    }
+    //
+    List<HoiDap> getListHDbyUSER(string tk)
+    {
+        return _context.HoiDap.Where(x => x.NguoiDang == tk).ToList();
+    }
 }
+@* @model List<NguoiDung> *@
     <section class="container-fluid my-2 px-5 bg-submenu p-2">
         <div class="container-fluid bg-forum2">
             <h3 class="text-forum-orange mb-0 p-2">
@@ -53,58 +95,79 @@
                         </div>
                     </div>
                 </div>
+                @if(getListHDbyUSER(User.FindFirst("TaiKhoan").Value.Trim()).Count() == 0)
+            {
+                <div class="container-fluid bg-forum p-5">
+                <h2 class="text-center">Hiện tại thành viên này chưa có bài đăng nào!</h2>
+                </div>
+            }else
+            {
+                @foreach (var item in getListHDbyUSER(User.FindFirst("TaiKhoan").Value.Trim()))
+            {
                 <div class="col-12 mb-5">
-                    <div class="container-fluid bg-question-light">
-                        <div class="row p-2 details">
-                            <h2 class="details-title">Thành công ở đại học là gì? Bí quyết để thành công?</h2>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="details-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
+                <div class="container-fluid bg-question-light">
+                    <div class="row p-2 details">
+                        <h2 class="details-title">@item.TieuDe</h2>
+                        <p id="MaHD" hidden>@item.MaHoiDap</p>
+                        <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang) - <a
+                                href="#"><img id="question-imguser" src="@getIMG(getUSERbyTK(item.NguoiDang).HinhAnh)"
+                                    alt=""> @getUSERbyTK(item.NguoiDang).HoTen</a></p>
+                        <p class="details-list">
+                            @foreach (var item1 in item.CthoiDap)
+                            {
+                                <a href="#">@getDMbyMA((int)item1.MaDanhMuc).TenDanhMuc</a>
+                            }
+                        </p>
+                        <p class="details-content">@item.NoiDung
+                        </p>
+                        @if (item != null && (item.HinhAnh1 != null || item.HinhAnh3 != null || item.HinhAnh2 !=
+                        null))
+                        {
                             <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0"
-                                        class="active">
+                                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active">
                                     </li>
                                     <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
                                     <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
                                 </ol>
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <div class="container-fluid">
-                                            <div class="row p-5">
-                                                <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-                                                    <img class="img-fluid" src="./assets/img/img2.webp" alt="">
+                                    @if (item.HinhAnh1 != null)
+                                    {
+                                        <div class="carousel-item active">
+                                            <div class="container-fluid">
+                                                <div class="row p-5">
+                                                    <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
+                                                        <img class="img-fluid" src="@getIMG(item.HinhAnh1)" alt="">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="container-fluid">
-                                            <div class="row p-5">
-                                                <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-                                                    <img class="img-fluid" src="./assets/img/img2.webp" alt="">
+                                    }
+                                    @if (item.HinhAnh2 != null)
+                                    {
+                                        <div class="carousel-item">
+                                            <div class="container-fluid">
+                                                <div class="row p-5">
+                                                    <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
+                                                        <img class="img-fluid" src="@getIMG(item.HinhAnh2)" alt="">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="container-fluid">
-                                            <div class="row p-5">
-                                                <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-                                                    <img class="img-fluid" src="./assets/img/img2.webp" alt="">
+                                    }
+                                    @if (item.HinhAnh3 != null)
+                                    {
+                                        <div class="carousel-item">
+                                            <div class="container-fluid">
+                                                <div class="row p-5">
+                                                    <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
+                                                        <img class="img-fluid" src="@getIMG(item.HinhAnh3)" alt="">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
+
                                 </div>
                                 <a class="carousel-control-prev text-decoration-none w-auto ps-3"
                                     href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
@@ -115,194 +178,77 @@
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
                             </div>
-                        </div>
+                        }
                     </div>
-                    <section class="bg-text-forum">
-                        <div style="border-bottom: 3px solid #2a9d8f;">
-                            <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận.Nếu như có thể
-                                    tôi muốn nó hay hơn nữa bạn nên sửa chỗ này lại một tí
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận</p>
-                            </div>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận</p>
-                            </div>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận</p>
-                            </div>
-                        </div>
-                        <div class="m-2 p-2">
-                            <button class="d-block m-auto" id="load-more"><i class="fa fa-spinner"
-                                    aria-hidden="true"></i></button>
-                        </div>
-                    </section>
-                    <section class="bg-text-forum m-0 p-2 mb-2">
-                        <div class="anwser row m-0 p-2">
-                            <div class="col-4 col-lg-2 col-md-2 anwser-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-8 col-lg-10 col-md-10 anwser-right">
-                                <input type="file" hidden name="" id="upimg">
-                                <label for="upimg"><i class="fa fa-image" aria-hidden="true"></i></label>
-                                <input type="file" hidden name="" id="upimg">
-                                <label for="upimg"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
-                                <textarea name="" id=""></textarea>
-                                <div class="garelly"></div>
-                                <button class="btn btn-send">Bình luận</button>
-                            </div>
-                        </div>
-                    </section>
                 </div>
-                <!-- end 1 -->
-                <div class="col-12">
-                    <div class="container-fluid bg-question-light">
-                        <div class="row p-2 details">
-                            <h2 class="details-title">Thành công ở đại học là gì? Bí quyết để thành công?</h2>
-                            <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                        src="images/user.jfif" alt=""> Boy AiTi</a></p>
-                            <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
-                            <p class="details-content">
-                                Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ
-                                còn rất chú trọng đến sự năng động hoạt bát và kĩ năng từ khi còn làm sinh viên của bạn.
-                                Bởi vậy mà bên cạnh việc học tập thì bạn nên tích cực tham gia các hoạt động tình
-                                nguyện, các câu lạc bộ các hoạt động văn hóa văn nghệ thể thao do nhà trường tổ chức…Các
-                                hoạt động này không chỉ giúp bạn có thểm kinh nghiệm làm việc nhóm, tư duy,… mà còn là
-                                cách giúp bạn hoàn thiện về mặt cảm xúc, tình cảm. Hơn nữa còn là cách rèn luyện kĩ năng
-                                giao tiếp hiệu quả.
-                            </p>
-                            <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0"
-                                        class="active">
-                                    </li>
-                                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
-                                    <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <div class="container-fluid">
-                                            <div class="row p-5">
-                                                <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-                                                    <img class="img-fluid" src="./assets/img/img2.webp" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
+                @* <div id="section_comment">
+                    @if (getListBLByMa(item.MaHoiDap).Count() == 0)
+                    {
+                        <section class="bg-text-forum">
+                            <div style="border-bottom: 3px solid #2a9d8f;">
+                                <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
+                            </div>
+                            <h4 class="text-center p-2">Chưa có bình luận nào. Hãy trở thành người bình luận đầu tiên</h4>
+                        </section>
+                    }
+                    else
+                    {
+                        <section class="bg-text-forum">
+                            <div style="border-bottom: 3px solid #2a9d8f;">
+                                <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
+                            </div>
+                            @foreach (var item1 in getListBLByMa(item.MaHoiDap))
+                            {
+                                <div class="row comment" id="loadcomment">
+                                    <div class="col-3 col-lg-2 col-md-2 comment-left">
+                                        <img src="@getAvatar(getUSER(item1.TaiKhoan).HinhAnh)" alt="">
                                     </div>
-                                    <div class="carousel-item">
-                                        <div class="container-fluid">
-                                            <div class="row p-5">
-                                                <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-                                                    <img class="img-fluid" src="./assets/img/img2.webp" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="container-fluid">
-                                            <div class="row p-5">
-                                                <div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-                                                    <img class="img-fluid" src="./assets/img/img2.webp" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="col-9 col-lg-10 col-md-10 comment-right">
+                                        <p>@item1.NoiDung</p>
+                                        @if (item1.File != null)
+                                        {
+                                            <img class="img rounded img-fluid" height="100" src="@getAvatar(item1.File)" alt="">
+                                        }
                                     </div>
                                 </div>
-                                <a class="carousel-control-prev text-decoration-none w-auto ps-3"
-                                    href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
-                                <a class="carousel-control-next text-decoration-none w-auto pe-3"
-                                    href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
+                            }
+                            <div class="m-2 p-2">
+                                <button class="d-block m-auto" id="load-more"><i class="fa fa-spinner"
+                                        aria-hidden="true"></i></button>
                             </div>
-                        </div>
-                    </div>
-                    <section class="bg-text-forum">
-                        <div style="border-bottom: 3px solid #2a9d8f;">
-                            <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
+                        </section>
+                    }
+                    <form action="/comment_qa" enctype="multipart/form-data" method="post">
+                        <section class="bg-text-forum m-0 p-2 mb-2">
+                            <div class="anwser row m-0 p-2">
+                                <div class="col-4 col-lg-2 col-md-2 anwser-left">
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <img src="@getAvatar(null)" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="@getAvatar(getUSERbyTK(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)"
+                                            alt="">
+                                    }
+                                </div>
+                                <div class="col-8 col-lg-10 col-md-10 anwser-right">
+                                    <input type="file" hidden name="file" id="upload">
+                                    <label for="upload"><i class="fa fa-image" aria-hidden="true"></i></label>
+                                    <input type="file" hidden name="" id="upload1">
+                                    <label for="upload1"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
+                                    <textarea name="comment" id="comment"></textarea>
+                                    <div class="garellyImages"></div>
+                                    <button id="btnComment" class="btn btn-send">Bình luận</button>
+                                </div>
                             </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận.Nếu như có thể
-                                    tôi muốn nó hay hơn nữa bạn nên sửa chỗ này lại một tí
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận</p>
-                            </div>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận</p>
-                            </div>
-                        </div>
-                        <div class="row comment">
-                            <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                <p>Bài đăng hay phết. khá hữu ích tôi sẽ ghi nhận</p>
-                            </div>
-                        </div>
-                        <div class="m-2 p-2">
-                            <button class="d-block m-auto" id="load-more"><i class="fa fa-spinner"
-                                    aria-hidden="true"></i></button>
-                        </div>
-                    </section>
-                    <section class="bg-text-forum m-0 p-2 mb-2">
-                        <div class="anwser row m-0 p-2">
-                            <div class="col-4 col-lg-2 col-md-2 anwser-left">
-                                <img src="images/user.jfif" alt="">
-                            </div>
-                            <div class="col-8 col-lg-10 col-md-10 anwser-right">
-                                <input type="file" hidden name="" id="upimg1">
-                                <label for="upimg1"><i class="fa fa-image" aria-hidden="true"></i></label>
-                                <input type="file" hidden name="" id="upimg">
-                                <label for="upimg"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
-                                <textarea name="" id=""></textarea>
-                                <div class="garelly1"></div>
-                                <button class="btn btn-send">Bình luận</button>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <!-- end 2 -->
+                        </section>
+                    </form>
+                </div> *@
+                    <script src="~/js/qa.js"></script>
+            </div>
+            }
+            }
             </div>
             <!-- end -->
             <div class="col-12 col-md-4 col-lg-4 mt-2">

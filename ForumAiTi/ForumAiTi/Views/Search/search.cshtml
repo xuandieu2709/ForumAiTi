@@ -180,6 +180,31 @@
                         }
                     </div>
                 </div>
+                <!-- -->
+                <h2 class="py-4 bg-forum text-light text-center new-question">Thành viên ưu tú</h2>
+                <div class="listTopMember">
+                    @foreach (var item in ViewBag.ListUSER)
+                    {
+                        <a href="/personal/@item.TaiKhoan">
+                            <div class="row member">
+                                <div class="col-4 col-sm-6 member-left">
+                                    <img src="@getAvatar(item.HinhAnh)" alt="">
+                                </div>
+                                <div class="col-8 col-sm-6 member-right">
+                                    <h4>@item.HoTen</h4>
+                                    @if (item.SinhNhat == null)
+                                    {
+                                        <p>?? - ?? - ????</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@item.SinhNhat</p>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
             </div>
         </div>
     </section>

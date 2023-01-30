@@ -1,6 +1,17 @@
 @{
     ViewData["Title"] = "Liên hệ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    NguoiDung getUserbyAC()
+    {
+        string tk = null;
+        if(User.Identity.IsAuthenticated)
+        {
+        tk = User.FindFirst("TaiKhoan").Value.Trim();
+        }
+        if(tk == null) return new NguoiDung();
+        return _context.NguoiDung.FirstOrDefault(x =>x.TaiKhoan == tk);
+    }
 }
 @model ForumAiTi.Models.GopY
 <!-- Start Content Page -->
@@ -21,22 +32,22 @@
             <div class="row">
                 <div class="form-group col-md-6 mb-4">
                     <label for="inputname">Họ và tên</label>
-                    <input type="text" required class="form-control mt-1" id="name" name="Model.HoTen"
+                    <input type="text" required class="form-control mt-1" value="@getUserbyAC().HoTen" id="name" name="HoTen"
                         placeholder="Họ và tên của bạn">
                 </div>
                 <div class="form-group col-md-6 mb-4">
                     <label for="inputemail">Email</label>
-                    <input type="email" required class="form-control mt-1" id="email" name="Model.Email"
+                    <input type="email" required class="form-control mt-1" value="@getUserbyAC().Email" id="email" name="Email"
                         placeholder="Email của bạn">
                 </div>
             </div>
             <div class="mb-4">
                 <label for="inputsubject">Tiêu đề</label>
-                <input type="text" required class="form-control mt-1" id="subject" name="Model.TieuDe" placeholder="Tiêu đề">
+                <input type="text" required class="form-control mt-1" id="subject" name="TieuDe" placeholder="Tiêu đề">
             </div>
             <div class="mb-4">
                 <label for="inputmessage">Nội dung</label>
-                <textarea required class="form-control mt-1" id="message" name="Model.NoiDung" placeholder="Nội dung"
+                <textarea required class="form-control mt-1" id="message" name="NoiDung" placeholder="Nội dung"
                     rows="8"></textarea>
             </div>
             <div class="row">
@@ -62,6 +73,13 @@
             <script type="text/javascript" charset="utf-8">
                 window.onload = function () {
                     setTimeout(() => { alert("Đã có lỗi xảy ra!\nVui lòng thử lại sau."); }, 500);
+                };
+            </script>
+        }else if(ViewBag.MessSUcc.Equals("3"))
+        {
+            <script type="text/javascript" charset="utf-8">
+                window.onload = function () {
+                    setTimeout(() => { alert("Hôm nay bạn đã góp ý 3 lần rồi.\nĐể dành ngày mai góp ý tiếp bạn nhé.\nCám ơn bạn."); }, 500);
                 };
             </script>
         }

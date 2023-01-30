@@ -26,7 +26,7 @@ namespace SignalRChat.Hubs
         private ForumAiTiContext _context = new ForumAiTiContext();
         public async Task SendMessage1(string idChat,string userReceive,string message)
         {
-            Console.WriteLine(message);
+            // Console.WriteLine(message+"file"+imageData);
             // insert
             var chat = _context.TroChuyen.Where(x =>x.MaTroChuyen == Int32.Parse(idChat)).FirstOrDefault();
             Console.WriteLine(userReceive);
@@ -54,10 +54,10 @@ namespace SignalRChat.Hubs
             var check = _context.SaveChanges();
             if(check > 0)
             {
-                _logger.LogInformation("Thêm lỗi");
+                _logger.LogInformation("Đã thêm");
             }
             else{
-                _logger.LogInformation("Đã thêm");
+                _logger.LogInformation("Thêm lỗi");
             }
             await Clients.All.SendAsync("ReceiveMessage");
         }

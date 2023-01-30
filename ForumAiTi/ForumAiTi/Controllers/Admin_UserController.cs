@@ -23,7 +23,8 @@ namespace ForumAiTi.Controllers
         [HttpGet("/admin_user")]
         public IActionResult admin_user()
         {
-            return View();
+            var nd = _context.NguoiDung.ToList();
+            return View(nd);
         }
 
     }

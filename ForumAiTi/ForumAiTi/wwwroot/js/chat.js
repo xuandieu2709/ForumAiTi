@@ -31,33 +31,6 @@ connection.start().then(function () {
     return console.error(err.toString());
 });
 
-function getBuffer(fileData) {
-    return function(resolve) {
-      var reader = new FileReader();
-      reader.readAsArrayBuffer(fileData);
-      reader.onload = function() {
-        var arrayBuffer = reader.result
-        var bytes = new Uint8Array(arrayBuffer);
-        resolve(bytes);
-      }
-  }
-}
-function openfile(evt) {
-    var files = $('input#upfilechat')[0].files[0];
-    // Pass the file to the blob, not the input[0].
-    fileData = new Blob([files[0]]);
-    // Pass getBuffer to promise.
-    var promise = new Promise(getBuffer(fileData));
-    // Wait for promise to be resolved, or log error.
-    promise.then(function(data) {
-      // Here you can pass the bytes to another function.
-      output.innerHTML = data.toString();
-      console.log(data);
-    }).catch(function(err) {
-      console.log('Error: ',err);
-    });
-  }
-
 $(document).on("click","button#btn-submid-send", function (event) {
     var message = document.getElementById("exampleFormControlInput2").value;
     var userReceive = $('input#user2').val();
@@ -72,15 +45,27 @@ $(document).on("click","button#btn-submid-send", function (event) {
     namefile = null;
     typefile = null;
     }
-    
-    // $('input#upfilechat')[0].files[0]
-    console.log(images);
+    // var imageData;
+    // var reader;
+    // if (file) {
+    //             reader = new FileReader();
+    //             reader.onload = function (e) {
+    //                 imageData =  e.target.result;
+    //             }
+    //             reader.readAsDataURL(file);
+    //         }
+    //         $('textarea#exampleFormControlInput2').text(imageData);
+    // alert(imageData)
+    // // $('input#upfilechat')[0].files[0]
+    // console.log(imageData);
     var formData = new FormData();
     formData.append('idChat',$('input#MaChat').val())
     formData.append('message', message); // myFile is the input type="file" control
     formData.append('userReceive',userReceive);
     formData.append('file',file);
     formData.append('timeSend',new Date().toLocaleString())
+    //
+    
     console.log(file);
     if(message === null || message === '')
     {
@@ -97,7 +82,7 @@ $(document).on("click","button#btn-submid-send", function (event) {
                     return console.error(err.toString());
                 });
             }
-     }, 100);
+     }, 50);
     }
     event.preventDefault();
 });
@@ -136,3 +121,5 @@ $(document).on("click","button#btn-submid-send", function (event) {
 // }
 
 $('#details-chat').scrollTop($('#details-chat')[0].scrollHeight);
+
+//

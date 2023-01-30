@@ -28,7 +28,8 @@ namespace ForumAiTi.Controllers
         [HttpGet("/admin_qa")]
         public IActionResult admin_qa()
         {
-            return View();
+            var hd = _context.HoiDap.ToList();
+            return View(hd);
         }
 
     }

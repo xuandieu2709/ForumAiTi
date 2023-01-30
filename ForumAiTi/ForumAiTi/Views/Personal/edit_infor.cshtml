@@ -1,7 +1,34 @@
 @{
     ViewData["Title"] = "Thông tin cá nhân";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ForumAiTiContext _context = new ForumAiTiContext();
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    List<string> getListNN()
+        {
+            List<string> list = new List<string>();
+                list.Add("Sinh viên");
+                list.Add("Kỹ sư ai ti");
+                list.Add("Giảng viên");
+                list.Add("Giáo viên");
+                list.Add("Người đi làm");
+                list.Add("Freelancer");
+                list.Add("Khác");
+                return list;
+        }
+
+    List<ChiTietMxh> getListMXHByTK()
+        {
+            return _context.ChiTietMxh.Where(x => x.TaiKhoan == User.FindFirst("TaiKhoan").Value.Trim()).ToList();
+        } 
+    
 }
+@model ForumAiTi.Models.NguoiDung
 <!-- Close Header -->
 <section class="container-fluid my-2 px-5 bg-submenu p-2">
     <div class="container-fluid bg-forum2">
@@ -16,36 +43,71 @@
     <div class="row">
         <div class="col-12 col-md-5 col-lg-5 p-0">
             <div class="container-fluid">
-                <h2 class="py-4 bg-forum text-light text-center new-question" id="fullname">Nguyễn Xuân Diệu</h2>
+                @if (Model.HoTen.Equals(null))
+                {
+                    <h2 class="py-4 bg-forum text-light text-center new-question">Không xác định</h2>
+
+                }
+                else
+                {
+                    <h2 class="py-4 bg-forum text-light text-center new-question" id="fullname">@Model.HoTen</h2>
+                }
                 <div class="row user-infor">
                     <div class="user-img col-12">
-                        <img id="img-content" src="assets/img/user.jfif" alt="">
+                        <img id="img-content" src="@getAvatar(Model.HinhAnh)" alt="">
                     </div>
-                    <h4 class="birthday" id="birthday">27 / 09 /2001</h4>
+                    @if (Model.SinhNhat.Equals(null))
+                        {
+                            <h4 class="birthday" id="birthday">?? / ?? /????</h4>
+                        }
+                        else
+                        {
+                            <h4 class="birthday" id="birthday">@String.Format("{0:dd/MM/yyyy}", Model.SinhNhat)</h4>
+                        }
                     <div class="user-myself col-12">
                         <p class="infor"><i class="fa fa-info-circle"></i> Giới thiệu bản thân</p>
-                        <p class="des" id="des-yourself">Siêu đen đủi 2022. Tôi đối xử chân thành với mọi người,
-                            không bao giờ khoa
-                            trương, nhưng sự chân thành và tốt bụng khiến tôi luôn chiếm được lòng tin của bạn bè.
-                            Tôi là một người có chuyên môn vững vàng, đọc sách là niềm vui thích lớn nhất của tôi và
-                            việc nghiên cứu máy tính khiến tôi cảm thấy rất vui. Tôi làm việc chăm chỉ, bất kể việc
-                            nhỏ như thế nào, tôi phải hoàn thành một cách tỉ mỉ.</p>
+                        @if (Model.GtbanThan == null)
+                        {
+                            <p class="des" id="des-yourself">Bạn chưa cập nhật thông tin.</p>
+                        }
+                        else
+                        {
+                            <p class="des" id="des-yourself">@Model.GtbanThan</p>
+                        }
                     </div>
                     <div class="user-personal col-12">
                         <div class="row">
                             <h4 class="user-left text-center m-auto col-6"><i class="fa fa-user-secret"
                                     aria-hidden="true"></i> Nickname</h4>
-                            <h4 class="user-right text-center m-auto col-6" id="nickname">Boy AiTi</h4>
+                                                                @if (Model.Nickname == null)
+                            {
+                                <h4 class="user-right text-center m-auto col-6" id="nickname">Không xác định</h4>
+                            }
+                            else
+                            {
+                                <h4 class="user-right text-center m-auto col-6" id="nickname">@Model.Nickname</h4>
+                            }
                         </div>
                     </div>
                     <div class="user-personal col-12">
                         <div class="row">
                             <h4 class="user-left text-center m-auto col-6"><i class="fa fa-suitcase"
                                     aria-hidden="true"></i> Nghề nghiệp</h4>
-                            <h4 class="user-right text-center m-auto col-6" id="job">Kỹ sư IT</h4>
+                                    @if (Model.NgheNghiep == null)
+                            {
+                                <h4 class="user-right text-center m-auto col-6" id="job">Không xác định</h4>
+                            }
+                            else
+                            {
+                                <h4 class="user-right text-center m-auto col-6" id="job">@Model.NgheNghiep</h4>
+                            }
                         </div>
                     </div>
-                    <div class="user-card col-12 " id="div-facebook">
+                    @if(getListMXHByTK().Count() == 0)
+                    {
+
+                    }else{
+                        <div class="user-card col-12 " id="div-facebook">
                         <div class="row">
                             <h4 class="user-left text-center m-auto col-6"><i class="fa fa-facebook-square"> </i>
                                 Facebook</h4>
@@ -81,6 +143,7 @@
                             </a>
                         </div>
                     </div>
+                    }
                 </div>
             </div>
         </div>
@@ -88,30 +151,44 @@
             <h2 class="py-4 bg-forum text-center"><i class="fa fa-pencil-square" aria-hidden="true"></i> Cập nhật
                 thông tin cá nhân</h2>
             <div class="container-fluid bg-forum2">
-                <form action="#" method="post">
+                <form action="/update_infor" method="post" enctype="multipart/form-data">
                     <div class="row pt-2">
+                        @* <input type="text" asp-for="VaiTro" hidden value="@Model.VaiTro" id="VaiTro">
+                        <input type="text" asp-for="MaLoai" hidden value="@Model.MaLoai" id="MaLoai">
+                        <input type="text" asp-for="HinhAnh" hidden value="@Model.HinhAnh" id="HinhAnh"> *@
                         <div class="col-12 col-lg-7 col-md-7">
                             <div class="row edit-infor">
                                 <label for="fullname">Họ và tên</label>
-                                <input type="text" name="fullname" value="Nguyễn Xuân Diệu" id="fullname">
+                                <input type="text" asp-for="HoTen" value="@Model.HoTen" id="fullname">
+                            </div>
+                            <div class="row edit-infor">
+                                <label for="fullname">Mật khẩu</label>
+                                <div id="divPass">
+                                    <input type="password" name="Matkhau" value="@Model.MatKhau" id="Matkhau">
+                                    <i toggle="#Matkhau" class="fa fa-eye" id="hidepass"></i>
+                                </div>
                             </div>
                             <div class="row edit-infor">
                                 <label for="nickname">Nickname</label>
-                                <input type="text" name="nickname" value="Boy AiTi" id="nickname">
+                                <input type="text" asp-for="Nickname" value="@Model.Nickname" id="nickname">
+                            </div>
+                            <div class="row edit-infor">
+                                <label for="email">Email</label>
+                                <input type="email" asp-for="Email" value="@Model.Email" id="email">
                             </div>
                             <div class="row edit-infor">
                                 <label for="birthday">Sinh nhật</label>
-                                <input type="date" name="birthday" value="2001-09-27" id="birthday">
+                                <input type="date" asp-for="SinhNhat" value="@String.Format("{0:dd/MM/yyyy}", Model.SinhNhat)" id="birthday">
                             </div>
                             <div class="row edit-des">
                                 <label for="des-yourself">Giới thiệu bản thân</label>
-                                <textarea name="des-yourself"
-                                    id="des-yourself">Siêu đen đủi 2022. Tôi đối xử chân thành với mọi người, không bao giờ khoa trương, nhưng sự chân thành và tốt bụng khiến tôi luôn chiếm được lòng tin của bạn bè. Tôi là một người có chuyên môn vững vàng, đọc sách là niềm vui thích lớn nhất của tôi và việc nghiên cứu máy tính khiến tôi cảm thấy rất vui. Tôi làm việc chăm chỉ, bất kể việc nhỏ như thế nào, tôi phải hoàn thành một cách tỉ mỉ.</textarea>
+                                <textarea asp-for="GtbanThan"
+                                    id="des-yourself">@Model.GtbanThan</textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-5 col-lg-5 p-0" id="div-img2">
-                            <img src="assets/img/user.jfif" id="img-content" alt="">
-                            <button type="button" id="btn-img"><input type="file" id="changeimg"> <label
+                            <img src="@getAvatar(Model.HinhAnh)" id="img-content" alt="">
+                            <button type="button" id="btn-img"><input type="file" name="files" id="changeimg"> <label
                                     for="changeimg">Thay đổi hình ảnh đại diện</label></button>
                         </div>
                     </div>
@@ -119,79 +196,104 @@
                         <div class="col-12 col-lg-6 col-md-6 edit-infor">
                             <label for="listjob">Nghề nghiệp</label>
                             <select name="listjob" id="listjob">
-                                <option value="1">Sinh viên</option>
-                                <option value="2">Kỹ sư AiTi</option>
-                                <option value="3">Giáo viên</option>
+                                @foreach (var item in getListNN())
+                                {
+                                    @if(item == Model.NgheNghiep)
+                                    {
+                                <option selected style="background-color: #264653;color: #fff;" value="@item">@item</option>   
+                                    }else{
+                                <option value="@item">@item</option>   
+                                    }
+                                }
                             </select>
                         </div>
-                        <div class="edit-contact row col-12">
-                            <label for="" class="mb-1"><i class="fa fa-facebook-square"> </i> Facebook</label>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <input type="checkbox" name="" id="text-facebook">
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Link đính kèm thông Facebook của bạn" name=""
-                                    id="link-facebook">
-                            </div>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <label for="">Họ tên Facebook của bạn</label>
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Họ và tên của bạn trên Facebook là gì?" name=""
-                                    id="text-facebook">
-                            </div>
-                        </div>
-                        <div class="edit-contact row col-12">
-                            <label for="" class="mb-1"><i class="fa fa-github-square"> </i> Github</label>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <input type="checkbox" name="" id="text-github">
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Link đính kèm thông Github của bạn" name=""
-                                    id="link-github">
-                            </div>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <label for="">Họ tên Github của bạn</label>
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Họ và tên của bạn trên Github là gì?" name=""
-                                    id="text-github">
-                            </div>
-                        </div>
-                        <div class="edit-contact row col-12">
-                            <label for="" class="mb-1"><i class="fa fa-linkedin-square"> </i> Linkedin</label>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <input type="checkbox" name="" id="text-linked">
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Link đính kèm thông Linkedin của bạn" name=""
-                                    id="link-linked">
-                            </div>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <label for="">Họ tên Linkedin của bạn</label>
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Họ và tên của bạn trên Linkedin là gì?" name=""
-                                    id="text-linked">
-                            </div>
-                        </div>
-                        <div class="edit-contact row col-12">
-                            <label for="" class="mb-1"><i class="fa fa-stack-overflow"> </i> Stackoverflow</label>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <input type="checkbox" name="" id="text-stack">
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Link đính kèm thông Stackoverflow của bạn" name=""
-                                    id="link-stack">
-                            </div>
-                            <div class="col-12 col-lg-4 col-md-4 mb-2">
-                                <label for="">Họ tên Stackoverflow của bạn</label>
-                            </div>
-                            <div class="col-12 col-lg-8 col-md-8 mb-2">
-                                <input type="text" placeholder="Họ và tên của bạn trên Stackoverflow là gì?" name=""
-                                    id="text-stack">
-                            </div>
-                        </div>
+                        @if(getListMXHByTK().Count() != 0)
+                        {
+                            @foreach (var item in getListMXHByTK())
+                            {
+                                @if(item.MaMxh == 1)
+                                {
+                                <div class="edit-contact row col-12">
+                                    <label for="" class="mb-1"><i class="fa fa-facebook-square"> </i> Facebook</label>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <input type="checkbox" name="" id="text-facebook">
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" value="@item.Link" placeholder="Link đính kèm thông Facebook của bạn" name="ChiTietMxh.Link"
+                                            id="link-facebook">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <label for="">Họ tên Facebook của bạn</label>
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" placeholder="Họ và tên của bạn trên Facebook là gì?" value="@item.HoTenMxh" name=""
+                                            id="text-facebook">
+                                    </div>
+                                </div>
+                                }
+                                @if(item.MaMxh == 2)
+                                {
+                                <div class="edit-contact row col-12">
+                                    <label for="" class="mb-1"><i class="fa fa-linkedin-square"> </i> Linkedin</label>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <input type="checkbox" name="" id="text-linked">
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" placeholder="Link đính kèm thông Linkedin của bạn" value="@item.Link" name=""
+                                            id="link-linked">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <label for="">Họ tên Linkedin của bạn</label>
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" placeholder="Họ và tên của bạn trên Linkedin là gì?" value="@item.HoTenMxh" name=""
+                                            id="text-linked">
+                                    </div>
+                                </div>
+                                }
+                                @if(item.MaMxh == 3)
+                                {
+                                <div class="edit-contact row col-12">
+                                    <label for="" class="mb-1"><i class="fa fa-stack-overflow"> </i> Stackoverflow</label>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <input type="checkbox" name="" id="text-stack">
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" placeholder="Link đính kèm thông Stackoverflow của bạn" value="@item.Link" name=""
+                                            id="link-stack">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <label for="">Họ tên Stackoverflow của bạn</label>
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" placeholder="Họ và tên của bạn trên Stackoverflow là gì?" value="@item.HoTenMxh" name=""
+                                            id="text-stack">
+                                    </div>
+                                </div>
+                                }
+                                @if(item.MaMxh == 4)
+                                {
+                                <div class="edit-contact row col-12">
+                                    <label for="" class="mb-1"><i class="fa fa-github-square"> </i> Github</label>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <input type="checkbox" name="" id="text-github">
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" placeholder="Link đính kèm thông Github của bạn" value="@item.Link" name=""
+                                            id="link-github">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-4 mb-2">
+                                        <label for="">Họ tên Github của bạn</label>
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-md-8 mb-2">
+                                        <input type="text" placeholder="Họ và tên của bạn trên Github là gì?" value="@item.HoTenMxh" name=""
+                                            id="text-github">
+                                    </div>
+                                </div>
+                                }
+                            }
+                        }
+                        
                     </div>
                     <button class="btn btn-success m-2">Cập nhật</button>
                 </form>
@@ -257,6 +359,19 @@
     });
     // 
     $(document).ready(function () {
+        // click see pass
+        $("i#hidepass").click(function () {
+
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        // var tag = $('input#Matkhau');
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+        // end
         $('input[type="checkbox"]').each(function () {
             if ($(this).is(':checked')) {
                 var id = $(this).attr('id');

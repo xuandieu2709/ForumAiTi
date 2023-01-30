@@ -8,7 +8,7 @@
     }
     CttroChuyen getLastMess(int ma)
     {
-        return _context.CttroChuyen.OrderByDescending(x => x.ThoiGianGui).FirstOrDefault();
+        return _context.CttroChuyen.OrderByDescending(x => x.ThoiGianGui).FirstOrDefault(x => x.MaTroChuyen == ma);
     }
     NguoiDung getUSERByTK(string tk)
     {
@@ -68,10 +68,25 @@
                                         });
                                         //}
                                     });
+                                    $(document).on('click','a#clickchatDetails',function(){
+                                        var value = $(this).children("input").val();
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/chat/'+value,
+                                            data: "TaiKhoan="+value,
+                                            success: function (data) {
+                                                // alert(result)
+                                            $('#repalceblockChat').replaceWith(data);
+                                            },
+                                            error: function (data) {
+                                                alert("Đã xảy ra lỗi!\nVui lòng thử lại sau.");
+                                            }
+                                        });
+                                    });
                                 </script>
                                 <div id="chat-friend" data-mdb-perfect-scrollbar="true"
                                     style="position: relative; height: 500px">
-                                    <ul class="list-unstyled mb-0">
+                                    <ul class="list-unstyled mb-0" id="ul-chat">
                                         @if (((IEnumerable<TroChuyen>)ViewBag.ListChat).Count() == 0)
                                         {
                                             <li class="p-2 border-bottom">
@@ -82,28 +97,26 @@
                                         {
                                             @foreach (var item in (IEnumerable<TroChuyen>)ViewBag.ListChat)
                                             {
-                                                <li class="p-2 border-bottom">
-                                                    <a href="#!" class="d-flex justify-content-between">
+                                                @if (item.ThanhVien1.Trim().Equals(User.FindFirst("TaiKhoan").Value.Trim()))
+                                                {
+                                                    <li class="p-2 border-bottom">
+                                                    <a id="clickchatDetails" class="d-flex justify-content-between">
+                                                        <input type="text" name="" hidden id="MaUSER2" value="@item.ThanhVien2">
                                                         <div class="d-flex flex-row row">
                                                             <div class="col-3">
-                                                                @if (item.ThanhVien1.Trim().Equals(User.FindFirst("TaiKhoan").Value.Trim()))
-                                                                {
-                                                                    <img src="@getAvatar(getUSERByTK(item.ThanhVien1).HinhAnh)"
-                                                                        alt="avatar" class="d-flex m-auto"  style="height: 50px;width: 50px; border: 2px solid #12b1ac; border-radius: 50%;">
-                                                                }
-                                                                else
-                                                                {
-                                                                    <img src="@getAvatar(getUSERByTK(item.ThanhVien2).HinhAnh)"
-                                                                        alt="avatar" class="d-flex m-auto"  style="height: 50px;width: 50px; border: 2px solid #12b1ac; border-radius: 50%;">
-                                                                }
+                                                                <img src="@getAvatar(getUSERByTK(item.ThanhVien2).HinhAnh)"
+                                                                        alt="avatar" class="d-flex m-auto" id="avatarChat">
                                                             </div>
                                                             <div class="pt-1 ml-2 col-9">
-                                                                @* @if (get item.BdnguoiNhan != null)
-                                                                {
-                                                                    <p class="fw-bold mb-0">@item.BdnguoiNhan</p>
-                                                                } *@
-                                                                <p class="small text-muted mb-1">@getLastMess(item.MaTroChuyen).NoiDung</p>
-                                                                <p class="small text-muted">@String.Format("{0:HH:mm:ss dd/MM/yyyy}", getLastMess(item.MaTroChuyen).ThoiGianGui)</p>
+                                                                <p class="fw-bold mb-0">@item.ThanhVien2</p>
+                                                                @if(getLastMess(item.MaTroChuyen) == null)
+                                                                    {
+                                                                        <p class="small text-muted mb-1">Bạn chưa có tin nhắn nào.</p>
+                                                                        <p class="small text-muted">&nbsp;</p>
+                                                                    }else{
+                                                                        <p class="small text-muted mb-1">@getLastMess(item.MaTroChuyen).NoiDung</p>
+                                                                        <p class="small text-muted">@String.Format("{0:HH:mm:ss dd/MM/yyyy}", getLastMess(item.MaTroChuyen).ThoiGianGui)</p>
+                                                                    }
                                                             </div>
                                                         </div>
                                                         <div class="pt-1">
@@ -111,7 +124,37 @@
                                                             <span class="badge bg-danger rounded-pill float-end">1</span>
                                                         </div>
                                                     </a>
-                                                </li>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="p-2 border-bottom">
+                                                    <a id="clickchatDetails" class="d-flex justify-content-between">
+                                                        <input type="text" name="" hidden id="MaUSER2" value="@item.ThanhVien1">
+                                                        <div class="d-flex flex-row row">
+                                                            <div class="col-3">
+                                                                <img src="@getAvatar(getUSERByTK(item.ThanhVien1).HinhAnh)"
+                                                                        alt="avatar" class="d-flex m-auto" id="avatarChat">
+                                                            </div>
+                                                            <div class="pt-1 ml-2 col-9">
+                                                                <p class="fw-bold mb-0">@item.ThanhVien1</p>
+                                                                @if(getLastMess(item.MaTroChuyen) == null)
+                                                                    {
+                                                                        <p class="small text-muted mb-1">Bạn chưa có tin nhắn nào.</p>
+                                                                        <p class="small text-muted">&nbsp;</p>
+                                                                    }else{
+                                                                        <p class="small text-muted mb-1">@getLastMess(item.MaTroChuyen).NoiDung</p>
+                                                                        <p class="small text-muted">@String.Format("{0:HH:mm:ss dd/MM/yyyy}", getLastMess(item.MaTroChuyen).ThoiGianGui)</p>
+                                                                    }
+                                                            </div>
+                                                        </div>
+                                                        <div class="pt-1">
+                                                            <p class="small text-muted mb-1"></p>
+                                                            <span class="badge bg-danger rounded-pill float-end">1</span>
+                                                        </div>
+                                                    </a>
+                                                    </li>
+                                                }
                                             }
                                         }
                                     </ul>
@@ -121,7 +164,7 @@
 
                         </div>
 
-                        <div class="col-md-6 col-lg-7 col-xl-8 bg-light">
+                        <div class="col-md-6 col-lg-7 col-xl-8 bg-light" id="repalceblockChat">
                             @if (((IEnumerable<TroChuyen>)ViewBag.ListChat).Count() == 0)
                             {
                                 <div class="d-block m-auto p-5">
@@ -133,7 +176,7 @@
                             {
                                 @if(User.FindFirst("TaiKhoan").Value.Trim() == ((IEnumerable<TroChuyen>)ViewBag.ListChat).ToList()[0].ThanhVien1)
                                     {
-                                        <div class="py-3 m-0 bg-forum row">
+                                    <div class="py-3 m-0 bg-forum row">
                                     <div class="col-4 col-lg-2 col-md-3">
                                         <img id="avatar-chat" src="@getAvatar(getUSERByTK(((IEnumerable<TroChuyen>)ViewBag.ListChat).ToList()[0].ThanhVien2).HinhAnh)" alt="">
                                             <input type="text" hidden name="" id="user2" value="@getUSERByTK(((IEnumerable<TroChuyen>)ViewBag.ListChat).ToList()[0].ThanhVien2).TaiKhoan">
@@ -217,11 +260,11 @@
                                     <div class="row m-0">
                                         <div id="div-send-chat"
                                             class="col-12 row m-0 d-flex justify-content-start align-items-center pt-1 mt-2">
-                                            <div class="col-2 col-lg-1 float-right" id="div-left">
+                                            <div class="col-2 col-md-2 col-sm-2 col-lg-1 float-right" id="div-left">
                                                 <img src="@getAvatar(getUSERByTK(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)"
-                                                    alt="avatar 3" style="width: 50px; height: 50px;border-radius: 50%;">
+                                                    alt="avatar 3" id="avatarSendChat">
                                             </div>
-                                            <div class="col-9 col-lg-10" id="div-right">
+                                            <div class="col-9 col-md-8 col-sm-8 col-lg-10" id="div-right">
                                                 <input type="text" value="@User.FindFirst("TaiKhoan").Value.Trim()"
                                                     id="username" hidden>
                                                 <a class="ms-1"><input hidden type="file" name="" id="upfilechat"><label
@@ -279,7 +322,6 @@
 
                 </div>
             </div>
-
         </div>
     </div>
 </section>

@@ -29,6 +29,41 @@ namespace ForumAiTi.Controllers
             // var list1 = _context.TinTuc.FromSqlRaw($"Select * from HoiDap where CONCAT_WS(TieuDe,NoiDung,NguoiDang) like N'%"+search+"%'").ToList();
             var list1 = _context.HoiDap.Where(x => x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search)).ToList();
             var list = _context.TinTuc.Where(x => x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search)).ToList();
+            var listUser = new List<NguoiDung>();
+            // foreach(var item in list1)
+            // {
+            //     var user = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == item.NguoiDang && x.VaiTro == "USER");
+            //     listUser.Add(user);
+            // }
+            // foreach(var item in list)
+            // {
+            //     var user = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == item.NguoiDang && x.VaiTro == "USER");
+            //     listUser.Add(user);
+            // }
+            var listU = _context.NguoiDung.Where(x => (x.TaiKhoan!.Contains(search) && x.VaiTro == "USER") || (x.HoTen!.Contains(search)&& x.VaiTro == "USER") || (x.Nickname!.Contains(search)&& x.VaiTro == "USER")).ToList();
+            if(listU != null)
+            {
+                foreach(var item in listU)
+                {
+                    listUser.Add(item);
+                }
+            }
+            // var listnew = new List<NguoiDung>();
+            Console.WriteLine(listUser.Count());
+            // if(listUser.Count != 0)
+            // {
+            //     // IEnumerable<NguoiDung> listnew = 
+            // foreach(var item in listUser)
+            // {
+            //     Console.WriteLine(item);
+            //  } 
+            // // ViewBag.ListUSER = listnew;
+            // // Console.WriteLine(listnew.Count());
+            // }else{
+            //     var listnew = new List<NguoiDung>();
+            // ViewBag.ListUSER = listnew;
+            // }
+            ViewBag.ListUSER = listUser;
             ViewBag.ListHD = list1;
             ViewBag.ListTT = list;
             ViewBag.Keyword = search;
