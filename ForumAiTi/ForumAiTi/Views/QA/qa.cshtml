@@ -17,17 +17,13 @@
     {
         return _context.NguoiDung.OrderByDescending(x => x.VaiTro == "USER").Take(3).ToList();
     }
-    List<HoiDap> getLISTQA()
-    {
-        return _context.HoiDap.ToList();
-    }
     List<HoiDap> getLISTnewQA()
     {
-        return _context.HoiDap.OrderBy(x => x.NgayDang).ToList();
+        return _context.HoiDap.Take(5).OrderByDescending(x => x.NgayDang).ToList();
     }
-    List<CthoiDap> getlistDMByMA(int ma)
+    List<CthoiDap> getListDMbyMaHD(int ma)
     {
-        return _context.CthoiDap.Where(x => x.MaHoiDap == ma).Take(5).ToList();
+        return _context.CthoiDap.Where(x => x.MaHoiDap == ma).ToList();
     }
     DanhMucHoiDap getDMbyMA(int ma)
     {
@@ -48,7 +44,15 @@
         count = list.Count();
         return count;
     }
+    Pager paper = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        paper = ViewBag.Pager;
+        pageNo = paper.CurrentPage;
+    }
 }
+@model IEnumerable<HoiDap>;
 <!-- Close Header -->
 <section class="container-fluid my-2 px-5 bg-submenu p-2">
     <div class="container-fluid bg-forum2">
@@ -98,23 +102,153 @@
                                     language: "vi"
                                 });
                             });
+                            $(document).on('change', '#listcategory', function () {
+                            @* alert("da change"+ $(this).val() + $('#single-select-field').val()); *@
+                                var arr = $(this).val();
+                                var filters = $('#single-select-field :selected').val();
+                                var formData = new FormData();
+                                formData.append("sapxep",filters);
+                                @* for (i = 0; i < arr.length; i++) {
+                                    listModelMa.push({ Ma: Number(arr[i]), sapxep: Number(filters), page: 1 });
+                                } *@
+                                if(arr != null)
+                                {
+                                    if(arr.length == 1)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                }
+                                if(arr.length == 2)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                    formData.append("Ma2",arr[1]);
+                                }
+                                if(arr.length == 3)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                    formData.append("Ma2",arr[1]);
+                                    formData.append("Ma2",arr[2]);
+
+                                }
+                                }
+                                
+                                    $.ajax({
+                                        type: 'POST',
+                                        processData: false,  // tell jQuery not to process the data
+                                        contentType: false,
+                                        url: '/replacewithDM',
+                                        data: formData,
+                                        success: function (result) {
+                                            $('div#demoqa').replaceWith(result);
+                                        },
+                                        error: function (result) {
+                                                alert("Đã có lỗi xảy ra!");
+                                        }
+                                    });
+                            });
+                            //
+                            $(document).on('change', '#single-select-field', function () {
+                            @* alert("da change"+ $(this).val() + $('#single-select-field').val()); *@
+                                 var arr = $('#listcategory :selected').toArray().map(x => $(x).val());
+                                var filters = $(this).val();
+                                var formData = new FormData();
+                                formData.append("sapxep",filters);
+                                @* for (i = 0; i < arr.length; i++) {
+                                    listModelMa.push({ Ma: Number(arr[i]), sapxep: Number(filters), page: 1 });
+                                } *@
+                                if(arr != null)
+                                {
+                                    if(arr.length == 1)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                }
+                                if(arr.length == 2)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                    formData.append("Ma2",arr[1]);
+                                }
+                                if(arr.length == 3)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                    formData.append("Ma2",arr[1]);
+                                    formData.append("Ma2",arr[2]);
+
+                                }
+                                }
+                                
+                                    $.ajax({
+                                        type: 'POST',
+                                        processData: false,  // tell jQuery not to process the data
+                                        contentType: false,
+                                        url: '/replacewithDM',
+                                        data: formData,
+                                        success: function (result) {
+                                            $('div#demoqa').replaceWith(result);
+                                        },
+                                        error: function (result) {
+                                                alert("Đã có lỗi xảy ra!");
+                                        }
+                                    });
+                            });
+                            $(document).on('click', 'ul#clickTaga li a', function () {
+                                event.preventDefault();
+                                var page = Number(String(($(this).attr('href')).substring(9,($(this).attr('href').length))));
+                                //
+                                var arr = $('#listcategory :selected').toArray().map(x => $(x).val());
+                                var filters = $('#single-select-field :selected').val();
+                                console.log(page +'\n'+arr+ "fil"+filters);
+                                var formData = new FormData();
+                                formData.append("sapxep",filters);
+                                formData.append("sotrang",page);
+                                if(arr != null)
+                                {
+                                    if(arr.length == 1)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                }
+                                if(arr.length == 2)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                    formData.append("Ma2",arr[1]);
+                                }
+                                if(arr.length == 3)
+                                {
+                                    formData.append("Ma1",arr[0]);
+                                    formData.append("Ma2",arr[1]);
+                                    formData.append("Ma2",arr[2]);
+
+                                }
+                                }
+                                
+                                    $.ajax({
+                                        type: 'POST',
+                                        processData: false,  // tell jQuery not to process the data
+                                        contentType: false,
+                                        url: '/replacewithDM',
+                                        data: formData,
+                                        success: function (result) {
+                                            $('div#demoqa').replaceWith(result);
+                                        },
+                                        error: function (result) {
+                                                alert("Đã có lỗi xảy ra!");
+                                        }
+                                    });
+                            });
                         </script>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6">
                         Thời gian đăng bài
                         <select style="border: 3px solid #f4a261;padding: 1%;" class="form-select mt-2"
-                            id="single-select-field" data-placeholder="Choose one thing">
-                            <option></option>
-                            <option>Hôm nay</option>
-                            <option>Tuần trước</option>
-                            <option>Tháng này</option>
-                            <option>Năm này</option>
+                            id="single-select-field" name="filters" data-placeholder="Choose one thing">
+                            <option value="2" selected style="padding: 6px; font-size: 18px !important;">Mới nhất trước</option>
+                            <option value="1" style="padding: 6px; font-size: 18px !important;">Cũ nhất trước</option>
+                            @* <option>Tháng này</option>
+                            <option>Năm này</option> *@
                         </select>
                     </div>
                 </div>
             </div>
             <div class="QA my-2" id="demoqa">
-                @foreach (var item in @getLISTQA())
+                @foreach (var item in Model)
                 {
                     <div class="question row">
                         <div class="question-body col-12">
@@ -123,10 +257,11 @@
                                 <h4 class="question-title">@item.TieuDe</h4>
                             </a>
                             <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang) - <a
-                                    href="/personal/@item.NguoiDang"><img id="question-imguser" src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)"
-                                        alt=""> @getUSER(item.NguoiDang).HoTen</a></p>
+                                    href="/personal/@item.NguoiDang"><img id="question-imguser"
+                                        src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt="">
+                                    @getUSER(item.NguoiDang).HoTen</a></p>
                             <p class="question-list">
-                                @foreach (var item1 in @getlistDMByMA(item.MaHoiDap))
+                                @foreach (var item1 in @getListDMbyMaHD(item.MaHoiDap))
                                 {
                                     <a href="#">@getDMbyMA((int)item1.MaDanhMuc).TenDanhMuc</a>
                                 }
@@ -144,6 +279,38 @@
                             </p>
                         </div>
                     </div>
+                }
+                @if (paper.TotalPages > 0)
+                {
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if (paper.CurrentPage > 1)
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="qa" asp-controller="QA"
+                                asp-route-page="@(paper.CurrentPage -1)">Trước</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link disabeled">Trước</a></li>
+                            }
+                            @for (var pagee = paper.StartPage; pagee <= paper.EndPage; pagee++)
+                            {
+                                <li class="page-item @(pagee == paper.CurrentPage ? "active" : "")">
+                                    <a class="page-link" asp-action="qa" asp-controller="QA" asp-route-page="@pagee"> @pagee
+                                    </a>
+                                </li>
+                            }
+                            @if (paper.CurrentPage < paper.EndPage)
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="qa" asp-controller="QA"
+                                asp-route-page="@(paper.CurrentPage +1)">Sau</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link disabeled">Sau</a></li>
+                            }
+                        </ul>
+                    </nav>
                 }
                 <script>
                 </script>
@@ -193,7 +360,7 @@
                                     }
                                     else
                                     {
-                                        <p>@item.SinhNhat</p>
+                                        <p>@String.Format("{0:dd - MM - yyyy}", item.SinhNhat)</p>
                                     }
                                 </div>
                             </div>

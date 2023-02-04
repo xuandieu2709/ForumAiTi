@@ -57,8 +57,11 @@
                     <p class="news-paragraph-content">
                         @item.NoiDung
                     </p>
-                    <img src="@getIMG(item.File)" alt="">
-                    <p class="paragraph-note-img">@item.ChuThich</p>
+                    @if(item.File != null && item.File.Length > 0) 
+                            {
+                            <img src="@getIMG(item.File)" alt="">
+                            <p class="paragraph-note-img">@item.ChuThich</p>
+                            }
                 </div>
                 }
             </div>

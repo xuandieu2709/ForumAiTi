@@ -42,6 +42,35 @@
     {
         return _context.HoiDap.Where(x => x.NguoiDang == tk).ToList();
     }
+    int CountSumPOST()
+    {
+        string tk = User.FindFirst("TaiKhoan").Value.Trim();
+        var list = _context.HoiDap.Where(x =>x.NguoiDang == tk).ToList();
+        return list.Count();
+    }
+    int CountSumComment()
+    {
+        string tk = User.FindFirst("TaiKhoan").Value.Trim();
+        var list = _context.BinhLuan.Where(x =>x.TaiKhoan == tk).ToList();
+        return list.Count();
+    }
+    long CountSumWatch()
+    {
+        string tk = User.FindFirst("TaiKhoan").Value.Trim();
+        var list = _context.HoiDap.Where(x =>x.NguoiDang == tk).ToList();
+        long count = 0;
+        foreach(var i in list)
+        {
+            count += (long)i.LuotXem;
+        }
+        return count;
+    }
+    int CountSumFollow()
+    {
+        string tk = User.FindFirst("TaiKhoan").Value.Trim();
+        var list = _context.TheoDoi.Where(x =>x.MaNguoiDuocTd == tk).ToList();
+        return list.Count();
+    }
 }
 @* @model List<NguoiDung> *@
     <section class="container-fluid my-2 px-5 bg-submenu p-2">
@@ -259,38 +288,38 @@
                 <div class="container-fluid mt-3">
                     <div class="row Thongke">
                         <div class="col-5 Thongke-left">
-                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                            <i class="fa fa-chart-bar" aria-hidden="true"></i>
                         </div>
                         <div class=" col-7 Thongke-right">
                             <h4>Tổng bài đăng</h4>
-                            <p>100 bài</p>
+                            <p>@CountSumPOST() bài</p>
                         </div>
                     </div>
                     <div class="row Thongke">
                         <div class="col-5 Thongke-left">
-                            <i class="fa fa-line-chart" aria-hidden="true"></i>
+                            <i class="fa fa-chart-line" aria-hidden="true"></i>
                         </div>
                         <div class=" col-7 Thongke-right">
                             <h4>Bình luận</h4>
-                            <p>3000 bình luận</p>
+                            <p>@CountSumComment() bình luận</p>
                         </div>
                     </div>
                     <div class="row Thongke">
                         <div class="col-5 Thongke-left">
-                            <i class="fa fa-area-chart" aria-hidden="true"></i>
+                            <i class="fa fa-chart-area" aria-hidden="true"></i>
                         </div>
                         <div class=" col-7 Thongke-right">
                             <h4>Lượt xem</h4>
-                            <p>10000 lượt</p>
+                            <p>@CountSumWatch() lượt</p>
                         </div>
                     </div>
                     <div class="row Thongke">
                         <div class="col-5 Thongke-left">
-                            <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                            <i class="fa fa-chart-pie" aria-hidden="true"></i>
                         </div>
                         <div class=" col-7 Thongke-right">
                             <h4>Tổng lượng theo dõi</h4>
-                            <p>1000 lượt</p>
+                            <p>@CountSumFollow() lượt</p>
                         </div>
                     </div>
 

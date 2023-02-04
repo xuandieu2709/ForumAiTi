@@ -18,7 +18,10 @@ namespace ForumAiTi.Controllers
     public class Admin_NewsController : Controller
     {
         private readonly ILogger<Admin_NewsController> _logger;
+        [Obsolete]
         private IHostingEnvironment _environment;
+
+        [Obsolete]
         public Admin_NewsController(IHostingEnvironment environment, ILogger<Admin_NewsController> logger)
         {
             _logger = logger;
@@ -26,7 +29,7 @@ namespace ForumAiTi.Controllers
 
         }
         private ForumAiTiContext _context = new ForumAiTiContext();
-        
+
         [HttpGet("/add_news")]
         public IActionResult add_news()
         {
@@ -40,6 +43,7 @@ namespace ForumAiTi.Controllers
         }
         [Authorize(Roles = "ADMIN")]
         [HttpPost("/add_news_admin")]
+        [Obsolete]
         public IActionResult admin_news(TinTuc tinTuc, IFormFile FileND, IFormCollection form)
         {
             tinTuc.NguoiDang = User.FindFirst("TaiKhoan").Value.Trim();
@@ -121,7 +125,7 @@ namespace ForumAiTi.Controllers
                             string sql = "INSERT INTO [dbo].[NoiDungTinTuc] ([MaTinTuc],[NoiDung],[File],[TenFile],[LoaiFile],[ChuThich]) VALUES({0},{1},{2},{3},{4},{5})";
                             _context.Database.ExecuteSqlRaw(sql, newnd.MaTinTuc, newnd.NoiDung, newnd.File, newnd.TenFile, newnd.LoaiFile, newnd.ChuThich);
                         }
-                        var file1 = Path.Combine(_environment.ContentRootPath, "wwwroot/images/TinTuc", FileND.FileName);
+                        var file1 = Path.Combine(_environment.ContentRootPath, "wwwroot/images/TinTuc", item.File.FileName);
                         using (var fileStream1 = new FileStream(file1, FileMode.Create))
                         {
                             item.File.CopyTo(fileStream1);
@@ -129,6 +133,11 @@ namespace ForumAiTi.Controllers
                     }
                     else
                     {
+                        var newnd = new NoiDungTinTuc();
+                        newnd.MaTinTuc = tt.MaTinTuc;
+                        newnd.NoiDung = list[count].NoiDung;
+                        string sql = "INSERT INTO [dbo].[NoiDungTinTuc] ([MaTinTuc],[NoiDung]) VALUES({0},{1})";
+                        _context.Database.ExecuteSqlRaw(sql, newnd.MaTinTuc, newnd.NoiDung);
                         Console.WriteLine("Hinh k có = 0" + item.STT);
                     }
                     count++;

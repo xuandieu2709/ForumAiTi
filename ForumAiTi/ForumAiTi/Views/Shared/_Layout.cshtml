@@ -42,6 +42,7 @@
     <script src="~/dist/js/select2.min.js"></script>
     <!-- end -->
     <script src="~/js/pagination.min.js"></script>
+    <script src="~/js/showIMG.js"></script>
 </head>
 
 <body>
@@ -78,11 +79,11 @@
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
-                    <form action="/search" method="post">
+                    <form action="/search" method="GET">
                         <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                             <div class="input-group">
-                                <input type="text" name="search" value="@ViewBag.Keyword" class="form-control" id="inputMobileSearch"
-                                    placeholder="Tìm kiếm ...">
+                                <input type="text" name="search" value="@ViewBag.Keyword" class="form-control"
+                                    id="inputMobileSearch" placeholder="Tìm kiếm ...">
                                 <div class="input-group-text">
                                     <button class="btn border-0"><i class="fa fa-fw fa-search"></i></button>
                                 </div>
@@ -135,10 +136,10 @@
             <div class="w-100 pt-1 mb-5 text-right">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/search" method="POST" class="modal-content modal-body p-0">
+            <form action="/search" method="GET" class="modal-content modal-body p-0">
                 <div class="input-group" id="div-searchsearch">
-                    <input type="text" class="form-control m-0" value="@ViewBag.Keyword" id="inputModalSearch" name="search"
-                        placeholder="Tìm kiếm ...">
+                    <input type="text" class="form-control m-0" value="@ViewBag.Keyword" id="inputModalSearch"
+                        name="search" placeholder="Tìm kiếm ...">
                     <button type="submit" class="input-group-text bg-success text-light">
                         <i class="fa fa-fw fa-search text-white"></i>
                     </button>
@@ -154,6 +155,13 @@
             });
         });
     </script>
+    <!-- IMG -->
+    <div id="myModal1" class="modal1">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+    <!-- end -->
     <script src="dist/js/i18n/vi.js"></script>
     @RenderBody()
     <!-- Start Footer -->

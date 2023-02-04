@@ -23,7 +23,7 @@
     }
     List<HoiDap> getLISTnewQA()
     {
-        return _context.HoiDap.OrderBy(x => x.NgayDang).ToList();
+        return _context.HoiDap.Take(5).OrderByDescending(x => x.NgayDang).ToList();
     }
     string getAvatar(byte[] avataar)
     {
@@ -191,7 +191,15 @@
                             <label for="upload1"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
                             <textarea name="comment" id="comment"></textarea>
                             <div class="garellyImages"></div>
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                @if(User.IsInRole("ADMIN") == true)
+                                {
+                            <button type="button" onclick="alert('Để bình luận hãy đăng nhập bằng tài khoản người dùng')" class="btn btn-send">Bình luận</button>
+                            }
+                            }else{
                             <button id="btnComment" class="btn btn-send">Bình luận</button>
+                            }
                         </div>
                     </div>
                 </section>
@@ -213,7 +221,7 @@
                         <a href="/details_qa/@item.MaHoiDap">
                             <h4 class="question-sub-title">@item.TieuDe</h4>
                         </a>
-                        <p class="question-sub-time-posted">Đăng ngày @item.NgayDang</p>
+                        <p class="question-sub-time-posted">Đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang)</p>
                         <a href="/personal/@item.NguoiDang">
                             <p class="question-sub-imguser"><img src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</p>
                         </a>
@@ -237,7 +245,7 @@
                                 {
                                 <p>?? - ?? - ????</p>
                                 }else{
-                                <p>@item.SinhNhat</p>
+                                <p>@String.Format("{0:dd - MM - yyyy}", item.SinhNhat)</p>
                                 }
                             </div>
                         </div>
@@ -248,4 +256,4 @@
             </div>
         </div>
     </section>
-    <script src="~/js/qaa.js"></script>
+    <script src="~/js/qa.js"></script>

@@ -66,13 +66,17 @@ namespace ForumAiTi.Controllers
             td.ThoiGianTd = DateTime.Now;
             TroChuyen tc = new TroChuyen();
             tc.ThanhVien1 = tk;
-            tc.ThanhVien2 =TaiKhoan;
+            tc.ThanhVien2 = TaiKhoan;
             tc.ThoiGianTao = DateTime.Now;
+            var find = _context.TroChuyen.FirstOrDefault(x => (x.ThanhVien1 == TaiKhoan && x.ThanhVien2 == tk) || (x.ThanhVien2 == TaiKhoan && x.ThanhVien1 == tk));
+            if (find == null)
+            {
+                _logger.LogInformation("Doan chat giua 2 nguoi " + TaiKhoan + " va " + tk + " khong co!");
+                _context.Add(tc);
+            }
             // TV1 : USER theo doi , TV2  : USER dc theo doi
             _context.Add(td);
-            _context.Add(tc);
             var check = _context.SaveChanges();
-
             if (check > 0)
             {
                 return true;
@@ -89,8 +93,8 @@ namespace ForumAiTi.Controllers
         {
             // TV1 : USER theo doi , TV2  : USER dc theo doi
             string tk = User.FindFirst("TaiKhoan").Value.Trim();
-            var chat  = _context.TroChuyen.Where(x => x.ThanhVien1 == tk && x.ThanhVien2 == TaiKhoan).FirstOrDefault();
-            _context.CttroChuyen.FromSqlRaw("DELETE FROM CTTroChuyen WHERE MaTroChuyen = {0}",chat.MaTroChuyen);
+            var chat = _context.TroChuyen.Where(x => x.ThanhVien1 == tk && x.ThanhVien2 == TaiKhoan).FirstOrDefault();
+            _context.CttroChuyen.FromSqlRaw("DELETE FROM CTTroChuyen WHERE MaTroChuyen = {0}", chat.MaTroChuyen);
             _context.Remove(chat);
             var td = _context.TheoDoi.Where(x => x.MaNguoiTd.Trim() == tk && x.MaNguoiDuocTd.Trim() == TaiKhoan).FirstOrDefault();
             _context.Remove(td);
@@ -116,7 +120,7 @@ namespace ForumAiTi.Controllers
 
         [Authorize(Roles = "USER")]
         [HttpPost("/update_infor")]
-        public IActionResult edit_infor(NguoiDung user,IFormFile files, IFormCollection form)
+        public IActionResult edit_infor(NguoiDung user, IFormFile files, IFormCollection form)
         {
             if (files != null)
             {
@@ -135,16 +139,18 @@ namespace ForumAiTi.Controllers
             }
             user.TaiKhoan = User.FindFirst("TaiKhoan").Value.Trim();
             user.NgheNghiep = form["listjob"];
-            if(files != null)
+            if (files != null)
             {
                 string sql = "UPDATE [dbo].[NguoiDung] SET [HoTen] = {0},[SinhNhat] = {1},[Nickname] = {2},[GTBanThan] = {3},[NgheNghiep] = {4},[HinhAnh] = {5},[Email] = {6},[MatKhau] = {7} WHERE TaiKhoan = {8};";
-                _context.Database.ExecuteSqlRaw(sql,user.HoTen,user.SinhNhat,user.Nickname,user.GtbanThan,user.NgheNghiep,user.HinhAnh,user.Email,user.MatKhau,user.TaiKhoan);
+                _context.Database.ExecuteSqlRaw(sql, user.HoTen, user.SinhNhat, user.Nickname, user.GtbanThan, user.NgheNghiep, user.HinhAnh, user.Email, user.MatKhau, user.TaiKhoan);
 
-            }else{
-                string sql = "UPDATE [dbo].[NguoiDung] SET [HoTen] = {0},[SinhNhat] = {1},[Nickname] = {2},[GTBanThan] = {3},[NgheNghiep] = {4},[Email] = {5},[MatKhau] = {6} WHERE TaiKhoan = {7};";
-                _context.Database.ExecuteSqlRaw(sql,user.HoTen,user.SinhNhat,user.Nickname,user.GtbanThan,user.NgheNghiep,user.Email,user.MatKhau,user.TaiKhoan);
             }
-            
+            else
+            {
+                string sql = "UPDATE [dbo].[NguoiDung] SET [HoTen] = {0},[SinhNhat] = {1},[Nickname] = {2},[GTBanThan] = {3},[NgheNghiep] = {4},[Email] = {5},[MatKhau] = {6} WHERE TaiKhoan = {7};";
+                _context.Database.ExecuteSqlRaw(sql, user.HoTen, user.SinhNhat, user.Nickname, user.GtbanThan, user.NgheNghiep, user.Email, user.MatKhau, user.TaiKhoan);
+            }
+
             var user2 = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == User.FindFirst("TaiKhoan").Value.Trim());
             return View(user2);
         }

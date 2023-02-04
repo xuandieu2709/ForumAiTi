@@ -57,6 +57,13 @@ $(document).on('click', 'i#img0', function () {
 $(document).on('click', 'button#btnComment', function (event) {
     event.preventDefault();
     var comment = $('textarea#comment').val();
+    if((!comment && !$('input#upload')[0].files[0]))
+    {
+        alert("Vui lòng nhập bình luận hoặc chọn hình ảnh.")
+        // comment was empty string, false, 0, null, undefined, ...
+        $('textarea#comment')[0].setCustomValidity("Vui lòng nhập thông tin vào trường bình luận");
+    }else{
+    $('textarea#comment')[0].setCustomValidity("");
     var ma = Number($('p#MaHD').text());
     var formData = new FormData();
     formData.append('file', $('input#upload')[0].files[0]); // myFile is the input type="file" control
@@ -83,6 +90,7 @@ $(document).on('click', 'button#btnComment', function (event) {
             // console.log(result + result.status);
         }
     });
+    }
 });
 // function xhrRequest() {
 //     console.log(this.status);
@@ -94,10 +102,10 @@ $(document).on('click', 'button#btnComment', function (event) {
 //     oReq.open("POST", "/comment_qa");
 //     oReq.send();
 // }
-$(document).ready(function () {
-    $("#loadcomment").slice(0, 5).show();
+// $(document).ready(function () {
+//     $("#loadcomment").slice(0, 5).show();
 
-});
+// });
   // $(document).on("button#load-more","click", function(e){
     //   e.preventDefault();
     //   $("div#loadcomment:hidden").slice(0, 5).slideDown();

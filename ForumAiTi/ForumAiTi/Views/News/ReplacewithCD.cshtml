@@ -1,0 +1,95 @@
+@{
+    ForumAiTiContext _context = new ForumAiTiContext();
+    string getIMG(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    List<CttinTuc> getlistCDByMA(int ma)
+    {
+        return _context.CttinTuc.Where(x => x.MaTinTuc == ma).Take(5).ToList();
+    }
+    ChuDe getCDbyMA(int ma)
+    {
+        return _context.ChuDe.Where(x => x.MaChuDe == ma).FirstOrDefault();
+    }
+    Pager paper = new Pager();
+    int pageNo = 0;
+    if(ViewBag.Pager != null)
+    {
+        paper = ViewBag.Pager;
+        pageNo = paper.CurrentPage;
+    }
+}
+@model IEnumerable<TinTuc>
+<div class="div-news my-2" id="divreplaceNews">
+    @if(Model.Count() == 0)
+    {
+        <div class="row bg-forum p-5">
+        <h2 class="text-center">Không tìm thấy tin tức nào phù hợp.</h2>
+        </div>
+    }
+    else{
+        @foreach (var item in Model)
+                {
+                    <div class="news row">
+                        <div class="news-left p-0 col-12 col-lg-4 col-md-4">
+                            <img class="m-0" src="@getIMG(item.HinhAnh)" alt="">
+                        </div>
+                        <div class="news-right col-12 col-lg-8 col-md-8">
+                            <a href="/details_news/@item.MaTinTuc">
+                                <h4 class="news-title">@item.TieuDe</h4>
+                            </a>
+                            <p class="news-time-post">Đăng ngày  @String.Format("{0:dd/MM/yyyy}", item.NgayDang)</p>
+                            <p class="news-list">
+                                @foreach (var item1 in getlistCDByMA(item.MaTinTuc))
+                                {
+                                    <a href="#">@getCDbyMA((int)item1.MaChuDe).TenChuDe</a>
+                                }
+                            </p>
+                            <p class="news-content">@item.NoiDung
+                            </p>
+                        </div>
+                    </div>
+                }
+                @if(paper.TotalPages > 0)
+                {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="clickTaga">
+                        @if(paper.CurrentPage > 1)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="news" asp-controller="News" asp-route-page="@(paper.CurrentPage -1)">Trước</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Trước</a></li>
+                        }
+                        @for (var pagee = paper.StartPage;pagee <= paper.EndPage;pagee++)
+                        {
+                            <li class="page-item @(pagee == paper.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-action="news" asp-controller="News" asp-route-page="@pagee" > @pagee </a>
+                            </li>
+                        }
+                        @if(paper.CurrentPage < paper.EndPage)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="news" asp-controller="News" asp-route-page="@(paper.CurrentPage +1)">Sau</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Sau</a></li>
+                        }
+                    </ul>
+                </nav>
+                }
+                @* <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Trước</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                </nav> *@
+    }
+                
+</div>

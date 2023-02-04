@@ -48,6 +48,27 @@
     {
         return _context.ChuDe.Where(x => x.MaChuDe == ma).FirstOrDefault();
     }
+    Pager paper = new Pager();
+    int pageNo = 0;
+    if(ViewBag.Pager != null)
+    {
+        paper = ViewBag.Pager;
+        pageNo = paper.CurrentPage;
+    }
+    Pager paper1 = new Pager();
+    int pageNo1 = 0;
+    if(ViewBag.Pager1 != null)
+    {
+        paper1 = ViewBag.Pager1;
+        pageNo1 = paper1.CurrentPage;
+    }
+    Pager paper2 = new Pager();
+    int pageNo2 = 0;
+    if(ViewBag.Pager2 != null)
+    {
+        paper2 = ViewBag.Pager2;
+        pageNo2 = paper2.CurrentPage;
+    }
 }
     <!-- Close Header -->
     <section class="container-fluid my-2 px-5 bg-submenu p-2">
@@ -115,15 +136,33 @@
                         </div>
                     </div>
                 }   
+                @if(paper.TotalPages > 0)
+                {
                 <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Trước</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Sau</a></li>
-                            </ul>
-                        </nav>
+                    <ul class="pagination">
+                        @if(paper.CurrentPage > 1)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="search" asp-controller="Search" asp-route-search="@ViewBag.Keyword" asp-route-page="@(paper.CurrentPage -1)">Trước</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Trước</a></li>
+                        }
+                        @for (var pagee = paper.StartPage;pagee <= paper.EndPage;pagee++)
+                        {
+                            <li class="page-item @(pagee == paper.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-action="search" asp-controller="Search" asp-route-search="@ViewBag.Keyword" asp-route-page="@pagee" > @pagee </a>
+                            </li>
+                        }
+                        @if(paper.CurrentPage < paper.EndPage)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="search" asp-controller="Search" asp-route-search="@ViewBag.Keyword" asp-route-page="@(paper.CurrentPage +1)">Sau</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Sau</a></li>
+                        }
+                    </ul>
+                </nav>
+                }
                         }else{
                             <div class="question row p-5">
                                 <h1 class="text-center">Không tìm thấy kết quả phù hợp</h1>
@@ -163,7 +202,34 @@
                         </div>
                     </div>
                 }
+                @if(paper1.TotalPages > 0)
+                {
                 <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        @if(paper1.CurrentPage > 1)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="search" asp-route-search="@ViewBag.Keyword"  asp-controller="Search" asp-route-page1="@(paper1.CurrentPage -1)">Trước</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Trước</a></li>
+                        }
+                        @for (var pagee = paper1.StartPage;pagee <= paper1.EndPage;pagee++)
+                        {
+                            <li class="page-item @(pagee == paper1.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-action="search" asp-route-search="@ViewBag.Keyword" asp-controller="Search" asp-route-page1="@pagee" > @pagee </a>
+                            </li>
+                        }
+                        @if(paper1.CurrentPage < paper1.EndPage)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="search" asp-route-search="@ViewBag.Keyword" asp-controller="Search" asp-route-page1="@(paper1.CurrentPage +1)">Sau</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Sau</a></li>
+                        }
+                    </ul>
+                </nav>
+                }
+                @* <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item"><a class="page-link" href="#">Trước</a></li>
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -171,7 +237,7 @@
                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item"><a class="page-link" href="#">Sau</a></li>
                             </ul>
-                        </nav>
+                        </nav> *@
                         }else
                         {
                             <div class="news row p-5">
@@ -181,9 +247,11 @@
                     </div>
                 </div>
                 <!-- -->
-                <h2 class="py-4 bg-forum text-light text-center new-question">Thành viên ưu tú</h2>
+                <h2 class="py-4 bg-forum text-light text-center new-question">Thành viên Forum</h2>
                 <div class="listTopMember">
-                    @foreach (var item in ViewBag.ListUSER)
+                    @if (((IEnumerable<NguoiDung>)ViewBag.ListUSER).Count() > 0)
+                        {
+                            @foreach (var item in ViewBag.ListUSER)
                     {
                         <a href="/personal/@item.TaiKhoan">
                             <div class="row member">
@@ -198,12 +266,45 @@
                                     }
                                     else
                                     {
-                                        <p>@item.SinhNhat</p>
+                                        <p>@String.Format("{0:dd - MM - yyyy}", item.SinhNhat)</p>
                                     }
                                 </div>
                             </div>
                         </a>
                     }
+                    @if(paper2.TotalPages > 0)
+                {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        @if(paper2.CurrentPage > 1)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="search" asp-controller="Search" asp-route-search="@ViewBag.Keyword" asp-route-page2="@(paper2.CurrentPage -1)">Trước</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Trước</a></li>
+                        }
+                        @for (var pagee = paper2.StartPage;pagee <= paper2.EndPage;pagee++)
+                        {
+                            <li class="page-item @(pagee == paper2.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-action="search" asp-controller="Search" asp-route-search="@ViewBag.Keyword" asp-route-page2="@pagee" > @pagee </a>
+                            </li>
+                        }
+                        @if(paper2.CurrentPage < paper2.EndPage)
+                        {
+                        <li class="page-item"><a class="page-link" asp-action="search" asp-controller="Search" asp-route-search="@ViewBag.Keyword" asp-route-page2="@(paper2.CurrentPage +1)">Sau</a></li>
+                        }else
+                        {
+                        <li class="page-item"><a class="page-link disabeled">Sau</a></li>
+                        }
+                    </ul>
+                </nav>
+                }
+                        }
+                        else{
+                            <div class="news row p-5">
+                                <h1 class="text-center">Không tìm thấy kết quả phù hợp</h1>
+                            </div>
+                        }
                 </div>
             </div>
         </div>

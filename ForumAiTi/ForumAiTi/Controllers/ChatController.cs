@@ -49,23 +49,39 @@ namespace ForumAiTi.Controllers
         }
 
         [HttpPost("/searchChat")]
-        public IActionResult searchChat(string search )
+        public IActionResult searchChat(string search)
         {
             string tk = User.FindFirst("TaiKhoan").Value.Trim();
-            var listUser = _context.NguoiDung.Where(x => x.HoTen!.Contains(search) || x.Nickname!.Contains(search)|| x.TaiKhoan!.Contains(search)).ToList();
+            var listUser = _context.NguoiDung.Distinct().Where(x => x.HoTen!.Contains(search) || x.Nickname!.Contains(search)|| x.TaiKhoan!.Contains(search)).ToList();
             // var listUser = _context.NguoiDung.FromSqlRaw("Select distinct nd.[HoTen],nd.[SinhNhat],nd.[Nickname],nd.[GTBanThan],nd.[NgheNghiep],nd.[HinhAnh],nd.[Email],nd.[GioiTinh],nd.[TaiKhoan],nd.[MatKhau],nd.[MaLoai],nd.[VaiTro]  from NguoiDung nd join TheoDoi td on nd.TaiKhoan = td.MaNguoiDuocTD where td.MaNguoiTD = {0} and CONCAT_WS(nd.TaiKhoan,nd.Nickname,nd.HoTen) like '%{0}%';",User.FindFirst("TaiKhoan").Value.Trim(),search).ToList();
-            var listFollow = _context.TheoDoi.Where(x => (x.MaNguoiTd == tk && x.MaNguoiDuocTd != tk) || (x.MaNguoiDuocTd == tk && x.MaNguoiTd != tk)).ToList();
+            var listFollow = _context.TheoDoi.Distinct().Where(x => (x.MaNguoiTd == tk && x.MaNguoiDuocTd != tk) || (x.MaNguoiDuocTd == tk && x.MaNguoiTd != tk)).ToList();
             var newlist = new List<NguoiDung>(); 
-            foreach(var item in listFollow)
+            foreach(var item in listUser)
             {
-                foreach(var itemt in listUser)
+                foreach(var itemt in listFollow)
                 {
-                    if((itemt.TaiKhoan.Equals(item.MaNguoiDuocTd) && itemt.TaiKhoan != tk) || (itemt.TaiKhoan.Equals(item.MaNguoiTd) && itemt.TaiKhoan != tk))
+                    if((item.TaiKhoan != tk && itemt.MaNguoiDuocTd.Equals(item.TaiKhoan) && itemt.MaNguoiDuocTd != tk) || (item.TaiKhoan != tk && itemt.MaNguoiTd.Equals(item.TaiKhoan) && itemt.MaNguoiDuocTd != tk))
                     {
-                        newlist.Add(itemt);
+                        newlist.Add(item);
                     }
                 }
             }
+            //
+            // var list = (from nd in _context.NguoiDung
+            //         join td in _context.TheoDoi on nd.TaiKhoan equals td.MaNguoiTd 
+            //         where (ct.MaChuDe == listModelMa.Ma1 || ct.MaChuDe == listModelMa.Ma2)
+            //         select new TinTuc
+            //         {
+            //             MaTinTuc = tt.MaTinTuc,
+            //             TieuDe = tt.TieuDe,
+            //             NoiDung = tt.NoiDung,
+            //             TenFile = tt.TenFile,
+            //             HinhAnh = tt.HinhAnh,
+            //             TrangThai = tt.TrangThai,
+            //             NgayDang = tt.NgayDang,
+            //             NguoiDang = tt.NguoiDang
+            //         }).Where(x => x.TrangThai == true).Distinct().OrderByDescending(x =>x.NgayDang).ToList();
+            //
             var listchat = _context.TroChuyen.Where(x => x.ThanhVien1 == tk || x.ThanhVien2 == tk).ToList();
             foreach(var item in listchat)
             {

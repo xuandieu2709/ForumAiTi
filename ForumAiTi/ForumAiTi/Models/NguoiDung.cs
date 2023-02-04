@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -28,6 +29,7 @@ namespace ForumAiTi.Models
         }
 
         public string HoTen { get; set; }
+        // [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? SinhNhat { get; set; }
         public string Nickname { get; set; }
         public string GtbanThan { get; set; }

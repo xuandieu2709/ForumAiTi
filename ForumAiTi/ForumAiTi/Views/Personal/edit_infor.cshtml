@@ -178,7 +178,8 @@
                             </div>
                             <div class="row edit-infor">
                                 <label for="birthday">Sinh nhật</label>
-                                <input type="date" asp-for="SinhNhat" value="@String.Format("{0:dd/MM/yyyy}", Model.SinhNhat)" id="birthday">
+                                @* <input type="date" asp-for="SinhNhat" value="@Model.SinhNhat" asp-format="{0:yyyy-MM-dd}" id="birthday"> *@
+                                @Html.TextBoxFor(Model => Model.SinhNhat, "{0:yyyy-MM-dd}", new {type = "date",id = "birthday"})
                             </div>
                             <div class="row edit-des">
                                 <label for="des-yourself">Giới thiệu bản thân</label>

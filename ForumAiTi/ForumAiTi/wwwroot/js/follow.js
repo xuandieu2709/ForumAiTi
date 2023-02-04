@@ -8,7 +8,7 @@
             url: '/unfollow',
             data: "TaiKhoan="+user,
             success: function (result) {
-                alert(result)
+                // alert(result)
                 if(result === true)
                 {
                 $('#btn-unfollow').text(" Theo dõi");

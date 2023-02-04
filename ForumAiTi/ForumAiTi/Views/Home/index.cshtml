@@ -189,14 +189,14 @@
             {
                 <div class="col-12 col-md-4 mb-4">
                     <div id="divTop3" class="card h-100 w-100">
-                        <div class="card-body">
-                            <div class="card-left w-25"></div>
-                            <div class="card-right w-5"></div>
-                            <a
-                                class="h2 text-decoration-none text-forum">@item.TieuDe</a>
-                            <p class="card-text mt-3">@item.NoiDung
-                            </p>
-                            <p class="text-muted"><a href="/details_news/@item.MaTinTuc">Xem tiếp >></a></p>
+                        <div class="card-header">
+                            <a class="h2 text-decoration-none text-forum">@item.TieuDe</a>
+                        </div>
+                        <div class="card-body" id="news-img">
+                                <img src="@getAvatar(item.HinhAnh)" alt="">
+                                <p class="card-text p-content mt-3">@item.NoiDung
+                                </p>
+                                <p class="text-muted seemore"><a href="/details_news/@item.MaTinTuc">Xem tiếp >></a></p>
                         </div>
                     </div>
                 </div>

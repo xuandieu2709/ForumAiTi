@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.WebRequestMethods;
 using Microsoft.EntityFrameworkCore;
-
+using System.Text.Json;
 namespace ForumAiTi.Controllers
 {
     public class QAController : Controller
@@ -30,10 +30,37 @@ namespace ForumAiTi.Controllers
         private IHostingEnvironment _environment;
 
 
+        // [HttpGet("/qa/{page}")]
+        // public IActionResult qa(int page = 1)
+        // {
+        //     var list = _context.HoiDap.ToList();
+        // const int pageSize = 10;
+        // if(page <1)
+        // {
+        //     page =1;
+        // }
+        // int recsCount = list.Count();
+        // var paper = new Pager(recsCount,page,pageSize);
+        // int recSkip = (page -1)*pageSize;
+        // var data = list.Skip(recSkip).Take(paper.PageSize).ToList();
+        // this.ViewBag.Pager = paper;
+        // return View(data);
+        // }
         [HttpGet("/qa")]
-        public IActionResult qa()
+        public IActionResult qa(int page = 1)
         {
-            return View();
+            var list = _context.HoiDap.Where(x => x.TrangThai == true).ToList();
+            const int pageSize = 5;
+            if (page < 1)
+            {
+                page = 1;
+            }
+            int recsCount = list.Count();
+            var paper = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = list.Skip(recSkip).Take(paper.PageSize).ToList();
+            this.ViewBag.Pager = paper;
+            return View(data);
         }
 
         [Authorize(Roles = "USER")]
@@ -141,7 +168,7 @@ namespace ForumAiTi.Controllers
             _context.Database.ExecuteSqlRaw(sql, hd.MaHoiDap);
             return View(hd);
         }
-        [Authorize(Roles = "USER,ADMIN")]
+        [Authorize(Roles = "USER")]
         [HttpPost("/comment_qa")]
         public IActionResult ReplaceView(CommentModel commentModel)
         {
@@ -181,13 +208,210 @@ namespace ForumAiTi.Controllers
         [HttpGet("/delete")]
         public IActionResult delete(CommentModel commentModel)
         {
-            for(int i=121;i<=238;i++)
+            for (int i = 8; i <= 9; i++)
             {
-            // _context.Database.ExecuteSqlRaw("Delete From NoiDungTinTuc Where MaTinTuc = {0}",i);
-            _context.Database.ExecuteSqlRaw("Delete From CTTinTuc Where MaTinTuc = {0}",i);
-            // _context.Database.ExecuteSqlRaw("Delete From TinTuc Where MaTinTuc = {0}",i);
+                _context.Database.ExecuteSqlRaw("Delete From NoiDungTinTuc Where MaTinTuc = {0}",i);
+                _context.Database.ExecuteSqlRaw("Delete From CTTinTuc Where MaTinTuc = {0}", i);
+                _context.Database.ExecuteSqlRaw("Delete From TinTuc Where MaTinTuc = {0}",i);
             }
             return View("qa");
         }
+
+        [HttpPost("/replacewithDM")]
+        public IActionResult ReplacewithDM(ModelMa listModelMa)
+        {
+            int page = 1;
+            if(listModelMa.sotrang != 0)
+            {
+                page = listModelMa.sotrang;
+            }
+            // Console.WriteLine("Value"+listModelMa.Ma1 +listModelMa.Ma2+listModelMa.Ma3 +"...."+listModelMa.sapxep);
+            var list = _context.HoiDap.Where(x => x.TrangThai == true).OrderBy(x => x.NgayDang).ToList();
+
+            if (listModelMa.Ma1 == 0 && listModelMa.Ma2 == 0 && listModelMa.Ma3 == 0)
+            {
+                if (listModelMa.sapxep == 1)
+                {
+                    list = _context.HoiDap.Where(x => x.TrangThai == true).OrderBy(x => x.NgayDang).ToList();
+                }
+                else if(listModelMa.sapxep == 2)
+                {
+                    list = _context.HoiDap.Where(x => x.TrangThai == true).OrderByDescending(x => x.NgayDang).ToList();
+                }
+            }
+            if (listModelMa.Ma1 != 0 && listModelMa.Ma2 == 0 && listModelMa.Ma3 == 0)
+            {
+                if (listModelMa.sapxep == 1)
+                {
+                    list = (from hd in _context.HoiDap
+                    join ct in _context.CthoiDap on hd.MaHoiDap equals ct.MaHoiDap
+                    where (ct.MaDanhMuc == listModelMa.Ma1)
+                    select new HoiDap
+                    {
+                        MaHoiDap = hd.MaHoiDap,
+                        TieuDe = hd.TieuDe,
+                        NoiDung = hd.NoiDung,
+                        HinhAnh1 = hd.HinhAnh1,
+                        TenHinh1 = hd.TenHinh1,
+                        HinhAnh2 = hd.HinhAnh2,
+                        TenHinh2 = hd.TenHinh2,
+                        HinhAnh3 = hd.HinhAnh3,
+                        TenHinh3 = hd.TenHinh3,
+                        TrangThai = hd.TrangThai,
+                        NgayDang = hd.NgayDang,
+                        NguoiDang = hd.NguoiDang,
+                        LuotXem = hd.LuotXem
+                    }).Where(x => x.TrangThai == true).Distinct().OrderBy(x =>x.NgayDang).ToList();
+                }
+                else if(listModelMa.sapxep == 2)
+                {
+                    list = (from hd in _context.HoiDap
+                    join ct in _context.CthoiDap on hd.MaHoiDap equals ct.MaHoiDap
+                    where (ct.MaDanhMuc == listModelMa.Ma1)
+                    select new HoiDap
+                    {
+                        MaHoiDap = hd.MaHoiDap,
+                        TieuDe = hd.TieuDe,
+                        NoiDung = hd.NoiDung,
+                        HinhAnh1 = hd.HinhAnh1,
+                        TenHinh1 = hd.TenHinh1,
+                        HinhAnh2 = hd.HinhAnh2,
+                        TenHinh2 = hd.TenHinh2,
+                        HinhAnh3 = hd.HinhAnh3,
+                        TenHinh3 = hd.TenHinh3,
+                        TrangThai = hd.TrangThai,
+                        NgayDang = hd.NgayDang,
+                        NguoiDang = hd.NguoiDang,
+                        LuotXem = hd.LuotXem
+                    }).Where(x => x.TrangThai == true).Distinct().OrderByDescending(x =>x.NgayDang).ToList();
+                }
+
+            }
+            if (listModelMa.Ma1 != 0 && listModelMa.Ma2 != 0 && listModelMa.Ma3 == 0)
+            {
+                if (listModelMa.sapxep == 1)
+                {
+                    list = (from hd in _context.HoiDap
+                    join ct in _context.CthoiDap on hd.MaHoiDap equals ct.MaHoiDap
+                    where (ct.MaDanhMuc == listModelMa.Ma1 || ct.MaDanhMuc == listModelMa.Ma2)
+                    select new HoiDap
+                    {
+                        MaHoiDap = hd.MaHoiDap,
+                        TieuDe = hd.TieuDe,
+                        NoiDung = hd.NoiDung,
+                        HinhAnh1 = hd.HinhAnh1,
+                        TenHinh1 = hd.TenHinh1,
+                        HinhAnh2 = hd.HinhAnh2,
+                        TenHinh2 = hd.TenHinh2,
+                        HinhAnh3 = hd.HinhAnh3,
+                        TenHinh3 = hd.TenHinh3,
+                        TrangThai = hd.TrangThai,
+                        NgayDang = hd.NgayDang,
+                        NguoiDang = hd.NguoiDang,
+                        LuotXem = hd.LuotXem
+                    }).Where(x => x.TrangThai == true).Distinct().OrderBy(x =>x.NgayDang).ToList();
+                }
+                else if(listModelMa.sapxep == 2)
+                {
+                    list = (from hd in _context.HoiDap
+                    join ct in _context.CthoiDap on hd.MaHoiDap equals ct.MaHoiDap
+                    where (ct.MaDanhMuc == listModelMa.Ma1 || ct.MaDanhMuc == listModelMa.Ma2)
+                    select new HoiDap
+                    {
+                        MaHoiDap = hd.MaHoiDap,
+                        TieuDe = hd.TieuDe,
+                        NoiDung = hd.NoiDung,
+                        HinhAnh1 = hd.HinhAnh1,
+                        TenHinh1 = hd.TenHinh1,
+                        HinhAnh2 = hd.HinhAnh2,
+                        TenHinh2 = hd.TenHinh2,
+                        HinhAnh3 = hd.HinhAnh3,
+                        TenHinh3 = hd.TenHinh3,
+                        TrangThai = hd.TrangThai,
+                        NgayDang = hd.NgayDang,
+                        NguoiDang = hd.NguoiDang,
+                        LuotXem = hd.LuotXem
+                    }).Where(x => x.TrangThai == true).Distinct().OrderByDescending(x =>x.NgayDang).ToList();
+                }
+
+            }
+            if (listModelMa.Ma1 != 0 && listModelMa.Ma2 != 0 && listModelMa.Ma3 != 0)
+            {
+                if (listModelMa.sapxep == 1)
+                {
+                    list = (from hd in _context.HoiDap
+                    join ct in _context.CthoiDap on hd.MaHoiDap equals ct.MaHoiDap
+                    where (ct.MaDanhMuc == listModelMa.Ma1 || ct.MaDanhMuc == listModelMa.Ma2 || ct.MaDanhMuc == listModelMa.Ma3)
+                    select new HoiDap
+                    {
+                        MaHoiDap = hd.MaHoiDap,
+                        TieuDe = hd.TieuDe,
+                        NoiDung = hd.NoiDung,
+                        HinhAnh1 = hd.HinhAnh1,
+                        TenHinh1 = hd.TenHinh1,
+                        HinhAnh2 = hd.HinhAnh2,
+                        TenHinh2 = hd.TenHinh2,
+                        HinhAnh3 = hd.HinhAnh3,
+                        TenHinh3 = hd.TenHinh3,
+                        TrangThai = hd.TrangThai,
+                        NgayDang = hd.NgayDang,
+                        NguoiDang = hd.NguoiDang,
+                        LuotXem = hd.LuotXem
+                    }).Where(x => x.TrangThai == true).Distinct().OrderBy(x =>x.NgayDang).ToList();
+                }
+                else if(listModelMa.sapxep == 2)
+                {
+                    list = (from hd in _context.HoiDap
+                    join ct in _context.CthoiDap on hd.MaHoiDap equals ct.MaHoiDap
+                    where (ct.MaDanhMuc == listModelMa.Ma1 || ct.MaDanhMuc == listModelMa.Ma2 || ct.MaDanhMuc == listModelMa.Ma3)
+                    select new HoiDap
+                    {
+                        MaHoiDap = hd.MaHoiDap,
+                        TieuDe = hd.TieuDe,
+                        NoiDung = hd.NoiDung,
+                        HinhAnh1 = hd.HinhAnh1,
+                        TenHinh1 = hd.TenHinh1,
+                        HinhAnh2 = hd.HinhAnh2,
+                        TenHinh2 = hd.TenHinh2,
+                        HinhAnh3 = hd.HinhAnh3,
+                        TenHinh3 = hd.TenHinh3,
+                        TrangThai = hd.TrangThai,
+                        NgayDang = hd.NgayDang,
+                        NguoiDang = hd.NguoiDang,
+                        LuotXem = hd.LuotXem
+                    }).Where(x => x.TrangThai == true).Distinct().OrderByDescending(x =>x.NgayDang).ToList();
+                }
+
+            }
+            const int pageSize = 5;
+            if (page < 1)
+            {
+                page = 1;
+            }
+            int recsCount = list.Count();
+            Console.WriteLine("rec "+recsCount+"number page"+page);
+            var paper = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = list.Skip(recSkip).Take(paper.PageSize).ToList();
+            this.ViewBag.Pager = paper;
+            return PartialView(data);
+        }
+
+        // [HttpGet("/qa")]
+        // public IActionResult qaa(int page = 1)
+        // {
+        //     var list = _context.HoiDap.ToList();
+        //     const int pageSize = 5;
+        //     if (page < 1)
+        //     {
+        //         page = 1;
+        //     }
+        //     int recsCount = list.Count();
+        //     var paper = new Pager(recsCount, page, pageSize);
+        //     int recSkip = (page - 1) * pageSize;
+        //     var data = list.Skip(recSkip).Take(paper.PageSize).ToList();
+        //     this.ViewBag.Pager = paper;
+        //     return View(data);
+        // }
     }
 }

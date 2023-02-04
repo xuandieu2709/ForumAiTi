@@ -5,12 +5,12 @@
     NguoiDung getUserbyAC()
     {
         string tk = null;
-        if(User.Identity.IsAuthenticated)
+        if (User.Identity.IsAuthenticated)
         {
-        tk = User.FindFirst("TaiKhoan").Value.Trim();
+            tk = User.FindFirst("TaiKhoan").Value.Trim();
         }
-        if(tk == null) return new NguoiDung();
-        return _context.NguoiDung.FirstOrDefault(x =>x.TaiKhoan == tk);
+        if (tk == null) return new NguoiDung();
+        return _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == tk);
     }
 }
 @model ForumAiTi.Models.GopY
@@ -32,13 +32,13 @@
             <div class="row">
                 <div class="form-group col-md-6 mb-4">
                     <label for="inputname">Họ và tên</label>
-                    <input type="text" required class="form-control mt-1" value="@getUserbyAC().HoTen" id="name" name="HoTen"
-                        placeholder="Họ và tên của bạn">
+                    <input type="text" required class="form-control mt-1" value="@getUserbyAC().HoTen" id="name"
+                        name="HoTen" placeholder="Họ và tên của bạn">
                 </div>
                 <div class="form-group col-md-6 mb-4">
                     <label for="inputemail">Email</label>
-                    <input type="email" required class="form-control mt-1" value="@getUserbyAC().Email" id="email" name="Email"
-                        placeholder="Email của bạn">
+                    <input type="email" required class="form-control mt-1" value="@getUserbyAC().Email" id="email"
+                        name="Email" placeholder="Email của bạn">
                 </div>
             </div>
             <div class="mb-4">
@@ -52,36 +52,45 @@
             </div>
             <div class="row">
                 <div class="col text-end mt-2">
-                    <button type="submit" class="btn btn-success btn-lg px-3">Góp ý</button>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("ADMIN") == true)
+                        {
+                            <button type="button" onclick="alert('Không thể gửi góp ý!\nHãy đăng nhập bằng tài khoản người dùng để sử dụng chức năng này.')" class="btn btn-success btn-lg px-3">Góp ý</button>
+                        }
+                    }else{
+                            <button type="submit" class="btn btn-success btn-lg px-3">Góp ý</button>
+                    }
                 </div>
             </div>
         </form>
     </div>
 </div>
 @if (ViewBag.MessSUcc != null)
+{
+    @if (ViewBag.MessSUcc.Equals("1"))
     {
-        @if (ViewBag.MessSUcc.Equals("1"))
-        {
-            <script type="text/javascript" charset="utf-8">
-                window.onload = function () {
-                    setTimeout(() => { alert("Cảm ơn ý kiến đóng góp của bạn.\nChúng tôi sẽ cố gắng cải thiện để phù hợp nhất với yêu cầu của mọi người."); }, 500);
-                };
-            </script>
-        }
-        else if (ViewBag.MessSUcc.Equals("2"))
-        {
-            <script type="text/javascript" charset="utf-8">
-                window.onload = function () {
-                    setTimeout(() => { alert("Đã có lỗi xảy ra!\nVui lòng thử lại sau."); }, 500);
-                };
-            </script>
-        }else if(ViewBag.MessSUcc.Equals("3"))
-        {
-            <script type="text/javascript" charset="utf-8">
-                window.onload = function () {
-                    setTimeout(() => { alert("Hôm nay bạn đã góp ý 3 lần rồi.\nĐể dành ngày mai góp ý tiếp bạn nhé.\nCám ơn bạn."); }, 500);
-                };
-            </script>
-        }
+        <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                setTimeout(() => { alert("Cảm ơn ý kiến đóng góp của bạn.\nChúng tôi sẽ cố gắng cải thiện để phù hợp nhất với yêu cầu của mọi người."); }, 500);
+            };
+        </script>
     }
+    else if (ViewBag.MessSUcc.Equals("2"))
+    {
+        <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                setTimeout(() => { alert("Đã có lỗi xảy ra!\nVui lòng thử lại sau."); }, 500);
+            };
+        </script>
+    }
+    else if (ViewBag.MessSUcc.Equals("3"))
+    {
+        <script type="text/javascript" charset="utf-8">
+            window.onload = function () {
+                setTimeout(() => { alert("Hôm nay bạn đã góp ý 3 lần rồi.\nĐể dành ngày mai góp ý tiếp bạn nhé.\nCám ơn bạn."); }, 500);
+            };
+        </script>
+    }
+}
 <!-- End Contact -->
