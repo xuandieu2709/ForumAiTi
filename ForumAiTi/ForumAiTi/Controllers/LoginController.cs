@@ -48,7 +48,8 @@ namespace ForumAiTi.Controllers
             NguoiDung us1 = _context.NguoiDung.Find(user.TaiKhoan);
             if (us1 == null)
             {
-                return Redirect("/login");
+                ViewBag.StatusLogin = "1";
+                return View("login");
             }
             if (us1.MatKhau.Trim().Equals(user.MatKhau.Trim()))
             {
@@ -61,8 +62,8 @@ namespace ForumAiTi.Controllers
             }
             else
             {
-                TempData["StatusLogin"] = "1";
-                return RedirectToAction("Index");
+                ViewBag.StatusLogin = "1";
+                return View("login");
             }
         }
         [HttpGet("/loginWithgoogle")]
@@ -211,7 +212,7 @@ namespace ForumAiTi.Controllers
                 user.HinhAnh = uploadedImage;
                 _context.Add(user);
                 _context.SaveChanges();
-                TempData["StatusLogin"] = "2";
+                ViewBag.StatusLogin = "2";
                 return View("login");
             }
             else

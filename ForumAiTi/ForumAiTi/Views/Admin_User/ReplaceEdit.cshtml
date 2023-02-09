@@ -1,0 +1,134 @@
+@{
+    Layout = null;
+    ForumAiTiContext _context = new ForumAiTiContext();
+    List<string> getListNN()
+    {
+        List<string> list = new List<string>();
+        list.Add("Sinh viên");
+        list.Add("Kỹ sư ai ti");
+        list.Add("Giảng viên");
+        list.Add("Giáo viên");
+        list.Add("Người đi làm");
+        list.Add("Freelancer");
+        list.Add("Khác");
+        return list;
+    }
+    List<string> getListROLE()
+    {
+        List<string> list = new List<string>();
+        list.Add("ADMIN");
+        list.Add("USER");
+        return list;
+    }
+    List<ModelGender> getListGT()
+    {
+        List<ModelGender> list = new List<ModelGender>();
+        ModelGender m1 = new ModelGender();
+        m1.Ma = "0"; m1.Ten = "Nam";
+        ModelGender m2 = new ModelGender();
+        m2.Ma = "1"; m2.Ten = "Nữ";
+        ModelGender m3 = new ModelGender();
+        m3.Ma = "2"; m3.Ten = "Không xác định";
+        list.Add(m1);
+        list.Add(m2);
+        list.Add(m3);
+        return list;
+    }
+
+}
+@model ForumAiTi.Models.NguoiDung
+<div class="row " id="divEditUser">
+    <div class="col-12">
+        <div class="row edit-infor" id="div-edit-remove">
+            <div class="col-6">
+                <button class="btn btn-confirm" type="button" id="edit-btn">Chỉnh sửa</button>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-cancel" type="button" id="remove-btn" onclick="clickRemoveUser('@(Model.TaiKhoan)')">Xóa</button>
+            </div>
+        </div>
+        <div class="row edit-infor">
+            <label for="fullname">Họ và tên</label>
+            <input type="text" required name="HoTen" value="@Model.HoTen" id="fullname">
+        </div>
+        <div class="row edit-infor">
+            <label for="fullname">Tài khoản</label>
+            <input type="text" required name="TaiKhoan" value="@Model.TaiKhoan" id="Taikhoan">
+        </div>
+        <div class="row edit-infor">
+            <label for="fullname">Mật khẩu</label>
+            <div id="divPass">
+                <input type="password" required name="MatKhau" value="@Model.MatKhau" id="Matkhau">
+                <i toggle="#Matkhau" class="fa fa-eye" id="hidepass"></i>
+            </div>
+        </div>
+        <div class="row edit-infor">
+            <label for="birthday">Sinh nhật</label>
+            @* <input type="date" name="birthday" value="" id="birthday"> *@
+            @Html.TextBoxFor(Model => Model.SinhNhat, "{0:yyyy-MM-dd}", new {type = "date",id = "birthday"})
+        </div>
+        <div class="row edit-infor">
+            <label for="listjob">Nghề nghiệp</label>
+            <select name="NgheNghiep" id="listjob">
+                @foreach (var item in getListNN())
+                {
+                    @if (item == Model.NgheNghiep)
+                    {
+                        <option selected style="background-color: #264653;color: #fff;" value="@item">@item</option>
+                    }
+                    else
+                    {
+                        <option value="@item">@item</option>
+                    }
+                }
+                @* <option value="1">Sinh viên</option>
+                <option value="2">Kỹ sư AiTi</option>
+                <option value="3">Giáo viên</option> *@
+            </select>
+        </div>
+        <div class="row edit-infor">
+            <label for="listGT">Giới tính</label>
+            <select name="GioiTinh" id="listgender">
+                @foreach (var item in getListGT())
+                {
+                    @if (item.Ma == Model.GioiTinh)
+                    {
+                        <option selected style="background-color: #264653;color: #fff;" value="@item.Ma">@item.Ten</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Ma">@item.Ten</option>
+                    }
+                }
+                @* <option value="1">Nam</option>
+                <option value="2">Nữ</option>
+                <option value="3">Không xác định</option> *@
+            </select>
+        </div>
+        <div class="row edit-infor">
+            <label for="listVT">Vai trò</label>
+            <select name="VaiTro" id="listvaitro">
+                @foreach (var item in getListROLE())
+                {
+                    @if (item == Model.VaiTro)
+                    {
+                        <option selected style="background-color: #264653;color: #fff;" value="@item">@item</option>
+                    }
+                    else
+                    {
+                        <option value="@item">@item</option>
+                    }
+                }
+                @* <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option> *@
+            </select>
+        </div>
+        <input type="text" hidden name="" id="loaitk" value="@Model.MaLoai">
+        <div id="div-cancel-confirm">
+            <div id="div-cancel-confirm">
+                <a href="/admin_user"><button type="button" class="btn btn-cancel">Hủy</button></a>
+                <button class="btn btn-confirm" type="button" id="confirm-addUser">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

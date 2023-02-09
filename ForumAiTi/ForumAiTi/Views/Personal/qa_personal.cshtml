@@ -108,18 +108,16 @@
                             Tình trạng
                             <select style="border: 3px solid #f4a261;padding: 1%;" class="form-select mt-2"
                                 id="single-select-field" data-placeholder="Choose one thing">
-                                <option disabled selected>Vui lòng chọn 1 tùy chọn</option>
-                                <option>Hiển thị</option>
-                                <option>Đang ẩn</option>
+                                <option selected value="true">Hiển thị</option>
+                                <option value="false">Đang ẩn</option>
                             </select>
                         </div>
                         <div class="col-12 col-lg-6 col-md-6">
                             Sắp xếp theo lượt xem
                             <select style="border: 3px solid #f4a261;padding: 1%;" class="form-select mt-2"
                                 id="single-select-field" data-placeholder="Choose one thing">
-                                <option disabled selected>Vui lòng chọn 1 tùy chọn</option>
-                                <option>Tăng dần</option>
-                                <option>Giảm dần</option>
+                                <option selected value="1">Mới nhất trước</option>
+                                <option value="2">Cũ nhất trước</option>
                             </select>
                         </div>
                     </div>
@@ -135,6 +133,10 @@
             {
                 <div class="col-12 mb-5">
                 <div class="container-fluid bg-question-light">
+                    <div class="p-2">
+                        @* <button class="float-right btn btn-outline-warning">Sửa</button> *@
+                        <a class="float-right btn btn-outline-danger ml-5" id="remove_qa" href="/delete_qa/@item.MaHoiDap">Xóa</a>
+                    </div>
                     <div class="row p-2 details">
                         <h2 class="details-title">@item.TieuDe</h2>
                         <p id="MaHD" hidden>@item.MaHoiDap</p>
@@ -210,70 +212,6 @@
                         }
                     </div>
                 </div>
-                @* <div id="section_comment">
-                    @if (getListBLByMa(item.MaHoiDap).Count() == 0)
-                    {
-                        <section class="bg-text-forum">
-                            <div style="border-bottom: 3px solid #2a9d8f;">
-                                <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
-                            </div>
-                            <h4 class="text-center p-2">Chưa có bình luận nào. Hãy trở thành người bình luận đầu tiên</h4>
-                        </section>
-                    }
-                    else
-                    {
-                        <section class="bg-text-forum">
-                            <div style="border-bottom: 3px solid #2a9d8f;">
-                                <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
-                            </div>
-                            @foreach (var item1 in getListBLByMa(item.MaHoiDap))
-                            {
-                                <div class="row comment" id="loadcomment">
-                                    <div class="col-3 col-lg-2 col-md-2 comment-left">
-                                        <img src="@getAvatar(getUSER(item1.TaiKhoan).HinhAnh)" alt="">
-                                    </div>
-                                    <div class="col-9 col-lg-10 col-md-10 comment-right">
-                                        <p>@item1.NoiDung</p>
-                                        @if (item1.File != null)
-                                        {
-                                            <img class="img rounded img-fluid" height="100" src="@getAvatar(item1.File)" alt="">
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            <div class="m-2 p-2">
-                                <button class="d-block m-auto" id="load-more"><i class="fa fa-spinner"
-                                        aria-hidden="true"></i></button>
-                            </div>
-                        </section>
-                    }
-                    <form action="/comment_qa" enctype="multipart/form-data" method="post">
-                        <section class="bg-text-forum m-0 p-2 mb-2">
-                            <div class="anwser row m-0 p-2">
-                                <div class="col-4 col-lg-2 col-md-2 anwser-left">
-                                    @if (!User.Identity.IsAuthenticated)
-                                    {
-                                        <img src="@getAvatar(null)" alt="">
-                                    }
-                                    else
-                                    {
-                                        <img src="@getAvatar(getUSERbyTK(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)"
-                                            alt="">
-                                    }
-                                </div>
-                                <div class="col-8 col-lg-10 col-md-10 anwser-right">
-                                    <input type="file" hidden name="file" id="upload">
-                                    <label for="upload"><i class="fa fa-image" aria-hidden="true"></i></label>
-                                    <input type="file" hidden name="" id="upload1">
-                                    <label for="upload1"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
-                                    <textarea name="comment" id="comment"></textarea>
-                                    <div class="garellyImages"></div>
-                                    <button id="btnComment" class="btn btn-send">Bình luận</button>
-                                </div>
-                            </div>
-                        </section>
-                    </form>
-                </div> *@
                     <script src="~/js/qa.js"></script>
             </div>
             }
@@ -281,7 +219,7 @@
             </div>
             <!-- end -->
             <div class="col-12 col-md-4 col-lg-4 mt-2">
-                <a href="ask-question.html" class="ask-question">
+                <a href="/ask_question" class="ask-question">
                     <h2 class="py-4 bg-submenu-1 text-center">Bài đăng mới</h2>
                 </a>
                 <h2 class="py-4 mb-4 bg-forum text-light text-center new-question">Thống kê cá nhân</h2>
@@ -363,5 +301,23 @@
                 $('input#upimg' + id + '').val("");
             });
         });
+        //
+        $(document).on("click","#remove_qa",function(event){
+    event.preventDefault();
+    var href = $(this).attr('href');
+    if(confirm("Toàn bộ thông tin về bài đăng này sẽ bị xóa.\nBạn có chắc muốn xóa bài đăng này không?\nNhấn OK để xóa hoặc nhấn hủy để hủy thao tác."))
+    {
+         $.get(href,function (data,status){
+            location.reload();
+            if(String(status) === "success")
+            {
+                alert("Xóa thành công!");
+            }else{
+                alert("Xóa thất bại!");
+            }
+         });
+     }else{
+     }
+});
     </script>
     <!-- End Featured Product -->

@@ -163,6 +163,58 @@ namespace ForumAiTi.Controllers
             }
             return View("add_edit_news_admin");
         }
+        [HttpPost("/showDetailsNews")]
+        public IActionResult ReplaceDataNews(int MaTT)
+        {
+            var tt = _context.TinTuc.Where(x => x.MaTinTuc == MaTT).FirstOrDefault();
+            var listdm = _context.CttinTuc.Where(x => x.MaTinTuc == MaTT).ToList();
+            tt.CttinTuc = listdm;
+            tt.NoiDungTinTuc = _context.NoiDungTinTuc.Where(x => x.MaTinTuc == MaTT).ToList();
+            return PartialView(tt);
+        }
+
+        [HttpPost("/removeNews")]
+        public bool RemoveNews(int MaTT)
+        {
+            var tt = _context.TinTuc.FirstOrDefault(x =>x.MaTinTuc == MaTT);
+            var listct = _context.CttinTuc.Where(x =>x.MaTinTuc == MaTT).ToList();
+            var listnd = _context.NoiDungTinTuc.Where(x=>x.MaTinTuc == MaTT).ToList();
+            if(listct.Count() > 0)
+            {
+                foreach(var item in listct)
+                {
+                _context.Remove(item);
+                _context.SaveChanges();
+                }
+            }
+            if(listnd.Count() > 0)
+            {
+                foreach(var item in listnd)
+                {
+                _context.Remove(item);
+                _context.SaveChanges();
+                }
+            }
+            _context.Remove(tt);
+            int x = _context.SaveChanges();
+            if(x > 0)
+            {
+                _logger.LogInformation("Xoa TT Thành công!");
+                return true;
+            }else{
+                _logger.LogInformation("Xoa TT Thất bại!");
+                return false;
+            }
+        }
+
+        [HttpGet("/edit_news/{MaTinTuc}")]
+        public IActionResult edit_news(int MaTinTuc)
+        {
+            var tt = _context.TinTuc.FirstOrDefault(x => x.MaTinTuc == MaTinTuc);
+            tt.CttinTuc = _context.CttinTuc.Where(x =>x.MaTinTuc == MaTinTuc).ToList();
+            tt.NoiDungTinTuc = _context.NoiDungTinTuc.Where(x => x.MaTinTuc == MaTinTuc).ToList();
+            return View(tt);
+        }
 
     }
 }

@@ -247,7 +247,7 @@
                 <div class="container-fluid bg-question-light">
                     <div class="row p-2 details">
                         <h2 class="details-title">@item.TieuDe</h2>
-                        <p id="MaHD" hidden>@item.MaHoiDap</p>
+                        <p id="MaHD@(item.MaHoiDap)" hidden>@item.MaHoiDap</p>
                         <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang) - <a
                                 href="#"><img id="question-imguser" src="@getIMG(getUSERbyTK(item.NguoiDang).HinhAnh)"
                                     alt=""> @getUSERbyTK(item.NguoiDang).HoTen</a></p>
@@ -320,7 +320,7 @@
                         }
                     </div>
                 </div>
-                <div id="section_comment">
+                <div id="section_comment@(item.MaHoiDap)">
                     @if (getListBLByMa(item.MaHoiDap).Count() == 0)
                     {
                         <section class="bg-text-forum">
@@ -357,7 +357,7 @@
                             </div>
                         </section>
                     }
-                    <form action="/comment_qa" enctype="multipart/form-data" method="post">
+                    <form action="/comment_qaa" enctype="multipart/form-data" method="post">
                         <section class="bg-text-forum m-0 p-2 mb-2">
                             <div class="anwser row m-0 p-2">
                                 <div class="col-4 col-lg-2 col-md-2 anwser-left">
@@ -372,18 +372,18 @@
                                     }
                                 </div>
                                 <div class="col-8 col-lg-10 col-md-10 anwser-right">
-                                    <input type="file" hidden name="file" id="upload">
-                                    <label for="upload"><i class="fa fa-image" aria-hidden="true"></i></label>
-                                    <input type="file" hidden name="" id="upload1">
-                                    <label for="upload1"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
-                                    <textarea name="comment" id="comment"></textarea>
-                                    <div class="garellyImages"></div>
-                                    <button id="btnComment" class="btn btn-send">Bình luận</button>
+                                    <input type="file" hidden name="file" id="upload@(item.MaHoiDap)">
+                                    <label for="upload@(item.MaHoiDap)"><i class="fa fa-image" aria-hidden="true"></i></label>
+                                    <input type="file" hidden name="" readonly id="uploaad">
+                                    <label for="uploaad"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
+                                    <textarea name="comment" id="comment@(item.MaHoiDap)"></textarea>
+                                    <div class="garellyImages@(item.MaHoiDap)"></div>
+                                    <button id="btnComment@(item.MaHoiDap)" type="button" onclick="clickComment(this.id,event)" class="btn btn-send">Bình luận</button>
                                 </div>
                             </div>
                         </section>
                     </form>
-                    <script src="~/js/qa.js"></script>
+                    <script src="~/js/qaa.js"></script> <!-- comment in  page personal user -->
                 </div>
             </div>
             }

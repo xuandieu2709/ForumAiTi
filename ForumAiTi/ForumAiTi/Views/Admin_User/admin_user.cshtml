@@ -1,6 +1,7 @@
+
 @{
     ViewData["Title"] = "Quản lý người dùng";
-	Layout = "~/Views/Shared/_Layout_admin.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
     ForumAiTiContext _context = new ForumAiTiContext();
     string getAvatar(byte[] avataar)
     {
@@ -9,44 +10,77 @@
         string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
         return imageDataURL;
     }
+    List<string> getListNN()
+    {
+        List<string> list = new List<string>();
+        list.Add("Sinh viên");
+        list.Add("Kỹ sư ai ti");
+        list.Add("Giảng viên");
+        list.Add("Giáo viên");
+        list.Add("Người đi làm");
+        list.Add("Freelancer");
+        list.Add("Khác");
+        return list;
+    }
+    List<string> getListROLE()
+    {
+        List<string> list = new List<string>();
+        list.Add("ADMIN");
+        list.Add("USER");
+        return list;
+    }
+    List<ModelGender> getListGT()
+    {
+        List<ModelGender> list = new List<ModelGender>();
+        ModelGender m1 = new ModelGender();
+        m1.Ma = "0"; m1.Ten = "Nam";
+        ModelGender m2 = new ModelGender();
+        m2.Ma = "1"; m2.Ten = "Nữ";
+        ModelGender m3 = new ModelGender();
+        m3.Ma = "2"; m3.Ten = "Không xác định";
+        list.Add(m1);
+        list.Add(m2);
+        list.Add(m3);
+        return list;
+    }
 }
 @model List<NguoiDung>
-    <!-- Close Header -->
-    <section class="container-fluid my-2 px-5 bg-submenu p-2">
-        <div class="container-fluid bg-forum2">
-            <h3 class="text-forum-orange mb-0 p-2">
-                <oke class="bg-text-forum p-1">Management</oke>
-                <oke class="text-forum-submenu">Forum</oke> / Người dùng
-            </h3>
-        </div>
-    </section>
-    <!-- Modal -->
-    <!-- Start Categories of The Month -->
-    <section class="mx-5 my-2 ">
-        <div class="row m-0">
-            <div class="col-12 p-0 bg-forum2" id="admin-left">
-                <div class="container-fluid mb-2">
-                    <div class="row p-1">
-                        <div class="col-6"></div>
-                        <div class="col-6 p-2">
-                            <button class="btn btn-addUser" id="addUser-btn">Thêm mới</button>
-                        </div>
+<!-- Close Header -->
+<section class="container-fluid my-2 px-5 bg-submenu p-2">
+    <div class="container-fluid bg-forum2">
+        <h3 class="text-forum-orange mb-0 p-2">
+            <oke class="bg-text-forum p-1">Management</oke>
+            <oke class="text-forum-submenu">Forum</oke> / Người dùng
+        </h3>
+    </div>
+</section>
+<!-- Modal -->
+<!-- Start Categories of The Month -->
+<section class="mx-5 my-2 ">
+    <div class="row m-0">
+        <div class="col-12 p-0 bg-forum2" id="admin-left">
+            <div class="container-fluid mb-2">
+                <div class="row p-1">
+                    <div class="col-6"></div>
+                    <div class="col-6 p-2">
+                        <button class="btn btn-addUser" id="addUser-btn">Thêm mới</button>
                     </div>
-                    <table id="example" class="table table-striped table-hover table-success" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Tài khoản</th>
-                                <th>Họ và tên</th>
-                                <th>Sinh nhật</th>
-                                @* <th>Giới tính</th> *@
-                                <th>Hình ảnh</th>
-                                <th>Nghề nghiệp</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                            <tr>
+                </div>
+                <table id="example" class="table table-striped table-hover table-success" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Tài khoản</th>
+                            <th style="width: 20%;">Họ và tên</th>
+                            <th style="width: 20%;">Sinh nhật</th>
+                            @* <th>Giới tính</th> *@
+                            <th style="width: 20%;">Hình ảnh</th>
+                            <th style="width: 20%;">Nghề nghiệp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr onclick="showUSER('@item.TaiKhoan')">
                                 <td>@item.TaiKhoan</td>
                                 <td>@item.HoTen</td>
                                 <td>@String.Format("{0:dd/MM/yyyy}", item.SinhNhat)</td>
@@ -54,82 +88,132 @@
                                 <td><img src="@getAvatar(item.HinhAnh)" alt=""></td>
                                 <td>@item.NgheNghiep</td>
                             </tr>
-                            }
-                            
+                        }
 
-                        <tfoot>
-                            <tr>
-                                <th>Tài khoản</th>
-                                <th>Họ và tên</th>
-                                <th>Sinh nhật</th>
+
+                    <tfoot>
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Họ và tên</th>
+                            <th>Sinh nhật</th>
                                 @* <th>Giới tính</th> *@
-                                <th>Hình ảnh</th>
-                                <th>Nghề nghiệp</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                            <th>Hình ảnh</th>
+                            <th>Nghề nghiệp</th>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
-            <div class="col-12 col-md-4 col-lg-4" id="admin-right">
-                <h2 id="text-mess-user" class="py-4 bg-forum text-center "><i class="fa fa-television" aria-hidden="true"></i> Thêm mới</h2>
-                <div class="row ">
+        </div>
+        <div class="col-12 col-md-4 col-lg-4" id="admin-right">
+            <h2 id="text-mess-user" class="py-4 bg-forum text-center "><i class="fa fa-television"
+                    aria-hidden="true"></i> Thêm mới</h2>
+            @* <form action="/insertUser" method="post"> *@
+                <div class="row " id="divEditUser">
                     <div class="col-12">
                         <div class="row edit-infor" id="div-edit-remove">
                             <div class="col-6">
-                                <button class="btn btn-confirm" id="edit-btn">Chỉnh sửa</button>
+                                <button class="btn btn-confirm" type="button" id="edit-btn">Chỉnh sửa</button>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-cancel" id="remove-btn">Xóa</button>
+                                <button class="btn btn-cancel" type="button" id="remove-btn">Xóa</button>
                             </div>
                         </div>
                         <div class="row edit-infor">
                             <label for="fullname">Họ và tên</label>
-                            <input type="text" name="fullname" value="" id="fullname">
+                            <input type="text" name="HoTen" required value="" id="fullname">
                         </div>
                         <div class="row edit-infor">
                             <label for="fullname">Tài khoản</label>
-                            <input type="text" name="Taikhoan" value="" id="Taikhoan">
+                            <input type="text" name="TaiKhoan" required value="" id="Taikhoan">
                         </div>
                         <div class="row edit-infor">
                             <label for="fullname">Mật khẩu</label>
                             <div id="divPass">
-                                <input type="password" name="Matkhau" value="" id="Matkhau">
+                                <input type="password" required name="MatKhau" value="" id="Matkhau">
                                 <i toggle="#Matkhau" class="fa fa-eye" id="hidepass"></i>
                             </div>
                         </div>
                         <div class="row edit-infor">
                             <label for="birthday">Sinh nhật</label>
-                            <input type="date" name="birthday" value="" id="birthday">
+                            <input type="date" required name="SinhNhat" value="" id="birthday">
                         </div>
                         <div class="row edit-infor">
-                            <label for="listjob">Nghề nghiệp</label>
-                            <select name="listjob" id="listjob">
-                                <option value="1">Sinh viên</option>
-                                <option value="2">Kỹ sư AiTi</option>
-                                <option value="3">Giáo viên</option>
+                            <label for="NgheNghiep">Nghề nghiệp</label>
+                            <select name="NgheNghiep" id="listjob">
+                                @foreach (var item in getListNN())
+                                {
+                                    <option value="@item">@item</option>
+                                }
                             </select>
                         </div>
                         <div class="row edit-infor">
-                            <label for="listjob">Giới tính</label>
-                            <select name="listjob" id="listjob">
-                                <option value="1">Nam</option>
-                                <option value="2">Nữ</option>
-                                <option value="3">Không xác định</option>
+                            <label for="NguoiDung.GioiTinh">Giới tính</label>
+                            <select name="GioiTinh" id="listgender">
+                                @foreach (var item in getListGT())
+                                {
+                                    <option value="@item.Ma">@item.Ten</option>
+                                }
                             </select>
                         </div>
                         <div class="row edit-infor">
-                            <label for="listjob">Vai trò</label>
-                            <select name="listjob" id="listjob">
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="USER">USER</option>
+                            <label for="VaiTro">Vai trò</label>
+                            <select name="VaiTro" id="listvaitro">
+                                @foreach (var item in getListROLE())
+                                {
+                                        <option value="@item">@item</option>
+                                }
                             </select>
                         </div>
                         <div id="div-cancel-confirm">
-                            <a href="admin_account.html"><button class="btn btn-cancel">Hủy</button></a>
-                            <button class="btn btn-confirm">Xác nhận</button>
+                            <a href="/admin_user"><button type="button" class="btn btn-cancel">Hủy</button></a>
+                            <button class="btn btn-confirm" type="button" id="confirm-addUser">Xác nhận</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            @* </form> *@
         </div>
-    </section>
+    </div>
+</section>
+<script>
+    function showUSER(tk) {
+        $.ajax({
+            type: 'POST',
+            url: '/repalceDataUSER',
+            data: "tk=" + String(tk),
+            success: function (data) {
+                $('div#divEditUser').replaceWith(data);
+                disabled_Tag();
+            },
+            error: function (data) {
+
+    @* if(Number(result.status) === 401)
+                    {
+                    window.location.href = "/login?ReturnUrl=%2F";
+                    }
+                    else{
+                    alert("Đã có lỗi xảy ra!");
+                    } *@
+            // console.log(result + result.status);
+        }
+        });
+    }
+    function disabled_Tag() {
+        $('div.edit-infor input').each(function () {
+            $(this).attr('readonly', true);
+    @* alert("ok") *@
+        });
+        $('div.edit-infor select').each(function () {
+            $(this).attr('disabled', true);
+        });
+    }
+    @* $(document).on('click',"i#hidepass",function () {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        // var tag = $('input#Matkhau');
+        if (input.attr("type") == "password") {
+        input.attr("type", "text");
+        } else {
+        input.attr("type", "password");
+        }
+        }); *@
+</script>

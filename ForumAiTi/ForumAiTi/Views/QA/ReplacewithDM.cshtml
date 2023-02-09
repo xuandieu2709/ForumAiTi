@@ -34,6 +34,25 @@
         count = list.Count();
         return count;
     }
+    string getName(string taikhoan){
+        string tk = "";
+        if(taikhoan == null)
+        {
+            taikhoan = User.FindFirst("TaiKhoan").Value.Trim();
+        }
+        var user = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == taikhoan);
+        if(user.Nickname != null)
+        {
+            tk = user.Nickname;
+        }else if(user.HoTen != null)
+        {
+            tk = user.HoTen;
+        }else if(user.TaiKhoan != null)
+        {
+            tk = user.TaiKhoan;
+        }
+        return tk;
+    } 
     Pager paper = new Pager();
     int pageNo = 0;
     if (ViewBag.Pager != null)
@@ -61,7 +80,7 @@
                 </a>
                 <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang) - <a
                         href="/personal/@item.NguoiDang"><img id="question-imguser"
-                            src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</a></p>
+                            src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getName(item.NguoiDang)</a></p>
                 <p class="question-list">
                     @foreach (var item1 in @getlistDMByMA(item.MaHoiDap))
                     {

@@ -78,9 +78,9 @@
             </div>
         </div>
     </section>
-    @if (TempData["StatusLogin"] != null)
+    @if (ViewBag.StatusLogin != null)
 		{
-            @if(TempData["StatusLogin"].Equals("1"))
+            @if(ViewBag.StatusLogin.Equals("1"))
             {
             <script type="text/javascript" charset="utf-8">
 				window.onload = function () {
@@ -88,13 +88,13 @@
 			};
 			</script>
             }
-            else if(TempData["StatusLogin"].Equals("2")){
+            else if(ViewBag.StatusLogin.Equals("2")){
                 <script type="text/javascript" charset="utf-8">
 				window.onload = function () {
 				alert("Chúc mừng bạn đã trở thành thành viên mới của ForumAiTi.\nHãy đăng nhập để trải nghiệm ngay nào!");
 			};
 			</script>
-            }else if(TempData["StatusLogin"].Equals("3")){
+            }else if(ViewBag.StatusLogin.Equals("3")){
                 <script type="text/javascript" charset="utf-8">
 				window.onload = function () {
 				alert("Chúc mừng bạn lấy lại mật khẩu thành công!\nHãy đăng nhập để trải nghiệm ngay nào!");

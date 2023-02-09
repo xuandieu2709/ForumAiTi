@@ -27,8 +27,8 @@ namespace ForumAiTi.Controllers
             // var list = _context.HoiDap.FromSqlRaw("")
             // var list = _context.HoiDap.FromSqlRaw($"Select * from TinTuc where CONCAT_WS(TieuDe,NoiDung,NguoiDang) like N'%"+search+"%'").ToList();
             // var list1 = _context.TinTuc.FromSqlRaw($"Select * from HoiDap where CONCAT_WS(TieuDe,NoiDung,NguoiDang) like N'%"+search+"%'").ToList();
-            var list1 = _context.HoiDap.Where(x => x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search)).OrderByDescending(x => x.NgayDang).ToList();
-            var list = _context.TinTuc.Where(x => x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search)).OrderByDescending(x => x.NgayDang).ToList();
+            var list1 = _context.HoiDap.Where(x => (x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search) && x.TrangThai == true )).OrderByDescending(x => x.NgayDang).ToList();
+            var list = _context.TinTuc.Where(x => (x.TieuDe!.Contains(search) || x.NoiDung!.Contains(search)|| x.NguoiDang!.Contains(search) && x.TrangThai == true )).OrderByDescending(x => x.NgayDang).ToList();
             // var listUser = new List<NguoiDung>();
             // foreach(var item in list1)
             // {

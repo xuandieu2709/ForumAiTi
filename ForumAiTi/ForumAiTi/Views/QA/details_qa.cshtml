@@ -6,6 +6,25 @@
     {
         return _context.DanhMucHoiDap.Where(x => x.MaDanhMuc == ma).FirstOrDefault();
     }
+    string getName(string taikhoan){
+        string tk = "";
+        if(taikhoan == null)
+        {
+            taikhoan = User.FindFirst("TaiKhoan").Value.Trim();
+        }
+        var user = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == taikhoan);
+        if(user.Nickname != null)
+        {
+            tk = user.Nickname;
+        }else if(user.HoTen != null)
+        {
+            tk = user.HoTen;
+        }else if(user.TaiKhoan != null)
+        {
+            tk = user.TaiKhoan;
+        }
+        return tk;
+    } 
     string getIMG(byte[] avataar)
     {
         if (avataar == null) return "/images/noneavatar.jpg";
@@ -67,7 +86,7 @@
                         <h2 class="details-title">@Model.TieuDe</h2>
                         <p id="MaHD" hidden>@Model.MaHoiDap</p>
                         <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", Model.NgayDang) - <a href="/personal/@Model.NguoiDang"><img id="question-imguser"
-                                    src="@getIMG(getUSERbyTK(Model.NguoiDang).HinhAnh)" alt=""> @getUSERbyTK(Model.NguoiDang).HoTen</a></p>
+                                    src="@getIMG(getUSERbyTK(Model.NguoiDang).HinhAnh)" alt=""> @getName(Model.NguoiDang)</a></p>
                         <p class="details-list">
                             @foreach (var item in Model.CthoiDap)
                     {
@@ -196,6 +215,8 @@
                                 @if(User.IsInRole("ADMIN") == true)
                                 {
                             <button type="button" onclick="alert('Để bình luận hãy đăng nhập bằng tài khoản người dùng')" class="btn btn-send">Bình luận</button>
+                            }else{
+                            <button id="btnComment" class="btn btn-send">Bình luận</button>
                             }
                             }else{
                             <button id="btnComment" class="btn btn-send">Bình luận</button>
@@ -223,7 +244,7 @@
                         </a>
                         <p class="question-sub-time-posted">Đăng ngày @String.Format("{0:dd/MM/yyyy}", item.NgayDang)</p>
                         <a href="/personal/@item.NguoiDang">
-                            <p class="question-sub-imguser"><img src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getUSER(item.NguoiDang).HoTen</p>
+                            <p class="question-sub-imguser"><img src="@getAvatar(getUSER(item.NguoiDang).HinhAnh)" alt=""> @getName(item.NguoiDang)</p>
                         </a>
                     </div>   
                     }
@@ -240,7 +261,7 @@
                                 <img src="@getAvatar(item.HinhAnh)" alt="">
                             </div>
                             <div class="col-8 col-sm-6 member-right">
-                                <h4>@item.HoTen</h4>
+                                <h4>@getName(item.TaiKhoan)</h4>
                                 @if(item.SinhNhat == null)
                                 {
                                 <p>?? - ?? - ????</p>

@@ -4,8 +4,27 @@
     ForumAiTiContext _context = new ForumAiTiContext();
     List<NguoiDung> getTop3()
     {
-        return _context.NguoiDung.OrderByDescending(x => x.VaiTro == "USER").Take(3).ToList();
+        return _context.NguoiDung.Where(x => x.VaiTro == "USER").Take(3).ToList();
     }
+    string getName(string taikhoan){
+        string tk = "";
+        if(taikhoan == null)
+        {
+            taikhoan = User.FindFirst("TaiKhoan").Value.Trim();
+        }
+        var user = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == taikhoan);
+        if(user.Nickname != null)
+        {
+            tk = user.Nickname;
+        }else if(user.HoTen != null)
+        {
+            tk = user.HoTen;
+        }else if(user.TaiKhoan != null)
+        {
+            tk = user.TaiKhoan;
+        }
+        return tk;
+    } 
     string getAvatar(byte[] avataar)
     {
         if (avataar == null) return "/images/noneavatar.jpg";
@@ -126,7 +145,7 @@
         {
             <div id="divUser" class="col-12 col-md-4 p-5 mt-3 pr-2">
                 <a href="#"><img src="@getAvatar(item.HinhAnh)" class="img-div-user"></a>
-                <h5 class="text-center mt-3 mb-3">@item.TaiKhoan</h5>
+                <h5 class="text-center mt-3 mb-3">@getName(item.TaiKhoan)</h5>
                 <p class="text-center"><a href="/personal/@item.TaiKhoan" class="btn btn-success">Theo dõi ngay</a></p>
             </div>
         }

@@ -86,7 +86,7 @@ namespace ForumAiTi.Controllers
             user.MatKhau = MatKhau;
             _context.Update(user);
             _context.SaveChanges();
-            TempData["StatusLogin"] = "3";
+            ViewBag.StatusLogin = "3";
 
             return RedirectToAction("Index","Login");
         }

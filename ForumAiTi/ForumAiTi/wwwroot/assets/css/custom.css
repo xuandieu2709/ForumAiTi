@@ -858,7 +858,7 @@ a:hover>h1.banner-title {
     padding: 2%;
 }
 
-.ask-two>.ask-one>input#input-datetime {
+.ask-two>.ask-one>input#input-datetime,.ask-two>.ask-one>input#input-datetime-edit {
     margin-top: 1.6rem;
     border: 2px solid #f4a261;
     outline: 1px solid #f4a261;
@@ -1366,6 +1366,16 @@ button#btn-submid-send {
 table#example {
     border: 2px solid #264653 !important;
     color: #264653;
+}
+table#example td,table#example > thead > th
+{
+    text-align: left; 
+    vertical-align: middle;
+}
+table#example th > button
+{
+    display: block;
+    margin: auto;
 }
 
 /* MANagement */

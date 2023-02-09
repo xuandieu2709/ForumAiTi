@@ -205,16 +205,56 @@ namespace ForumAiTi.Controllers
             ViewBag.HD = hd;
             return PartialView("ReplaceView");
         }
+        //
+        [Authorize(Roles = "USER")]
+        [HttpPost("/comment_qaa")]
+        public IActionResult ReplacePersonalComment(CommentModel commentModel)
+        {
+            BinhLuan bl = new BinhLuan();
+            if (commentModel.file != null)
+            {
+                MemoryStream ms = new MemoryStream();
+                commentModel.file.CopyTo(ms);
+                var file1 = Path.Combine(_environment.ContentRootPath, "wwwroot/images/BinhLuan", commentModel.file.FileName);
+                using (var fileStream = new FileStream(file1, FileMode.Create))
+                {
+                    commentModel.file.CopyTo(fileStream);
+                }
+                bl.File = ms.ToArray();
+                bl.TenFile = commentModel.file.FileName;
+                bl.LoaiFile = commentModel.file.ContentType;
+            }
+            bl.NoiDung = commentModel.comment;
+            bl.MaHoiDap = commentModel.ma;
+            bl.TaiKhoan = User.FindFirst("TaiKhoan").Value.Trim();
+            bl.ThoiGianBinhLuan = DateTime.Now;
+            bl.TrangThai = true;
+            _context.Add(bl);
+            int x = _context.SaveChanges();
+            if (x > 0)
+            {
+                _logger.LogInformation("Da insert");
+            }
+            else
+            {
+                _logger.LogInformation("Loi insert");
+            }
+            var hd = _context.HoiDap.Where(x => x.MaHoiDap == commentModel.ma).FirstOrDefault();
+            ViewBag.HD = hd;
+            ViewBag.MaQA = commentModel.ma;
+            return PartialView();
+        }
+        //
         [HttpGet("/delete")]
         public IActionResult delete(CommentModel commentModel)
         {
-            for (int i = 8; i <= 9; i++)
+            for (int i = 39; i <= 40; i++)
             {
-                _context.Database.ExecuteSqlRaw("Delete From NoiDungTinTuc Where MaTinTuc = {0}",i);
-                _context.Database.ExecuteSqlRaw("Delete From CTTinTuc Where MaTinTuc = {0}", i);
-                _context.Database.ExecuteSqlRaw("Delete From TinTuc Where MaTinTuc = {0}",i);
+                _context.Database.ExecuteSqlRaw("Delete From BinhLuan Where MaBinhLuan = {0}",i);
+                // _context.Database.ExecuteSqlRaw("Delete From CTTinTuc Where MaTinTuc = {0}", i);
+                // _context.Database.ExecuteSqlRaw("Delete From TinTuc Where MaTinTuc = {0}",i);
             }
-            return View("qa");
+            return View("index");
         }
 
         [HttpPost("/replacewithDM")]

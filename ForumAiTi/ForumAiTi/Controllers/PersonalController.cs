@@ -154,5 +154,31 @@ namespace ForumAiTi.Controllers
             var user2 = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == User.FindFirst("TaiKhoan").Value.Trim());
             return View(user2);
         }
+        // QA PESONAL 
+        [HttpGet("/edit_qa_personal")]
+        public IActionResult edit_qa_personal(int MaHoiDap)
+        {
+            var qa = _context.HoiDap.FirstOrDefault(x => x.MaHoiDap == MaHoiDap);
+            return View(qa);
+        }
+        [HttpGet("/delete_qa/{MaHoiDap}")]
+        public IActionResult delete_qa(int MaHoiDap)
+        {
+            var qa = _context.HoiDap.FirstOrDefault(x => x.MaHoiDap == MaHoiDap);
+            qa.CthoiDap = _context.CthoiDap.Where(x => x.MaHoiDap == MaHoiDap).ToList();
+            qa.BinhLuan = _context.BinhLuan.Where(x => x.MaHoiDap == MaHoiDap).ToList();
+            _context.Remove(qa);
+            int check = _context.SaveChanges();
+            if(check > 0)
+            {
+                _logger.LogInformation("Xoa TC");
+            }else 
+            {
+                _logger.LogInformation("Xoa TB");
+            }
+            return View("qa_personal");
+        }
     }
+
+
 }

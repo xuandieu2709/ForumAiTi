@@ -6,15 +6,24 @@ $(document).ready(function () {
         language: "vi"
     });
     $('#input-datetime').val(new Date().toISOString().slice(0, 10));
-    $('datetime').text($('#input-datetime').val());
+    var date = $('#input-datetime').val();
+    var str = date.substring(8, 10) + ' / ' + date.substring(5, 7) + ' / ' + date.substring(0, 4);
+    $('datetime').text(str);
     // change demo
     $('input#input-title').on('input', function () {
         var text = $(this).val();
         $('#text-title').text(text);
     });
     $('#input-datetime').on('change', function () {
-        var text = $('#input-datetime').val();
-        $('datetime').text(text);
+        var date = $('#input-datetime').val();
+        var str = date.substring(8, 10) + ' / ' + date.substring(5, 7) + ' / ' + date.substring(0, 4);
+        $('datetime').text(str);
+    });
+    // edit datetime
+    $('#input-datetime1').on('change', function () {
+        var date = $('#input-datetime').val();
+        var str = date.substring(8, 10) + ' / ' + date.substring(5, 7) + ' / ' + date.substring(0, 4);
+        $('datetime').text(str);
     });
     $('textarea#content').on('keyup', function () {
         var text = $(this).val();
@@ -129,7 +138,7 @@ $(function () {
     $(document).on('change', 'input[id*="upload"]', function () {
         var id = $(this).attr('id');
         id = id.substring(6, id.length);
-        if ($('input#upload'+id)[0].files[0]) {
+        if ($('input#upload' + id)[0].files[0]) {
             console.log("have file");
             imagesPreview(this, 'div.garelly' + id, id);
             $('input#chuthich' + id).attr('value', '1');
@@ -177,12 +186,11 @@ $(function () {
     $(document).on('change', 'input[id="changeimg"]', function () {
         var id = $(this).attr('id');
         id = id.substring(9, id.length);
-        if($('input#changeimg'+id)[0].files[0])
-        {
+        if ($('input#changeimg' + id)[0].files[0]) {
             imagesPreview1(this);
         }
-        else{
-            $('img#img-content').attr('src',"assets/img/img3.webp");
+        else {
+            $('img#img-content').attr('src', "assets/img/img3.webp");
         }
     });
 });

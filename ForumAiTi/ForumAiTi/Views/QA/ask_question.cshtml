@@ -6,6 +6,40 @@
         {
             return _context.DanhMucHoiDap.ToList();
         }
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    string getDay(){return  (DateTime.Today.Day).ToString();}
+    string getMonth(){return (DateTime.Today.Month).ToString();}
+    string getYear(){return (DateTime.Today.Year).ToString();}
+
+    string getName(string taikhoan){
+        string tk = "";
+        if(taikhoan == null)
+        {
+            taikhoan = User.FindFirst("TaiKhoan").Value.Trim();
+        }
+        var user = _context.NguoiDung.FirstOrDefault(x => x.TaiKhoan == taikhoan);
+        if(user.Nickname != null)
+        {
+            tk = user.Nickname;
+        }else if(user.HoTen != null)
+        {
+            tk = user.HoTen;
+        }else if(user.TaiKhoan != null)
+        {
+            tk = user.TaiKhoan;
+        }
+        return tk;
+    } 
+    NguoiDung getUSERbyTK(string tk)
+    {
+        return _context.NguoiDung.Where(x => x.TaiKhoan == tk).FirstOrDefault();
+    }   
 }
 @model ForumAiTi.Models.HoiDap;
 <!-- Close Header -->
@@ -152,8 +186,8 @@
                 <div class="row p-2 details bg-question-light">
                     <h2 class="details-title" id="text-title">Thành công ở đại học là gì? Bí quyết để thành công?
                     </h2>
-                    <p class="time-posted">Đã đăng ngày 27 / 01 / 2022 - <a href="#"><img id="question-imguser"
-                                src="images/user.jfif" alt=""> Boy AiTi</a></p>
+                    <p class="time-posted">Đã đăng ngày @getDay() / @getMonth() / @getYear() - <a href="/personal/@User.FindFirst("TaiKhoan").Value.Trim()"><img id="question-imguser"
+                                src="@getAvatar(getUSERbyTK(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)" alt=""> @getName(null)</a></p>
                     <p class="details-list"><a href="#">Java</a> <a href="#">Python</a> <a href="#">C#</a></p>
                     <p class="details-content" id="text-content">
                         Nhà tuyển dụng sẽ không chỉ quan tâm tới những ứng viên có thành tích học tập cao mà họ

@@ -1,0 +1,89 @@
+@{
+    Layout = null;
+    ForumAiTiContext _context = new ForumAiTiContext();
+    NguoiDung getUSERbyTK(string tk)
+    {
+        return _context.NguoiDung.Where(x => x.TaiKhoan == tk).FirstOrDefault();
+    }
+    List<BinhLuan> getListBLByMa(int MaHD)
+    {
+        var list = _context.BinhLuan.Where(x => x.MaHoiDap == MaHD).ToList();
+        return list;
+    }
+    string getAvatar(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+    NguoiDung getUSER(string taikhoan)
+    {
+        return _context.NguoiDung.Where(x => x.TaiKhoan == taikhoan).FirstOrDefault();
+    }
+}
+<div id="section_comment@(ViewBag.MaQA)">
+                    @if (getListBLByMa(ViewBag.MaQA).Count() == 0)
+                    {
+                        <section class="bg-text-forum">
+                            <div style="border-bottom: 3px solid #2a9d8f;">
+                                <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
+                            </div>
+                            <h4 class="text-center p-2">Chưa có bình luận nào. Hãy trở thành người bình luận đầu tiên</h4>
+                        </section>
+                    }
+                    else
+                    {
+                        <section class="bg-text-forum">
+                            <div style="border-bottom: 3px solid #2a9d8f;">
+                                <h4 class="" style="padding: 2% 4%;">Bình luận</h4>
+                            </div>
+                            @foreach (var item1 in getListBLByMa(ViewBag.MaQA))
+                            {
+                                <div class="row comment" id="loadcomment">
+                                    <div class="col-3 col-lg-2 col-md-2 comment-left">
+                                        <img src="@getAvatar(getUSER(item1.TaiKhoan).HinhAnh)" alt="">
+                                    </div>
+                                    <div class="col-9 col-lg-10 col-md-10 comment-right">
+                                        <p>@item1.NoiDung</p>
+                                        @if (item1.File != null)
+                                        {
+                                            <img class="img rounded img-fluid" height="100" src="@getAvatar(item1.File)" alt="">
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            <div class="m-2 p-2">
+                                <button class="d-block m-auto" id="load-more"><i class="fa fa-spinner"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </section>
+                    }
+                    <form action="/comment_qaa" enctype="multipart/form-data" method="post">
+                        <section class="bg-text-forum m-0 p-2 mb-2">
+                            <div class="anwser row m-0 p-2">
+                                <div class="col-4 col-lg-2 col-md-2 anwser-left">
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <img src="@getAvatar(null)" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="@getAvatar(getUSERbyTK(User.FindFirst("TaiKhoan").Value.Trim()).HinhAnh)"
+                                            alt="">
+                                    }
+                                </div>
+                                <div class="col-8 col-lg-10 col-md-10 anwser-right">
+                                    <input type="file" hidden name="file" id="upload@(ViewBag.MaQA)">
+                                    <label for="upload@(ViewBag.MaQA)"><i class="fa fa-image" aria-hidden="true"></i></label>
+                                    <input type="file" hidden name="" readonly id="uploaad">
+                                    <label for="uploaad"><i class="fa fa-file-archive" aria-hidden="true"></i></label>
+                                    <textarea name="comment" id="comment@(ViewBag.MaQA)"></textarea>
+                                    <div class="garellyImages@(ViewBag.MaQA)"></div>
+                                    <button id="btnComment@(ViewBag.MaQA)" type="button" onclick="clickComment(this.id,event)" class="btn btn-send">Bình luận</button>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                    <script src="~/js/qaa.js"></script> <!-- comment in  page personal user -->
+                </div>

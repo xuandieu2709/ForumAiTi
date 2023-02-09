@@ -1,0 +1,50 @@
+@{
+    ForumAiTiContext _context = new ForumAiTiContext();
+    ChuDe getCDbyMA(int ma)
+    {
+        return _context.ChuDe.Where(x => x.MaChuDe == ma).FirstOrDefault();
+    }
+    string getIMG(byte[] avataar)
+    {
+        if (avataar == null) return "/images/noneavatar.jpg";
+        string imageBase64Data = Convert.ToBase64String(avataar);
+        string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+        return imageDataURL;
+    }
+}
+@model ForumAiTi.Models.TinTuc
+<div class="row p-3 news-details bg-question-light" id="replaceNewsDetails">
+    <div class="row edit-infor" id="div-edit-remove">
+                            <div class="col-6">
+                                <a href="/edit_news/@Model.MaTinTuc" class="btn btn-confirm" id="edit-btn">Chỉnh sửa</a>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-cancel" id="remove-btn1" onclick="RemoveNews('@(Model.MaTinTuc)')">Xóa</button>
+                            </div>
+    </div>
+    <h2 class="details-title">@Model.TieuDe</h2>
+                <p class="time-posted">Đã đăng ngày @String.Format("{0:dd/MM/yyyy}", Model.NgayDang)</p>
+                <p class="details-list">
+                    @foreach (var item in Model.CttinTuc)
+                    {
+                        <a href="#">@getCDbyMA((int)item.MaChuDe).TenChuDe</a>
+                    }
+                </p>
+                <img class="details-img" src="@getIMG(Model.HinhAnh)" alt="">
+                <p class="details-content">
+                    @Model.NoiDung
+                </p>
+                @foreach (var item in Model.NoiDungTinTuc)
+                {
+                    <div class="news-paragraph p-0">
+                    <p class="news-paragraph-content">
+                        @item.NoiDung
+                    </p>
+                    @if(item.File != null && item.File.Length > 0) 
+                            {
+                            <img src="@getIMG(item.File)" alt="">
+                            <p class="paragraph-note-img">@item.ChuThich</p>
+                            }
+                </div>
+                }
+</div>
